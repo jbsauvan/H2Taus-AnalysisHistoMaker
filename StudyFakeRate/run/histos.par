@@ -1,0 +1,83 @@
+############################################################
+### Histograms used to derive fake rates in Zmumu
+############################################################
+HistosZMuMu: FakeRate_StandardIso_, FakeRate_InvertIso_(1000), FakeRate_NoIso_(2000)
+
+# General event 
+h1f 0 nevents ' Number of events ' 1 0.5 1.5
+1binvbh1f 1 nvertices ' Number of vertices ' 12 0. 5. 8. 10. 12. 14. 16. 18. 21. 25. 30. 40.
+1binvbh1f 2 rho ' #rho ' 11 0. 4. 6. 8. 10. 12. 14. 16. 20. 25. 35.
+
+# First muon
+h1f 10 l1_pt ' p_{T}^{l1} [GeV] ' 100 0. 100.
+h1f 11 l1_eta ' #eta^{l1} ' 50 -2.5 2.5
+h1f 12 l1_phi ' #phi^{l1} ' 50 -3.14159265359 3.14159265359 
+h1f 13 l1_reliso05 ' iso^{l1} ' 100 0. 0.2
+
+# Second muon
+h1f 20 l2_pt ' p_{T}^{l1} [GeV] ' 100 0. 100.
+h1f 21 l2_eta ' #eta^{l1} ' 50 -2.5 2.5
+h1f 22 l2_phi ' #phi^{l1} ' 50 -3.14159265359 3.14159265359
+h1f 23 l2_reliso05 ' iso^{l1} ' 100 0. 0.2
+
+# Dimuon mass
+h1f 50 l1l2_mass ' M_{#mu#mu} [GeV] ' 70 50. 120.
+
+# Tau
+1binvbh1f 100 tau_pt ' p_{T}(#tau) [GeV] ' 14 20. 22. 24. 26. 30. 35. 40. 50. 60. 70. 90. 120. 150. 200.
+h1f 101 tau_eta ' #eta^{#tau} ' 12 -2.4 2.4
+h1f 102 tau_phi ' #phi^{#tau} ' 50 -3.14159265359 3.14159265359
+h1f 103 tau_decayMode ' decay^{#tau} ' 15 0. 15.
+h1f 104 tau_againstMuon3 ' tau-muon discriminant ' 60 0. 6.
+h1f 105 tau_againstElectronMVA5 ' tau-ele discriminant ' 30 0. 3.
+h1f 106 tau_iso ' tau isolation ' 200 0. 20.
+h1f 107 tau_pdgId ' pdg id ' 45 -22.5 22.5
+
+end_HistosZMuMu
+
+###########################################################
+### Histograms used to check fake rates
+###########################################################
+HistosMuTau: FakeRate_StandardIso_, FakeRate_InvertIso_(1000), FakeRate_NoIso_(2000)
+
+# General event 
+h1f_sys 0 nevents ' Number of events ' 1 0.5 1.5
+h1f 1 nvertices ' Number of vertices ' 50 0. 50.
+h1f 2 rho ' #rho ' 50 0. 50.
+h1f_sys 3 weight ' Fake weight ' 1001 0. 1.001
+
+# First muon
+h1f 10 l1_pt ' p_{T}^{l1} [GeV] ' 100 0. 100.
+h1f 11 l1_eta ' #eta^{l1} ' 50 -2.5 2.5
+h1f 12 l1_phi ' #phi^{l1} ' 50 -3.14159265359 3.14159265359 
+h1f 13 l1_reliso05 ' iso^{l1} ' 100 0. 0.2
+
+# Tau
+h1f 20 tau_pt ' p_{T}^{#tau} [GeV] ' 100 0. 100.
+h1f 21 tau_eta ' #eta^{#tau} ' 50 -2.5 2.5
+h1f 22 tau_phi ' #phi^{#tau} ' 50 -3.14159265359 3.14159265359
+h1f 23 tau_decayMode ' decay^{#tau} ' 15 0. 15.
+h1f 24 tau_againstMuon3 ' tau-muon discriminant ' 60 0. 6.
+h1f 25 tau_againstElectronMVA5 ' tau-ele discriminant ' 30 0. 3.
+h1f 26 tau_iso ' tau isolation ' 200 0. 20.
+h1f 27 tau_pdgId ' pdg ID ' 45 -22.5 22.5
+
+# MuTau
+h1f_sys 50 mvis ' M_{vis} [GeV] ' 60 0. 300.
+h1f_sys 51 mt   ' M_{T} [GeV] ' 40 0. 200.
+
+## histo dependent on gen_match
+###
+1binfh1f_sys 100 nevents_vs_match ' Number of events ' 1 0.5 1.5
+MATCH 6 1. 0.5
+#
+1binfh1f_sys 110 weight_vs_match ' Fake weight ' 1000 0. 1.
+MATCH 6 1. 0.5
+#
+1binfh1f_sys 120 mvis_vs_match ' M_{vis} [GeV] ' 60 0. 300.
+MATCH 6 1. 0.5
+#
+1binfh1f_sys 130 mt_vs_match ' M_{T} [GeV] ' 40 0. 200.
+MATCH 6 1. 0.5
+
+end_HistosMuTau

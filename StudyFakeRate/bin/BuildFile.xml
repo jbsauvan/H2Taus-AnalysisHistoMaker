@@ -1,0 +1,6 @@
+<bin file="main_zmumu.cpp" name="fakerate.exe">
+  <use name="AnHiMaCMG/StudyFakeRate"/>
+</bin>
+<bin file="main_mutau.cpp" name="fakerateapply.exe">
+  <use name="AnHiMaCMG/StudyFakeRate"/>
+</bin>
