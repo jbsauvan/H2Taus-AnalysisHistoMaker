@@ -161,6 +161,11 @@ void AnalysisFakeRateApply::fillHistos(unsigned selection, const std::string& sy
     m_histos.Fill1BinHisto(110+hoffset, event().tau().gen_match, fakeFactor, event().weight(), sysNum);
     m_histos.Fill1BinHisto(120+hoffset, event().tau().gen_match, event().mvis(), weight, sysNum);
     m_histos.Fill1BinHisto(130+hoffset, event().tau().gen_match, event().mt(), weight, sysNum);
+
+    // Correlation plots
+    //m_histos.FillHisto(200+hoffset, event().mvis(), event().tau().Pt(), weight, sysNum);
+    //m_histos.FillHisto(201+hoffset, event().mvis(), event().tau().Eta(), weight, sysNum);
+    //m_histos.FillHisto(202+hoffset, event().mvis(), event().tau().decayMode, weight, sysNum);
 }
 
 

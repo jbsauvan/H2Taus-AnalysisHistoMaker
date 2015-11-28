@@ -209,6 +209,12 @@ bool HistoManager::ParseHistos(
         else if(item=="1binvbh1f_sys"){
             ReadParams1binVarSizeh1f(inParams,type,hoffset,SysNum,kTRUE);
         }
+        else if(item=="2binvbh2f"){
+            ReadParams2binVarSizeh2f(inParams,type,hoffset,SysNum,kFALSE);
+        }
+        else if(item=="2binvbh2f_sys"){
+            ReadParams2binVarSizeh2f(inParams,type,hoffset,SysNum,kTRUE);
+        }
         //... for bin histograms with variable bin width
         else if(item=="1binvh1f"){
             ReadParams1binvh1f(inParams,type,hoffset,SysNum,kFALSE);
