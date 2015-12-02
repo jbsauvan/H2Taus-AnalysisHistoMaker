@@ -1319,7 +1319,7 @@ void HistoManager::ReadParams2binVarSizeh2f(istringstream &inParams,string type,
      inParams  >>NInputBinY;
  
      // Boucle sur le binning 
-     Double_t *BinningVarY = new Double_t[NInputBinX];
+     Double_t *BinningVarY = new Double_t[NInputBinY];
      //Double_t iBinMinY = 0;
      //Double_t iBinMaxY = 0;
      for(Int_t iBin = 0;iBin<NInputBinY;iBin++){

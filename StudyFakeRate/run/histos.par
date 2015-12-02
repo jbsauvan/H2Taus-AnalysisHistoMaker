@@ -33,6 +33,40 @@ h1f 105 tau_againstElectronMVA5 ' tau-ele discriminant ' 30 0. 3.
 h1f 106 tau_iso ' tau isolation ' 200 0. 20.
 h1f 107 tau_pdgId ' pdg id ' 45 -22.5 22.5
 
+# 2D histograms
+2binvbh2f 200 tau_pt_vs_eta ' #eta^{#tau} vs p_{T}(#tau) [GeV] ' 
+7 20. 22. 25. 30. 40. 60. 200.
+4 0. 0.8 1.5 2.4
+#
+2binvbh2f 201 tau_pt_vs_decayMode ' decay^{#tau} vs p_{T}(#tau) [GeV] ' 
+7 20. 22. 25. 30. 40. 60. 200.
+16 0. 1. 2. 3. 4. 5. 6. 7. 8. 9. 10. 11. 12. 13. 14. 15.
+#
+2binvbh2f 202 tau_pt_vs_pdgId ' pdg ID vs p_{T}(#tau) [GeV] ' 
+5 20. 25. 30. 60. 200.
+46 -22.5 -21.5 -20.5 -19.5 -18.5 -17.5 -16.5 -15.5 -14.5 -13.5 -12.5 -11.5 -10.5 -9.5 -8.5 -7.5 -6.5 -5.5 -4.5 -3.5 -2.5 -1.5 -0.5 0.5 1.5 2.5 3.5 4.5 5.5 6.5 7.5 8.5 9.5 10.5 11.5 12.5 13.5 14.5 15.5 16.5 17.5 18.5 19.5 20.5 21.5 22.5
+#
+2binvbh2f 203 tau_pt_vs_mergedPdgId ' pdg ID vs p_{T}(#tau) [GeV] ' 
+5 20. 25. 30. 60. 200.
+9 -5.5 -0.5 0.5 1.5 3.5 4.5 5.5 21.5 22.5
+
+# arrays
+1binvvh1f 300 tau_pt_vs_eta_ ' p_{T}(#tau) [GeV] ' 7 20. 22. 25. 30. 40. 60. 200.
+ETA 3
+0. 0.8 1.5 2.4
+#
+1binvvh1f 310 tau_pt_vs_decayMode_ ' p_{T}(#tau) [GeV] ' 7 20. 22. 25. 30. 40. 60. 200.
+DECAY 3
+-0.5 0.5 1.5 10.5
+#
+1binvvh1f 320 tau_pt_vs_pdgId_ ' p_{T}(#tau) [GeV] ' 5 20. 25. 30. 60. 200.
+PDGID 13
+-5.5 -4.5 -3.5 -2.5 -1.5 -0.5 0.5 1.5 2.5 3.5 4.5 5.5 21.5 22.5
+#
+1binvvh1f 340 tau_pt_vs_mergedPdgId_ ' p_{T}(#tau) [GeV] ' 5 20. 25. 30. 60. 200.
+PDGID 9
+-5.5 -0.5 0.5 1.5 3.5 4.5 5.5 21.5 22.5
+
 end_HistosZMuMu
 
 ###########################################################
@@ -53,8 +87,8 @@ h1f 12 l1_phi ' #phi^{l1} ' 50 -3.14159265359 3.14159265359
 h1f 13 l1_reliso05 ' iso^{l1} ' 100 0. 0.2
 
 # Tau
-h1f 20 tau_pt ' p_{T}^{#tau} [GeV] ' 100 0. 100.
-h1f 21 tau_eta ' #eta^{#tau} ' 50 -2.5 2.5
+1binvbh1f 20 tau_pt ' p_{T}(#tau) [GeV] ' 14 20. 22. 24. 26. 30. 35. 40. 50. 60. 70. 90. 120. 150. 200.
+h1f 21 tau_eta ' #eta^{#tau} ' 12 -2.4 2.4
 h1f 22 tau_phi ' #phi^{#tau} ' 50 -3.14159265359 3.14159265359
 h1f 23 tau_decayMode ' decay^{#tau} ' 15 0. 15.
 h1f 24 tau_againstMuon3 ' tau-muon discriminant ' 60 0. 6.
@@ -74,10 +108,23 @@ MATCH 6 1. 0.5
 1binfh1f_sys 110 weight_vs_match ' Fake weight ' 1000 0. 1.
 MATCH 6 1. 0.5
 #
-1binfh1f_sys 120 mvis_vs_match ' M_{vis} [GeV] ' 60 0. 300.
+1binvvh1f 120 tau_pt_vs_match ' p_{T}(#tau) [GeV] ' 14 20. 22. 24. 26. 30. 35. 40. 50. 60. 70. 90. 120. 150. 200.
+MATCH 6
+0.5 1.5 2.5 3.5 4.5 5.5 6.5
+#
+1binfh1f 130 tau_eta_vs_match ' #eta^{#tau} ' 12 -2.4 2.4
 MATCH 6 1. 0.5
 #
-1binfh1f_sys 130 mt_vs_match ' M_{T} [GeV] ' 40 0. 200.
+1binfh1f 140 tau_decayMode_vs_match ' decay^{#tau} ' 15 0. 15.
+MATCH 6 1. 0.5
+#
+1binfh1f 150 tau_pdgId_vs_match ' pdg ID ' 45 -22.5 22.5 
+MATCH 6 1. 0.5
+#
+1binfh1f_sys 160 mvis_vs_match ' M_{vis} [GeV] ' 60 0. 300.
+MATCH 6 1. 0.5
+#
+1binfh1f_sys 170 mt_vs_match ' M_{T} [GeV] ' 40 0. 200.
 MATCH 6 1. 0.5
 
 # Correlation plots

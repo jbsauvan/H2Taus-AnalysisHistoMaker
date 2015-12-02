@@ -90,7 +90,7 @@ void AnalysisFakeRate::fillHistos(unsigned selection)
 
 
     // Event histos
-    m_histos.FillHisto(0+hoffset, 0.5, weight, sysNum); // Number of events
+    m_histos.FillHisto(0+hoffset, 1., weight, sysNum); // Number of events
     m_histos.FillHisto(1+hoffset, event().n_vertices(), weight, sysNum); 
     m_histos.FillHisto(2+hoffset, event().rho(), weight, sysNum); 
     //
@@ -118,5 +118,16 @@ void AnalysisFakeRate::fillHistos(unsigned selection)
      m_histos.FillHisto(106+hoffset, event().tau().byCombinedIsolationDeltaBetaCorrRaw3Hits, weight, sysNum);
      m_histos.FillHisto(107+hoffset, fabs(event().tauMatch().pdgId)*(event().tau().sign_flip!=0 ? event().tau().sign_flip : 1), weight, sysNum);
 
+     // 2D histograms
+     m_histos.FillHisto(200+hoffset, event().tau().Pt(), fabs(event().tau().Eta()), weight, sysNum);
+     m_histos.FillHisto(201+hoffset, event().tau().Pt(), event().tau().decayMode, weight, sysNum);
+     m_histos.FillHisto(202+hoffset, event().tau().Pt(), fabs(event().tauMatch().pdgId)*(event().tau().sign_flip!=0 ? event().tau().sign_flip : 1), weight, sysNum);
+     m_histos.FillHisto(203+hoffset, event().tau().Pt(), fabs(event().tauMatch().pdgId)*(event().tau().sign_flip!=0 ? event().tau().sign_flip : 1), weight, sysNum);
+
+     // arrays
+     m_histos.Fill1BinHisto(300+hoffset, fabs(event().tau().Eta()), event().tau().Pt(), weight, sysNum);
+     m_histos.Fill1BinHisto(310+hoffset, event().tau().decayMode, event().tau().Pt(), weight, sysNum);
+     m_histos.Fill1BinHisto(320+hoffset, fabs(event().tauMatch().pdgId)*(event().tau().sign_flip!=0 ? event().tau().sign_flip : 1), event().tau().Pt(), weight, sysNum);
+     m_histos.Fill1BinHisto(340+hoffset, fabs(event().tauMatch().pdgId)*(event().tau().sign_flip!=0 ? event().tau().sign_flip : 1), event().tau().Pt(), weight, sysNum);
 }
 

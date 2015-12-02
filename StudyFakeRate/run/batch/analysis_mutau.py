@@ -12,7 +12,8 @@ zj_cut  = 'l2_gen_match == 6'
 
 Name = "Name"
 File = "File"
-Histo = "Histo"
+Object = "Object"
+Type = "Type"
 Dir  = "Dir"
 Cut  = "Cut"
 
@@ -32,12 +33,12 @@ samples.append({Name:"QCD"      ,Dir:"QCD_Mu15"         ,Cut:""})
 ## Definition of fake factors
 fakeFactorsFile = "/afs/cern.ch/user/j/jsauvan/workspace/Projects/Htautau_Run2/Studies/ComputeFakeRates/plots/FakeFactors_ZMuMu/FakeFactors_ZMuMu.root"
 fakeFactors = []
-fakeFactors.append({Name:"Weight_Inclusive", File:fakeFactorsFile, Histo:"FakeFactors_ZMuMu_StandardIso_InvertIso_nevents"})
-fakeFactors.append({Name:"Weight_VsNVtx"   , File:fakeFactorsFile, Histo:"FakeFactors_ZMuMu_StandardIso_InvertIso_nvertices"})
-fakeFactors.append({Name:"Weight_VsPt"     , File:fakeFactorsFile, Histo:"FakeFactors_ZMuMu_StandardIso_InvertIso_tau_pt"})
-fakeFactors.append({Name:"Weight_VsEta"    , File:fakeFactorsFile, Histo:"FakeFactors_ZMuMu_StandardIso_InvertIso_tau_eta"})
-fakeFactors.append({Name:"Weight_VsDecay"  , File:fakeFactorsFile, Histo:"FakeFactors_ZMuMu_StandardIso_InvertIso_tau_decayMode"})
-fakeFactors.append({Name:"Weight_VsPdgId"  , File:fakeFactorsFile, Histo:"FakeFactors_ZMuMu_StandardIso_InvertIso_tau_pdgId"})
+fakeFactors.append({Name:"Weight_Inclusive", File:fakeFactorsFile, Type:"1DGraph", Object:"FakeFactors_ZMuMu_StandardIso_InvertIso_nevents"})
+fakeFactors.append({Name:"Weight_VsNVtx"   , File:fakeFactorsFile, Type:"1DGraph", Object:"FakeFactors_ZMuMu_StandardIso_InvertIso_nvertices"})
+fakeFactors.append({Name:"Weight_VsPt"     , File:fakeFactorsFile, Type:"1DGraph", Object:"FakeFactors_ZMuMu_StandardIso_InvertIso_tau_pt"})
+fakeFactors.append({Name:"Weight_VsEta"    , File:fakeFactorsFile, Type:"1DGraph", Object:"FakeFactors_ZMuMu_StandardIso_InvertIso_tau_eta"})
+fakeFactors.append({Name:"Weight_VsDecay"  , File:fakeFactorsFile, Type:"1DGraph", Object:"FakeFactors_ZMuMu_StandardIso_InvertIso_tau_decayMode"})
+fakeFactors.append({Name:"Weight_VsPdgId"  , File:fakeFactorsFile, Type:"1DGraph", Object:"FakeFactors_ZMuMu_StandardIso_InvertIso_tau_pdgId"})
 
 
 

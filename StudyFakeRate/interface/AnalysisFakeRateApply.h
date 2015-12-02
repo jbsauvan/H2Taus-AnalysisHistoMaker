@@ -27,8 +27,9 @@
 #include "AnHiMaCMG/Core/interface/EventAware.h"
 #include "AnHiMaCMG/H2TausCommon/interface/EventMuTau.h"
 
-#include "TGraphAsymmErrors.h"
 
+
+class TObject;
 
 namespace AnHiMa
 {
@@ -47,7 +48,8 @@ namespace AnHiMa
             void fillHistos(unsigned, const std::string&);
             double retrieveFakeFactor(const std::string&);
 
-            std::map<std::string, TGraphAsymmErrors*> m_fakeFactors;
+            std::map<std::string, std::pair<std::string, TObject*>> m_fakeFactors;
+
     };
 }
 
