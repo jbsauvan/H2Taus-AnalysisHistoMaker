@@ -31,14 +31,18 @@ samples.append({Name:"QCD"      ,Dir:"QCD_Mu15"         ,Cut:""})
 
 
 ## Definition of fake factors
-fakeFactorsFile = "/afs/cern.ch/user/j/jsauvan/workspace/Projects/Htautau_Run2/Studies/ComputeFakeRates/plots/FakeFactors_ZMuMu/FakeFactors_ZMuMu.root"
+fakeFactorsFile1D = "/afs/cern.ch/user/j/jsauvan/workspace/Projects/Htautau_Run2/Studies/ComputeFakeRates/plots/FakeFactors_ZMuMu/FakeFactors_ZMuMu.root"
+fakeFactorsFile2D = "/afs/cern.ch/user/j/jsauvan/workspace/Projects/Htautau_Run2/Studies/ComputeFakeRates/plots/2DFakeFactors_ZMuMu/2DFakeFactors_ZMuMu.root"
 fakeFactors = []
-fakeFactors.append({Name:"Weight_Inclusive", File:fakeFactorsFile, Type:"1DGraph", Object:"FakeFactors_ZMuMu_StandardIso_InvertIso_nevents"})
-fakeFactors.append({Name:"Weight_VsNVtx"   , File:fakeFactorsFile, Type:"1DGraph", Object:"FakeFactors_ZMuMu_StandardIso_InvertIso_nvertices"})
-fakeFactors.append({Name:"Weight_VsPt"     , File:fakeFactorsFile, Type:"1DGraph", Object:"FakeFactors_ZMuMu_StandardIso_InvertIso_tau_pt"})
-fakeFactors.append({Name:"Weight_VsEta"    , File:fakeFactorsFile, Type:"1DGraph", Object:"FakeFactors_ZMuMu_StandardIso_InvertIso_tau_eta"})
-fakeFactors.append({Name:"Weight_VsDecay"  , File:fakeFactorsFile, Type:"1DGraph", Object:"FakeFactors_ZMuMu_StandardIso_InvertIso_tau_decayMode"})
-fakeFactors.append({Name:"Weight_VsPdgId"  , File:fakeFactorsFile, Type:"1DGraph", Object:"FakeFactors_ZMuMu_StandardIso_InvertIso_tau_pdgId"})
+fakeFactors.append({Name:"Weight_Inclusive", File:fakeFactorsFile1D, Type:"1DGraph", Object:"FakeFactors_ZMuMu_StandardIso_InvertIso_nevents"})
+fakeFactors.append({Name:"Weight_VsNVtx"   , File:fakeFactorsFile1D, Type:"1DGraph", Object:"FakeFactors_ZMuMu_StandardIso_InvertIso_nvertices"})
+fakeFactors.append({Name:"Weight_VsPt"     , File:fakeFactorsFile1D, Type:"1DGraph", Object:"FakeFactors_ZMuMu_StandardIso_InvertIso_tau_pt"})
+fakeFactors.append({Name:"Weight_VsEta"    , File:fakeFactorsFile1D, Type:"1DGraph", Object:"FakeFactors_ZMuMu_StandardIso_InvertIso_tau_eta"})
+fakeFactors.append({Name:"Weight_VsDecay"  , File:fakeFactorsFile1D, Type:"1DGraph", Object:"FakeFactors_ZMuMu_StandardIso_InvertIso_tau_decayMode"})
+fakeFactors.append({Name:"Weight_VsPdgId"  , File:fakeFactorsFile1D, Type:"1DGraph", Object:"FakeFactors_ZMuMu_StandardIso_InvertIso_tau_pdgId"})
+fakeFactors.append({Name:"Weight_VsPtEta"  , File:fakeFactorsFile2D, Type:"2DHisto", Object:"2DFakeFactors_ZMuMu_StandardIso_InvertIso_tau_pt_vs_eta"})
+fakeFactors.append({Name:"Weight_VsPtDecay", File:fakeFactorsFile2D, Type:"2DHisto", Object:"2DFakeFactors_ZMuMu_StandardIso_InvertIso_tau_pt_vs_decayMode"})
+fakeFactors.append({Name:"Weight_VsPtPdgId", File:fakeFactorsFile2D, Type:"2DHisto", Object:"2DFakeFactors_ZMuMu_StandardIso_InvertIso_tau_pt_vs_mergedPdgId"})
 
 
 
@@ -85,6 +89,7 @@ for sample in samples:
     for i,fakeFactor in enumerate(fakeFactors):
         batch[-1].additionalParameters["FakeFactor.{0}.Name".format(i+1)]   = fakeFactor[Name]
         batch[-1].additionalParameters["FakeFactor.{0}.File".format(i+1)]   = fakeFactor[File]
-        batch[-1].additionalParameters["FakeFactor.{0}.Histo".format(i+1)]  = fakeFactor[Histo]
+        batch[-1].additionalParameters["FakeFactor.{0}.Object".format(i+1)] = fakeFactor[Object]
+        batch[-1].additionalParameters["FakeFactor.{0}.Type".format(i+1)]   = fakeFactor[Type]
 
 

@@ -225,7 +225,7 @@ double AnalysisFakeRateApply::retrieveFakeFactor(const std::string& sys)
     else if(sys=="Weight_VsPtEta")
     {
         values.push_back(event().tau().Pt());
-        values.push_back(event().tau().Eta());
+        values.push_back(fabs(event().tau().Eta())); // Careful: This is absolute value of eta
     }
     else if(sys=="Weight_VsPtDecay")
     {
