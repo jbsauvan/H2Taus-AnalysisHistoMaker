@@ -27,7 +27,7 @@ h1f 50 l1l2_mass ' M_{#mu#mu} [GeV] ' 70 50. 120.
 1binvbh1f 100 tau_pt ' p_{T}(#tau) [GeV] ' 14 20. 22. 24. 26. 30. 35. 40. 50. 60. 70. 90. 120. 150. 200.
 h1f 101 tau_eta ' #eta^{#tau} ' 12 -2.4 2.4
 h1f 102 tau_phi ' #phi^{#tau} ' 50 -3.14159265359 3.14159265359
-h1f 103 tau_decayMode ' decay^{#tau} ' 15 0. 15.
+h1f 103 tau_decayMode ' decay^{#tau} ' 15 -0.5 14.5
 h1f 104 tau_againstMuon3 ' tau-muon discriminant ' 60 0. 6.
 h1f 105 tau_againstElectronMVA5 ' tau-ele discriminant ' 30 0. 3.
 h1f 106 tau_iso ' tau isolation ' 200 0. 20.
@@ -40,7 +40,7 @@ h1f 107 tau_pdgId ' pdg id ' 45 -22.5 22.5
 #
 2binvbh2f 201 tau_pt_vs_decayMode ' decay^{#tau} vs p_{T}(#tau) [GeV] ' 
 7 20. 22. 25. 30. 40. 60. 200.
-16 0. 1. 2. 3. 4. 5. 6. 7. 8. 9. 10. 11. 12. 13. 14. 15.
+16 -0.5 0.5 1.5 2.5 3.5 4.5 5.5 6.5 7.5 8.5 9.5 10.5 11.5 12.5 13.5 14.5
 #
 2binvbh2f 202 tau_pt_vs_pdgId ' pdg ID vs p_{T}(#tau) [GeV] ' 
 5 20. 25. 30. 60. 200.
@@ -90,7 +90,7 @@ h1f 13 l1_reliso05 ' iso^{l1} ' 100 0. 0.2
 1binvbh1f 20 tau_pt ' p_{T}(#tau) [GeV] ' 14 20. 22. 24. 26. 30. 35. 40. 50. 60. 70. 90. 120. 150. 200.
 h1f 21 tau_eta ' #eta^{#tau} ' 12 -2.4 2.4
 h1f 22 tau_phi ' #phi^{#tau} ' 50 -3.14159265359 3.14159265359
-h1f 23 tau_decayMode ' decay^{#tau} ' 15 0. 15.
+h1f 23 tau_decayMode ' decay^{#tau} ' 15 -0.5 14.5
 h1f 24 tau_againstMuon3 ' tau-muon discriminant ' 60 0. 6.
 h1f 25 tau_againstElectronMVA5 ' tau-ele discriminant ' 30 0. 3.
 h1f 26 tau_iso ' tau isolation ' 200 0. 20.
@@ -115,7 +115,7 @@ MATCH 6
 1binfh1f 130 tau_eta_vs_match ' #eta^{#tau} ' 12 -2.4 2.4
 MATCH 6 1. 0.5
 #
-1binfh1f 140 tau_decayMode_vs_match ' decay^{#tau} ' 15 0. 15.
+1binfh1f 140 tau_decayMode_vs_match ' decay^{#tau} ' 15 -0.5 14.5
 MATCH 6 1. 0.5
 #
 1binfh1f 150 tau_pdgId_vs_match ' pdg ID ' 45 -22.5 22.5 
