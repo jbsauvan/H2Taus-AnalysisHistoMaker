@@ -194,8 +194,28 @@ double AnalysisFakeRateApply::retrieveFakeFactor(const std::string& sys)
     const std::string& type = type_object.first;
     double factor = 1.;
     std::vector<double> values;
+    // CAREFUL: it has to be checked that it doesn't go in the wrong place because
+    // of strings included in other strings. That's why 2D fake factors come first.
+    // 2D fake factor
+    if(sys.find("VsPtEta")!=std::string::npos)
+    {
+        values.push_back(event().tau().Pt());
+        values.push_back(fabs(event().tau().Eta())); // Careful: This is absolute value of eta
+    }
+    else if(sys.find("VsPtDecay")!=std::string::npos)
+    {
+        values.push_back(event().tau().Pt());
+        values.push_back(event().tau().decayMode);
+    }
+    else if(sys.find("VsPtPdgId")!=std::string::npos)
+    {
+        values.push_back(event().tau().Pt());
+        double valueId = fabs(event().tauMatch().pdgId);
+        if((valueId>=6 && valueId<=20) || valueId>=22 || valueId==0) valueId = 2.; // FIXME: find a better way to discard values not used to determine the fake rates
+        values.push_back( valueId * (event().tau().sign_flip!=0 ? event().tau().sign_flip : 1));
+    }
     // 1D fake factor
-    if(sys.find("Inclusive")!=std::string::npos)
+    else if(sys.find("Inclusive")!=std::string::npos)
     {
         values.push_back(1.);
     }
@@ -221,24 +241,7 @@ double AnalysisFakeRateApply::retrieveFakeFactor(const std::string& sys)
         if((value>=6 && value<=20) || value>=22 || value==0) value = 2.; // FIXME: find a better way to discard values not used to determine the fake rates
         values.push_back( value * (event().tau().sign_flip!=0 ? event().tau().sign_flip : 1));
     }
-    // 2D fake factor
-    else if(sys.find("VsPtEta")!=std::string::npos)
-    {
-        values.push_back(event().tau().Pt());
-        values.push_back(fabs(event().tau().Eta())); // Careful: This is absolute value of eta
-    }
-    else if(sys.find("VsPtDecay")!=std::string::npos)
-    {
-        values.push_back(event().tau().Pt());
-        values.push_back(event().tau().decayMode);
-    }
-    else if(sys.find("VsPtPdgId")!=std::string::npos)
-    {
-        values.push_back(event().tau().Pt());
-        double valueId = fabs(event().tauMatch().pdgId);
-        if((valueId>=6 && valueId<=20) || valueId>=22 || valueId==0) valueId = 2.; // FIXME: find a better way to discard values not used to determine the fake rates
-        values.push_back( valueId * (event().tau().sign_flip!=0 ? event().tau().sign_flip : 1));
-    }
+
     // Retrieve fake factor depending on type of object
     if(type=="1DGraph")
     {
