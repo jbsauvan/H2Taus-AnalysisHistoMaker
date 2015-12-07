@@ -107,7 +107,7 @@ void AnalysisFakeRateApply::execute()
 /*****************************************************************/
 {
     event().update();
-    for(unsigned sel=0; sel<=2; sel++)
+    for(unsigned sel=0; sel<=5; sel++)
     {
         if(event().passSelection(sel))
         {
@@ -195,44 +195,44 @@ double AnalysisFakeRateApply::retrieveFakeFactor(const std::string& sys)
     double factor = 1.;
     std::vector<double> values;
     // 1D fake factor
-    if(sys=="Weight_Inclusive")
+    if(sys.find("Inclusive")!=std::string::npos)
     {
         values.push_back(1.);
     }
-    else if(sys=="Weight_VsPt")
+    else if(sys.find("VsPt")!=std::string::npos)
     {
         values.push_back(event().tau().Pt());
     }
-    else if(sys=="Weight_VsEta")
+    else if(sys.find("VsEta")!=std::string::npos)
     {
         values.push_back(event().tau().Eta());
     }
-    else if(sys=="Weight_VsNVtx")
+    else if(sys.find("VsNVtx")!=std::string::npos)
     {
         values.push_back(event().n_vertices());
     }
-    else if(sys=="Weight_VsDecay")
+    else if(sys.find("VsDecay")!=std::string::npos)
     {
         values.push_back(event().tau().decayMode);
     }
-    else if(sys=="Weight_VsPdgId")
+    else if(sys.find("VsPdgId")!=std::string::npos)
     {
         double value = fabs(event().tauMatch().pdgId);
         if((value>=6 && value<=20) || value>=22 || value==0) value = 2.; // FIXME: find a better way to discard values not used to determine the fake rates
         values.push_back( value * (event().tau().sign_flip!=0 ? event().tau().sign_flip : 1));
     }
     // 2D fake factor
-    else if(sys=="Weight_VsPtEta")
+    else if(sys.find("VsPtEta")!=std::string::npos)
     {
         values.push_back(event().tau().Pt());
         values.push_back(fabs(event().tau().Eta())); // Careful: This is absolute value of eta
     }
-    else if(sys=="Weight_VsPtDecay")
+    else if(sys.find("VsPtDecay")!=std::string::npos)
     {
         values.push_back(event().tau().Pt());
         values.push_back(event().tau().decayMode);
     }
-    else if(sys=="Weight_VsPtPdgId")
+    else if(sys.find("VsPtPdgId")!=std::string::npos)
     {
         values.push_back(event().tau().Pt());
         double valueId = fabs(event().tauMatch().pdgId);

@@ -282,13 +282,22 @@ bool EventMuMu::passSelection(int selection)
     pass &= (tau().pt > 0.);
     switch(selection)
     {
-        case 0: // Standard tau isolation
+        case 0: // Tau isolation raw < 1.5 GeV
             pass &= (tau().byCombinedIsolationDeltaBetaCorrRaw3Hits < 1.5);
             break;
-        case 1: // Reversed isolation
+        case 1: // Reversed isolation raw > 1.5 GeV
             pass &= (tau().byCombinedIsolationDeltaBetaCorrRaw3Hits > 1.5);
             break;
         case 2: // No isolation
+            break;
+        case 3: // Tau isolation medium
+            pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits >= 2);
+            break;
+        case 4: // Reverse tau isolation medium
+            pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits < 2);
+            break;
+        case 5: // Reversed isolation raw > 3 GeV
+            pass &= (tau().byCombinedIsolationDeltaBetaCorrRaw3Hits > 3.);
             break;
         default:
             break;

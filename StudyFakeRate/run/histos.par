@@ -1,7 +1,7 @@
 ############################################################
 ### Histograms used to derive fake rates in Zmumu
 ############################################################
-HistosZMuMu: FakeRate_StandardIso_, FakeRate_InvertIso_(1000), FakeRate_NoIso_(2000)
+HistosZMuMu: FakeRate_IsoRaw_1_5_, FakeRate_InvertIsoRaw_1_5_(1000), FakeRate_NoIso_(2000), FakeRate_Iso_Medium_(3000), FakeRate_InvertIso_Medium_(4000), FakeRate_InvertIsoRaw_3_(5000)
 
 # General event 
 h1f 0 nevents ' Number of events ' 1 0.5 1.5
@@ -72,7 +72,7 @@ end_HistosZMuMu
 ###########################################################
 ### Histograms used to check fake rates
 ###########################################################
-HistosMuTau: FakeRate_StandardIso_, FakeRate_InvertIso_(1000), FakeRate_NoIso_(2000)
+HistosMuTau: FakeRate_IsoRaw_1_5_, FakeRate_InvertIsoRaw_1_5_(1000), FakeRate_NoIso_(2000), FakeRate_Iso_Medium_(3000), FakeRate_InvertIso_Medium_(4000), FakeRate_InvertIsoRaw_3_(5000)
 
 # General event 
 h1f_sys 0 nevents ' Number of events ' 1 0.5 1.5

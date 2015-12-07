@@ -72,7 +72,7 @@ void AnalysisFakeRate::execute()
 /*****************************************************************/
 {
     event().update();
-    for(unsigned sel=0; sel<=2; sel++)
+    for(unsigned sel=0; sel<=5; sel++)
     {
         if(event().passSelection(sel)) fillHistos(sel);
     }
