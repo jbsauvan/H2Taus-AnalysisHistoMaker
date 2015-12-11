@@ -230,7 +230,7 @@ bool EventMuTau::passSelection(int selection)
 {
     bool pass = true;
     pass &= (tau().pt > 0.);
-    switch(selection)
+    switch(selection%20)
     {
         case 0: // Tau isolation raw < 1.5 GeV
             pass &= (tau().byCombinedIsolationDeltaBetaCorrRaw3Hits < 1.5);
@@ -252,6 +252,10 @@ bool EventMuTau::passSelection(int selection)
         default:
             break;
     };
+    if(selection/20==1) // apply mT cut
+    {
+        pass &= (mt()<40.);
+    }
     return pass;
 }
 

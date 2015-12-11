@@ -107,13 +107,17 @@ void AnalysisFakeRateApply::execute()
 /*****************************************************************/
 {
     event().update();
-    for(unsigned sel=0; sel<=5; sel++)
+    for(unsigned applyMTcut=0; applyMTcut<=1; applyMTcut++ )
     {
-        if(event().passSelection(sel))
+        for(unsigned sel=0; sel<=5; sel++)
         {
-            for(const auto& sys : systematicList())
+            unsigned selectionId = applyMTcut*20+sel;
+            if(event().passSelection(selectionId))
             {
-                fillHistos(sel, sys);
+                for(const auto& sys : systematicList())
+                {
+                    fillHistos(selectionId, sys);
+                }
             }
         }
     }
@@ -169,6 +173,16 @@ void AnalysisFakeRateApply::fillHistos(unsigned selection, const std::string& sy
     m_histos.Fill1BinHisto(150+hoffset, event().tau().gen_match, fabs(event().tauMatch().pdgId)*(event().tau().sign_flip!=0 ? event().tau().sign_flip : 1), event().weight(), sysNum);
     m_histos.Fill1BinHisto(160+hoffset, event().tau().gen_match, event().mvis(), weight, sysNum);
     m_histos.Fill1BinHisto(170+hoffset, event().tau().gen_match, event().mt(), weight, sysNum);
+
+    // Histos depending on pdg ID
+    m_histos.Fill1BinHisto(200+hoffset, fabs(event().tauMatch().pdgId), 0.5, weight, sysNum);
+    m_histos.Fill1BinHisto(225+hoffset, fabs(event().tauMatch().pdgId), fakeFactor, event().weight(), sysNum);
+    m_histos.Fill1BinHisto(250+hoffset, fabs(event().tauMatch().pdgId), event().tau().Pt(), event().weight(), sysNum);
+    m_histos.Fill1BinHisto(275+hoffset, fabs(event().tauMatch().pdgId), event().tau().Eta(), event().weight(), sysNum);
+    m_histos.Fill1BinHisto(300+hoffset, fabs(event().tauMatch().pdgId), event().tau().decayMode, event().weight(), sysNum);
+    m_histos.Fill1BinHisto(325+hoffset, fabs(event().tauMatch().pdgId), fabs(event().tauMatch().pdgId)*(event().tau().sign_flip!=0 ? event().tau().sign_flip : 1), event().weight(), sysNum);
+    m_histos.Fill1BinHisto(350+hoffset, fabs(event().tauMatch().pdgId), event().mvis(), weight, sysNum);
+    m_histos.Fill1BinHisto(375+hoffset, fabs(event().tauMatch().pdgId), event().mt(), weight, sysNum);
 
     // Correlation plots
     //m_histos.FillHisto(200+hoffset, event().mvis(), event().tau().Pt(), weight, sysNum);
