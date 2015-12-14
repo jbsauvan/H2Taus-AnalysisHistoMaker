@@ -1,0 +1,3 @@
+<bin file="main_background.cpp" name="polarization_background.exe">
+  <use name="AnHiMaCMG/TauPolarization"/>
+</bin>

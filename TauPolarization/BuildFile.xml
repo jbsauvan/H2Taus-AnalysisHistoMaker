@@ -1,0 +1,7 @@
+<use name="root"/>
+<use name="DataFormats/ForwardDetId"/>
+<use name="AnHiMaCMG/Core"/>
+<use name="AnHiMaCMG/H2TausCommon"/>
+<export>
+   <lib name="1"/>
+</export>

@@ -121,6 +121,7 @@ namespace AnHiMa
             double neutralIsoPtSumWeight;
             double footprintCorrection;
             double photonPtSumOutsideSignalCone;
+            double nc_ratio;
             double gen_match;
             int    sign_flip;
 

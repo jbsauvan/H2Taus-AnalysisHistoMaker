@@ -49,6 +49,7 @@ namespace AnHiMa
             ~EventMuTau();
 
             bool passSelection(int selection=0);
+            bool passSelectionForPolarization(int selection=0);
             void connectVariables(TChain* inputChain);
             void update();
 

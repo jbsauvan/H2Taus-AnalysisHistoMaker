@@ -120,6 +120,7 @@ void EventMuTau::connectVariables(TChain* inputChain)
     inputChain->SetBranchStatus("l2_decayModeFindingNewDMs"                   , true);
     inputChain->SetBranchStatus("l2_neutralIsoPtSum"                          , true);
     inputChain->SetBranchStatus("l2_puCorrPtSum"                              , true);
+    inputChain->SetBranchStatus("l2_nc_ratio"                                 , true);
     inputChain->SetBranchStatus("l2_gen_match"                                , true);
     inputChain->SetBranchStatus("l2_gen_pt"                                   , true);
     inputChain->SetBranchStatus("l2_gen_eta"                                  , true);
@@ -205,6 +206,7 @@ void EventMuTau::connectVariables(TChain* inputChain)
     inputChain->SetBranchAddress("l2_decayModeFindingNewDMs"                   , &m_tau.decayModeFindingNewDMs                  );
     inputChain->SetBranchAddress("l2_neutralIsoPtSum"                          , &m_tau.neutralIsoPtSum                         );
     inputChain->SetBranchAddress("l2_puCorrPtSum"                              , &m_tau.puCorrPtSum                             );
+    inputChain->SetBranchAddress("l2_nc_ratio"                                 , &m_tau.nc_ratio                                );
     inputChain->SetBranchAddress("l2_gen_match"                                , &m_tau.gen_match                               );
     inputChain->SetBranchAddress("l2_gen_pt"                                   , &m_tauMatch.pt                                 );
     inputChain->SetBranchAddress("l2_gen_eta"                                  , &m_tauMatch.eta                                );
@@ -255,6 +257,34 @@ bool EventMuTau::passSelection(int selection)
     if(selection/20==1) // apply mT cut
     {
         pass &= (mt()<40.);
+    }
+    return pass;
+}
+
+/*****************************************************************/
+bool EventMuTau::passSelectionForPolarization(int selection)
+/*****************************************************************/
+{
+    bool pass = true;
+    pass &= (tau().pt > 0.);
+    switch(selection%20)
+    {
+        case 0: // Tau isolation medium
+            pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits >= 2);
+            break;
+        case 1: // Reverse tau isolation medium
+            pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits < 2);
+            break;
+        default:
+            break;
+    };
+    if(selection/20==0) // apply mT cut
+    {
+        pass &= (mt()<40.);
+    }
+    else if(selection/20==1) // reverse mT cut
+    {
+        pass &= (mt()>40.);
     }
     return pass;
 }
