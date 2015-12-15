@@ -31,8 +31,8 @@ samples.append({Name:"QCD"      ,Dir:"QCD_Mu15"         ,Cut:""})
 
 
 ## Definition of fake factors
-fakeFactorsFile1D = "/afs/cern.ch/user/j/jsauvan/workspace/Projects/Htautau_Run2/Studies/ComputeFakeRates/plots/FakeFactors_ZMuMu_1D/FakeFactors_ZMuMu_1D.root"
-fakeFactorsFile2D = "/afs/cern.ch/user/j/jsauvan/workspace/Projects/Htautau_Run2/Studies/ComputeFakeRates/plots/FakeFactors_ZMuMu_2D/FakeFactors_ZMuMu_2D.root"
+fakeFactorsFile1D = "/afs/cern.ch/user/j/jsauvan/workspace/Projects/Htautau_Run2/Studies/FakeRate/ComputeFakeRates/plots/FakeFactors_ZMuMu_1D/FakeFactors_ZMuMu_1D.root"
+fakeFactorsFile2D = "/afs/cern.ch/user/j/jsauvan/workspace/Projects/Htautau_Run2/Studies/FakeRate/ComputeFakeRates/plots/FakeFactors_ZMuMu_2D/FakeFactors_ZMuMu_2D.root"
 fakeFactors = []
 ## IsoRaw > 1.5 GeV -> IsoRaw < 1.5 GeV
 fakeFactors.append({Name:"Weight_IsoRaw_1_5_Inclusive", File:fakeFactorsFile1D, Type:"1DGraph", Object:"FakeFactors_ZMuMu_1D_IsoRaw_1_5_InvertIsoRaw_1_5_nevents"})

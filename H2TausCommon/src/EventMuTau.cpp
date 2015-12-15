@@ -275,6 +275,12 @@ bool EventMuTau::passSelectionForPolarization(int selection)
         case 1: // Reverse tau isolation medium
             pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits < 2);
             break;
+        case 2: // Tau isolation raw < 1.5 GeV
+            pass &= (tau().byCombinedIsolationDeltaBetaCorrRaw3Hits < 1.5);
+            break;
+        case 3: // Reversed isolation raw > 1.5 GeV
+            pass &= (tau().byCombinedIsolationDeltaBetaCorrRaw3Hits > 1.5);
+            break;
         default:
             break;
     };

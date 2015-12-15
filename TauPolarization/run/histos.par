@@ -1,7 +1,7 @@
 ###########################################################
 ### Histograms used to study background for polarization
 ###########################################################
-HistosBackground: FakeRate_MTlt40_Iso_Medium_, FakeRate_MTlt40_InvertIso_Medium_(1000), FakeRate_MTgt40_Iso_Medium_(20000), FakeRate_MTgt40_InvertIso_Medium_(21000)
+HistosBackground: Polarization_MTlt40_Iso_Medium_, Polarization_MTlt40_InvertIso_Medium_(1000), Polarization_MTlt40_IsoRaw_1_5_(2000), Polarization_MTlt40_InvertIsoRaw_1_5_(3000), Polarization_MTgt40_Iso_Medium_(20000), Polarization_MTgt40_InvertIso_Medium_(21000), Polarization_MTgt40_IsoRaw_1_5_(22000), Polarization_MTgt40_InvertIsoRaw_1_5_(23000)
 
 # General event 
 h1f_sys 0 nevents ' Number of events ' 1 0.5 1.5
@@ -20,7 +20,7 @@ h1f 21 tau_eta ' #eta^{#tau} ' 12 -2.4 2.4
 h1f 22 tau_phi ' #phi^{#tau} ' 50 -3.14159265359 3.14159265359
 h1f 23 tau_decayMode ' decay^{#tau} ' 15 -0.5 14.5
 h1f 24 tau_pdgId ' pdg ID ' 45 -22.5 22.5
-h1f 25 tau_nc_ratio ' neutral-charged asymmetry ' 20 -1. 1.
+h1f_sys 25 tau_nc_ratio ' neutral-charged asymmetry ' 20 -1. 1.
 
 # MuTau
 h1f_sys 50 mvis ' M_{vis} [GeV] ' 60 0. 300.

@@ -31,8 +31,8 @@ samples.append({Name:"QCD"      ,Dir:"QCD_Mu15"         ,Cut:""})
 
 
 ## Definition of fake factors
-#fakeFactorsFile1D = "/afs/cern.ch/user/j/jsauvan/workspace/Projects/Htautau_Run2/Studies/ComputeFakeRates/plots/FakeFactors_ZMuMu_1D/FakeFactors_ZMuMu_1D.root"
-fakeFactorsFile2D = "/afs/cern.ch/user/j/jsauvan/workspace/Projects/Htautau_Run2/Studies/ComputeFakeRates/plots/FakeFactors_ZMuMu_2D/FakeFactors_ZMuMu_2D.root"
+#fakeFactorsFile1D = "/afs/cern.ch/user/j/jsauvan/workspace/Projects/Htautau_Run2/Studies/FakeRate/ComputeFakeRates/plots/FakeFactors_ZMuMu_1D/FakeFactors_ZMuMu_1D.root"
+fakeFactorsFile2D = "/afs/cern.ch/user/j/jsauvan/workspace/Projects/Htautau_Run2/Studies/FakeRate/ComputeFakeRates/plots/FakeFactors_ZMuMu_2D/FakeFactors_ZMuMu_2D.root"
 fakeFactors = []
 ## IsoRaw > 1.5 GeV -> IsoRaw < 1.5 GeV
 #fakeFactors.append({Name:"Weight_IsoRaw_1_5_Inclusive", File:fakeFactorsFile1D, Type:"1DGraph", Object:"FakeFactors_ZMuMu_1D_IsoRaw_1_5_InvertIsoRaw_1_5_nevents"})
@@ -42,7 +42,7 @@ fakeFactors = []
 #fakeFactors.append({Name:"Weight_IsoRaw_1_5_VsDecay"  , File:fakeFactorsFile1D, Type:"1DGraph", Object:"FakeFactors_ZMuMu_1D_IsoRaw_1_5_InvertIsoRaw_1_5_tau_decayMode"})
 #fakeFactors.append({Name:"Weight_IsoRaw_1_5_VsPdgId"  , File:fakeFactorsFile1D, Type:"1DGraph", Object:"FakeFactors_ZMuMu_1D_IsoRaw_1_5_InvertIsoRaw_1_5_tau_pdgId"})
 #fakeFactors.append({Name:"Weight_IsoRaw_1_5_VsPtEta"  , File:fakeFactorsFile2D, Type:"2DHisto", Object:"FakeFactors_ZMuMu_2D_IsoRaw_1_5_InvertIsoRaw_1_5_tau_pt_vs_eta"})
-#fakeFactors.append({Name:"Weight_IsoRaw_1_5_VsPtDecay", File:fakeFactorsFile2D, Type:"2DHisto", Object:"FakeFactors_ZMuMu_2D_IsoRaw_1_5_InvertIsoRaw_1_5_tau_pt_vs_decayMode"})
+fakeFactors.append({Name:"Weight_IsoRaw_1_5_VsPtDecay", File:fakeFactorsFile2D, Type:"2DHisto", Object:"FakeFactors_ZMuMu_2D_IsoRaw_1_5_InvertIsoRaw_1_5_tau_pt_vs_decayMode"})
 #fakeFactors.append({Name:"Weight_IsoRaw_1_5_VsPtPdgId", File:fakeFactorsFile2D, Type:"2DHisto", Object:"FakeFactors_ZMuMu_2D_IsoRaw_1_5_InvertIsoRaw_1_5_tau_pt_vs_mergedPdgId"})
 ## !IsoMedium -> IsoMedium
 #fakeFactors.append({Name:"Weight_Iso_Medium_Inclusive", File:fakeFactorsFile1D, Type:"1DGraph", Object:"FakeFactors_ZMuMu_1D_Iso_Medium_InvertIso_Medium_nevents"})
@@ -89,6 +89,8 @@ for sample in samples:
     batch[-1].cuts.extend(["(mvis>40. && mvis<90.)"])
     # Remove events at MET=0
     batch[-1].cuts.extend(["!(pfmet_pt < 0.2 && pfmet_phi > 0 && pfmet_phi < 2)"])
+    # neutral-charge asymmetry cut
+    batch[-1].cuts.extend(["l2_nc_ratio>-99"])
     # Sample specific cuts
     if sample[Cut]!="":
         batch[-1].cuts.append(sample[Cut])
