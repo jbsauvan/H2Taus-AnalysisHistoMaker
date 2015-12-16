@@ -132,7 +132,7 @@ void EventMuTau::connectVariables(TChain* inputChain)
     //inputChain->SetBranchStatus("l2_byPileupWeightedIsolationRaw3Hits"        , true);
     //inputChain->SetBranchStatus("l2_neutralIsoPtSumWeight"                    , true);
     //inputChain->SetBranchStatus("l2_footprintCorrection"                      , true);
-    //inputChain->SetBranchStatus("l2_photonPtSumOutsideSignalCone"             , true);
+    inputChain->SetBranchStatus("l2_photonPtSumOutsideSignalCone"             , true);
 
 
 
@@ -218,7 +218,7 @@ void EventMuTau::connectVariables(TChain* inputChain)
     //inputChain->SetBranchAddress("l2_byPileupWeightedIsolationRaw3Hits"        , &m_tau.byPileupWeightedIsolationRaw3Hits       );
     //inputChain->SetBranchAddress("l2_neutralIsoPtSumWeight"                    , &m_tau.neutralIsoPtSumWeight                   );
     //inputChain->SetBranchAddress("l2_footprintCorrection"                      , &m_tau.footprintCorrection                     );
-    //inputChain->SetBranchAddress("l2_photonPtSumOutsideSignalCone"             , &m_tau.photonPtSumOutsideSignalCone            );
+    inputChain->SetBranchAddress("l2_photonPtSumOutsideSignalCone"             , &m_tau.photonPtSumOutsideSignalCone            );
 
 
 
@@ -280,6 +280,9 @@ bool EventMuTau::passSelectionForPolarization(int selection)
             break;
         case 3: // Reversed isolation raw > 1.5 GeV
             pass &= (tau().byCombinedIsolationDeltaBetaCorrRaw3Hits > 1.5);
+            break;
+        case 4: // Reversed medium isolation only reversing the raw isolation part
+            pass &= (tau().byCombinedIsolationDeltaBetaCorrRaw3Hits > 1.5 && tau().photonPtSumOutsideSignalCone/tau().Pt()<0.1);
             break;
         default:
             break;

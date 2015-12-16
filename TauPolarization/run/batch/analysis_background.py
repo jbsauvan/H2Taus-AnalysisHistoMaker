@@ -54,6 +54,8 @@ fakeFactors.append({Name:"Weight_IsoRaw_1_5_VsPtDecay", File:fakeFactorsFile2D, 
 #fakeFactors.append({Name:"Weight_Iso_Medium_VsPtEta"  , File:fakeFactorsFile2D, Type:"2DHisto", Object:"FakeFactors_ZMuMu_2D_Iso_Medium_InvertIso_Medium_tau_pt_vs_eta"})
 fakeFactors.append({Name:"Weight_Iso_Medium_VsPtDecay", File:fakeFactorsFile2D, Type:"2DHisto", Object:"FakeFactors_ZMuMu_2D_Iso_Medium_InvertIso_Medium_tau_pt_vs_decayMode"})
 #fakeFactors.append({Name:"Weight_Iso_Medium_VsPtPdgId", File:fakeFactorsFile2D, Type:"2DHisto", Object:"FakeFactors_ZMuMu_2D_Iso_Medium_InvertIso_Medium_tau_pt_vs_mergedPdgId"})
+## !IsoMedium (with the non-inverted strip pT cut) -> IsoMedium
+fakeFactors.append({Name:"Weight_Iso_Medium_InvertRawOnly_VsPtDecay", File:fakeFactorsFile2D, Type:"2DHisto", Object:"FakeFactors_ZMuMu_2D_Iso_Medium_InvertIso_Medium_RawOnly_tau_pt_vs_decayMode"})
 
 
 

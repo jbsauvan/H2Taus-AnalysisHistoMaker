@@ -108,7 +108,7 @@ void AnalysisPolarizationBackground::execute()
     event().update();
     for(unsigned applyMTcut=0; applyMTcut<=1; applyMTcut++ )
     {
-        for(unsigned sel=0; sel<=3; sel++)
+        for(unsigned sel=0; sel<=4; sel++)
         {
             unsigned selectionId = applyMTcut*20+sel;
             if(event().passSelectionForPolarization(selectionId))

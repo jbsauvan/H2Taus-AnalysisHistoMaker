@@ -296,8 +296,8 @@ bool EventMuMu::passSelection(int selection)
         case 4: // Reverse tau isolation medium
             pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits < 2);
             break;
-        case 5: // Reversed isolation raw > 3 GeV
-            pass &= (tau().byCombinedIsolationDeltaBetaCorrRaw3Hits > 3.);
+        case 5: // Reversed medium isolation only reversing the raw isolation part
+            pass &= (tau().byCombinedIsolationDeltaBetaCorrRaw3Hits > 1.5 && tau().photonPtSumOutsideSignalCone/tau().Pt()<0.1);
             break;
         default:
             break;
