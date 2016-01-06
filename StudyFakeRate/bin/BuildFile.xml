@@ -4,3 +4,9 @@
 <bin file="main_mutau.cpp" name="fakerateapply.exe">
   <use name="AnHiMaCMG/StudyFakeRate"/>
 </bin>
+<bin file="main_mutau_wjets.cpp" name="fakeratewjets.exe">
+  <use name="AnHiMaCMG/StudyFakeRate"/>
+</bin>
+<bin file="main_mutau_stat.cpp" name="fakeratestat.exe">
+  <use name="AnHiMaCMG/StudyFakeRate"/>
+</bin>

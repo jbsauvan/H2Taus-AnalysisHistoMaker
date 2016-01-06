@@ -1,19 +1,4 @@
-/**
- *  @file  EventMuTau.cpp
- *  @brief  
- *
- *
- *  @author  Jean-Baptiste Sauvan <sauvan@llr.in2p3.fr>
- *
- *  @date    20/11/2015
- *
- *  @internal
- *     Created :  20/11/2015
- * Last update :  20/11/2015 13:57:13
- *          by :  JB Sauvan
- *
- * =====================================================================================
- */
+
 
 
 
@@ -295,6 +280,37 @@ bool EventMuTau::passSelectionForPolarization(int selection)
     {
         pass &= (mt()>40.);
     }
+    return pass;
+}
+
+/*****************************************************************/
+bool EventMuTau::passSelectionWJetsStudy(int selection)
+/*****************************************************************/
+{
+    bool pass = true;
+    pass &= (tau().pt > 0.);
+    switch(selection)
+    {
+        case 0: // Tau isolation medium + OS
+            pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits >= 2);
+            pass &= (tau().charge*muon().charge<0);
+            break;
+        case 1: // Reverse tau isolation medium + OS
+            pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits < 2);
+            pass &= (tau().charge*muon().charge<0);
+            break;
+        case 2: // Tau isolation medium + SS
+            pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits >= 2);
+            pass &= (tau().charge*muon().charge>0);
+            break;
+        case 3: // Reverse tau isolation medium + SS
+            pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits < 2);
+            pass &= (tau().charge*muon().charge>0);
+            break;
+        default:
+            break;
+    };
+
     return pass;
 }
 
