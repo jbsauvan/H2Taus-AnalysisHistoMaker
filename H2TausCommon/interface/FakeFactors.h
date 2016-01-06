@@ -25,6 +25,7 @@
 #include <map>
 #include <utility>
 #include "AnHiMaCMG/H2TausCommon/interface/EventMuTau.h"
+#include "TRandom3.h"
 
 class TObject;
 
@@ -41,6 +42,7 @@ namespace AnHiMa
 
 
         private:
+            TRandom3 m_random;
             std::map<std::string, std::pair<std::string, TObject*>> m_fakeFactors;
 
     };

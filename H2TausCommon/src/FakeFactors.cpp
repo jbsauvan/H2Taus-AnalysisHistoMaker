@@ -140,10 +140,10 @@ double FakeFactors::retrieveFakeFactor(const std::string& name, const EventMuTau
     {
         TGraphAsymmErrors* graph = dynamic_cast<TGraphAsymmErrors*>(object);
         factor = graph->Eval(values[0]);
-        // In case 
+        // Apply randon fluctuations if requested
         if(fluctuate)
         {
-            // Find closest point
+            // Find closest point to retrieve relative error here
             int closest = -1;
             double dxmin = 9999.;
             for(int p=0;p<graph->GetN();p++)
@@ -154,13 +154,18 @@ double FakeFactors::retrieveFakeFactor(const std::string& name, const EventMuTau
                     closest = p;
                 }
             }
+            //std::cout<<"Closest point of "<<values[0]<<" is "<<graph->GetX()[closest]<<"\n";
             // Use same relative errors as the closest point
             double errorUp   = graph->GetEYhigh()[closest]*factor/graph->GetY()[closest]; 
             double errorDown = graph->GetEYlow()[closest]*factor/graph->GetY()[closest];
+            double errorMean = (errorUp+errorDown)/2.;
+            //std::cout<<factor<<" ("<<errorUp<<" "<<errorDown<<" "<<errorMean<<")";
+            factor = std::max(0.,m_random.Gaus(factor, errorMean));
             // Get random fluctuation using Gaussian with different positive and negative sigma
-            TF1 * f = new TF1("f",[&](double*x, double *p){ return (x[0]>0 ? TMath::Gaus(x[0], factor, errorUp) : TMath::Gaus(x[0], factor, errorDown)); }, factor-5.*errorDown, factor+5.*errorUp, 0); 
-            factor = f->GetRandom();
-            f->Delete();
+            //TF1 * f = new TF1("f",[&](double*x, double *p){ return fabs(x[0]>0 ? TMath::Gaus(x[0], factor, errorUp) : TMath::Gaus(x[0], factor, errorDown)); }, factor-3.*errorDown, factor+3.*errorUp, 0); 
+            //factor = f->GetRandom(); //FIXME: TRandom is used. Better to use TRandom3
+            //std::cout<<" "<<factor<<"\n";
+            //f->Delete();
         }
     }
     else if(type=="2DHisto")
@@ -169,6 +174,8 @@ double FakeFactors::retrieveFakeFactor(const std::string& name, const EventMuTau
         int bx = histo->GetXaxis()->FindBin(values[0]);
         int by = histo->GetYaxis()->FindBin(values[1]);
         factor = histo->GetBinContent(bx,by);
+        // TODO: also add random fluctuations feature here (would need to store asymmetric errors
+        // somewhere)
     }
     else
     {

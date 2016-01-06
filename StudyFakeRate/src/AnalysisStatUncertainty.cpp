@@ -114,8 +114,9 @@ void AnalysisStatUncertainty::fillHistos(unsigned selection, const std::string& 
 
 
     short sysNum = systematicNumber(sys);
+    bool fluctuate = (sys.find("Fluctuate")!=std::string::npos ? true : false);
     float weight = event().weight();
-    float fakeFactor = (sys!="" ? m_fakeFactors.retrieveFakeFactor(sys, event()) : 1.);
+    float fakeFactor = (sys!="" ? m_fakeFactors.retrieveFakeFactor(sys, event(), fluctuate) : 1.);
     weight *= fakeFactor;
     int hoffset  = 1000*selection;
 
@@ -130,7 +131,6 @@ void AnalysisStatUncertainty::fillHistos(unsigned selection, const std::string& 
     m_histos.FillHisto(10+hoffset, event().muon().Pt(), weight, sysNum);    
     m_histos.FillHisto(11+hoffset, event().muon().Eta(), weight, sysNum);
     m_histos.FillHisto(12+hoffset, event().muon().Phi(), weight, sysNum);
-    m_histos.FillHisto(13+hoffset, event().muon().reliso05, weight, sysNum);
 
 
     // Tau histos
