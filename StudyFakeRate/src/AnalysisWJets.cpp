@@ -145,7 +145,8 @@ void AnalysisWJets::fillHistos(unsigned selection, const std::string& sys)
 
 
     // Histos in bins of MT
-    m_histos.Fill1BinHisto(100+hoffset, event().mt(), fabs(event().tauMatch().pdgId)*(event().tau().sign_flip!=0 ? event().tau().sign_flip : 1), weight, sysNum);
+    m_histos.Fill1BinHisto(100+hoffset, event().mt(), event().tau().Pt(), weight, sysNum);
+    m_histos.Fill1BinHisto(110+hoffset, event().mt(), fabs(event().tauMatch().pdgId)*(event().tau().sign_flip!=0 ? event().tau().sign_flip : 1), weight, sysNum);
 }
 
 

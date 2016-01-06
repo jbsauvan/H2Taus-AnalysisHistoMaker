@@ -200,7 +200,11 @@ h1f_sys 50 mvis ' M_{vis} [GeV] ' 60 0. 300.
 h1f_sys 51 mt   ' M_{T} [GeV] ' 40 0. 200.
 
 # histos in bins of mT
-1binvh1f 100 tau_pdgId_vs_mt ' pdg id vs m_{T} ' 45 -22.5 22.5
+1binvvh1f 100 tau_pt_vs_mt_ ' p_{T}(#tau) vs m_{T} ' 14 20. 22. 24. 26. 30. 35. 40. 50. 60. 70. 90. 120. 150. 200.
+MT 3
+0. 40. 80. 1000.
+#
+1binvh1f 110 tau_pdgId_vs_mt_ ' pdg id vs m_{T} ' 45 -22.5 22.5
 MT 3
 0. 40. 80. 1000.
 
