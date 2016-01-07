@@ -114,9 +114,9 @@ void AnalysisStatUncertainty::fillHistos(unsigned selection, const std::string& 
 
 
     short sysNum = systematicNumber(sys);
-    bool fluctuate = (sys.find("Fluctuate")!=std::string::npos ? true : false);
+    //bool fluctuate = (sys.find("Fluctuate")!=std::string::npos ? true : false);
     float weight = event().weight();
-    float fakeFactor = (sys!="" ? m_fakeFactors.retrieveFakeFactor(sys, event(), fluctuate) : 1.);
+    float fakeFactor = (sys!="" ? m_fakeFactors.retrieveFakeFactor(sys, event()) : 1.);
     weight *= fakeFactor;
     int hoffset  = 1000*selection;
 

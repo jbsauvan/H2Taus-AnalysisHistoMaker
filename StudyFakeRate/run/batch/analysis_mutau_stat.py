@@ -41,13 +41,21 @@ fakeFactors.append({Name:"Weight_Iso_Medium_VsPt"     , File:fakeFactorsFile1D, 
 fakeFactors.append({Name:"Weight_Iso_Medium_VsDecay"  , File:fakeFactorsFile1D, Type:"1DGraph", Object:"FakeFactors_ZMuMu_1D_Iso_Medium_InvertIso_Medium_tau_decayMode"})
 fakeFactors.append({Name:"Weight_Iso_Medium_VsPtDecay", File:fakeFactorsFile2D, Type:"2DHisto", Object:"FakeFactors_ZMuMu_2D_Iso_Medium_InvertIso_Medium_tau_pt_vs_decayMode"})
 
-## Apply fake factors with random fluctuations
+## Apply fake factors with random fluctuations + Up/Down fake factors
 fakeFactorsFluctuate = []
 for fakeFactor in fakeFactors:
     for i in xrange(10):
         ffCopy = copy.deepcopy(fakeFactor)
         ffCopy[Name] += "_Fluctuate{}".format(i)
         fakeFactorsFluctuate.append(ffCopy)
+    #
+    ffUp = copy.deepcopy(fakeFactor)
+    ffUp[Name] += "_Up"
+    fakeFactorsFluctuate.append(ffUp)
+    #
+    ffDown = copy.deepcopy(fakeFactor)
+    ffDown[Name] += "_Down"
+    fakeFactorsFluctuate.append(ffDown)
 fakeFactors.extend(fakeFactorsFluctuate)
 
 

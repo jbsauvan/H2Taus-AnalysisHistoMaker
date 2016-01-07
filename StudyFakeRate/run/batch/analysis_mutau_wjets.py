@@ -45,7 +45,7 @@ for sample in samples:
     batch[-1].inputFiles.append("{0}/{1}/{2}/tree.root".format(treeDirectory, sample[Dir], treeProdName))
     batch[-1].tree = "tree"
     batch[-1].outputDirectory = "/afs/cern.ch/work/j/jsauvan/Projects/Htautau_Run2/Histos/StudyFakeRate/MuTau_WJets/"+sample[Name]
-    batch[-1].outputFile = "fakerates_MuTau_WJets{0}.root".format(sample[Name])
+    batch[-1].outputFile = "fakerates_MuTau_WJets_{0}.root".format(sample[Name])
     batch[-1].histoParameters = "../histos.par"
     batch[-1].histoTag = "HistosMuTauWJets"
     batch[-1].nFilesPerJob = 1
