@@ -61,6 +61,7 @@ for sample in samples:
     batch[-1].cuts.extend(["veto_dilepton<0.5", "veto_thirdlepton<0.5", "veto_otherlepton<0.5"])
     batch[-1].cuts.extend(["l2_decayModeFinding"])
     batch[-1].cuts.extend(["l2_pt>20"])
+    batch[-1].cuts.extend(["l2_gen_match==6"])
     # Mu-Tau cuts
     #batch[-1].cuts.extend(["l1_charge*l2_charge<0"])
     # Sample specific cuts
