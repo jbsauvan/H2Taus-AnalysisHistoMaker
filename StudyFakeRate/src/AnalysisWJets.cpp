@@ -94,7 +94,7 @@ void AnalysisWJets::execute()
 /*****************************************************************/
 {
     event().update();
-    for(unsigned sel=0; sel<=3; sel++)
+    for(unsigned sel=0; sel<=5; sel++)
     {
         unsigned selectionId = sel;
         if(event().passSelectionWJetsStudy(selectionId))
@@ -138,6 +138,8 @@ void AnalysisWJets::fillHistos(unsigned selection, const std::string& sys)
     m_histos.FillHisto(21+hoffset, event().tau().Eta(), weight, sysNum);
     m_histos.FillHisto(22+hoffset, event().tau().decayMode, weight, sysNum);
     m_histos.FillHisto(23+hoffset, fabs(event().tauMatch().pdgId)*(event().tau().sign_flip!=0 ? event().tau().sign_flip : 1), weight, sysNum);
+    m_histos.FillHisto(24+hoffset, event().tau().byCombinedIsolationDeltaBetaCorrRaw3Hits, weight, sysNum);
+    m_histos.FillHisto(25+hoffset, event().tau().photonPtSumOutsideSignalCone/event().tau().Pt(), weight, sysNum);
 
     // MuTau histos
     m_histos.FillHisto(50+hoffset, event().mvis(), weight, sysNum);
@@ -147,6 +149,8 @@ void AnalysisWJets::fillHistos(unsigned selection, const std::string& sys)
     // Histos in bins of MT
     m_histos.Fill1BinHisto(100+hoffset, event().mt(), event().tau().Pt(), weight, sysNum);
     m_histos.Fill1BinHisto(110+hoffset, event().mt(), fabs(event().tauMatch().pdgId)*(event().tau().sign_flip!=0 ? event().tau().sign_flip : 1), weight, sysNum);
+    m_histos.Fill1BinHisto(120+hoffset, event().mt(), event().tau().byCombinedIsolationDeltaBetaCorrRaw3Hits, weight, sysNum);
+    m_histos.Fill1BinHisto(130+hoffset, event().mt(), event().tau().photonPtSumOutsideSignalCone/event().tau().Pt(), weight, sysNum);
 }
 
 

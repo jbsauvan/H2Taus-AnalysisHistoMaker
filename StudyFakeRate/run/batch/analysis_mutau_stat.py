@@ -44,7 +44,7 @@ fakeFactors.append({Name:"Weight_Iso_Medium_VsPtDecay", File:fakeFactorsFile2D, 
 ## Apply fake factors with random fluctuations + Up/Down fake factors
 fakeFactorsFluctuate = []
 for fakeFactor in fakeFactors:
-    for i in xrange(100):
+    for i in xrange(200):
         ffCopy = copy.deepcopy(fakeFactor)
         ffCopy[Name] += "_Fluctuate{}".format(i)
         fakeFactorsFluctuate.append(ffCopy)

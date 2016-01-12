@@ -299,20 +299,26 @@ bool EventMuTau::passSelectionWJetsStudy(int selection)
             pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits < 2);
             pass &= (tau().charge*muon().charge<0);
             break;
-        case 2: // Tau isolation medium + SS
+        case 2: //  OS
+            pass &= (tau().charge*muon().charge<0);
+            break;
+        case 3: // Tau isolation medium + SS
             pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits >= 2);
             pass &= (tau().charge*muon().charge>0);
             break;
-        case 3: // Reverse tau isolation medium + SS
+        case 4: // Reverse tau isolation medium + SS
             pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits < 2);
             pass &= (tau().charge*muon().charge>0);
             break;
+        case 5: // SS
+            pass &= (tau().charge*muon().charge>0);
         default:
             break;
     };
 
     return pass;
 }
+
 
 
 /*****************************************************************/

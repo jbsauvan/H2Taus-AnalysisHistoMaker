@@ -176,7 +176,8 @@ end_HistosMuTau
 ###########################################################
 ### Histograms used to study W+jets
 ###########################################################
-HistosMuTauWJets: FakeRate_Iso_Medium_OS_, FakeRate_InvertIso_Medium_OS_(1000), FakeRate_Iso_Medium_SS_(2000), FakeRate_InvertIso_Medium_SS_(3000)
+HistosMuTauWJets: FakeRate_Iso_Medium_OS_, FakeRate_InvertIso_Medium_OS_(1000), FakeRate_OS_(2000), FakeRate_Iso_Medium_SS_(3000), FakeRate_InvertIso_Medium_SS_(4000), FakeRate_SS_(5000)
+
 
 # General event 
 h1f_sys 0 nevents ' Number of events ' 1 0.5 1.5
@@ -194,6 +195,8 @@ h1f 12 l1_phi ' #phi^{l1} ' 50 -3.14159265359 3.14159265359
 h1f 21 tau_eta ' #eta^{#tau} ' 12 -2.4 2.4
 h1f 22 tau_decayMode ' decay^{#tau} ' 15 -0.5 14.5
 h1f 23 tau_pdgId ' pdg id ' 45 -22.5 22.5
+h1f 24 tau_iso ' tau iso ' 500 0. 50.
+h1f 25 tau_outside_photons_pt ' relative photons pT outside cone ' 100 0. 1.
 
 # MuTau
 h1f_sys 50 mvis ' M_{vis} [GeV] ' 60 0. 300.
@@ -207,6 +210,15 @@ MT 3
 1binvh1f 110 tau_pdgId_vs_mt_ ' pdg id vs m_{T} ' 45 -22.5 22.5
 MT 3
 0. 40. 80. 1000.
+#
+1binvh1f 120 tau_iso_vs_mt_ ' tau iso vs m_{T} ' 500 0. 50.
+MT 3
+0. 40. 80. 1000.
+#
+1binvh1f 130 tau_outside_photons_pt_vs_mt_ ' relative photons pT ouside cone vs m_{T} ' 100 0. 1.
+MT 3
+0. 40. 80. 1000.
+
 
 
 

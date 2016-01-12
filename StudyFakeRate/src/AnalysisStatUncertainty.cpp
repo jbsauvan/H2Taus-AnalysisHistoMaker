@@ -94,14 +94,16 @@ void AnalysisStatUncertainty::execute()
 /*****************************************************************/
 {
     event().update();
-    for(unsigned sel=0; sel<=1; sel++)
+    std::vector<unsigned> selections = {23,24}; // MT<40, Iso_Medium and InvertIso_Medium
+    //for(unsigned sel : selections)
+    for(unsigned sel=0; sel<selections.size(); sel++)
     {
-        unsigned selectionId = sel;
+        unsigned selectionId = selections[sel];
         if(event().passSelection(selectionId))
         {
             for(const auto& sys : systematicList())
             {
-                fillHistos(selectionId, sys);
+                fillHistos(sel, sys);
             }
         }
     }
