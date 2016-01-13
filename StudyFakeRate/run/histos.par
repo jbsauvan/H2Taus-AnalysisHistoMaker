@@ -204,20 +204,65 @@ h1f_sys 51 mt   ' M_{T} [GeV] ' 40 0. 200.
 
 # histos in bins of mT
 1binvvh1f 100 tau_pt_vs_mt_ ' p_{T}(#tau) vs m_{T} ' 14 20. 22. 24. 26. 30. 35. 40. 50. 60. 70. 90. 120. 150. 200.
-MT 3
-0. 40. 80. 1000.
+MT 4
+0. 20. 40. 80. 1000.
 #
 1binvh1f 110 tau_pdgId_vs_mt_ ' pdg id vs m_{T} ' 45 -22.5 22.5
-MT 3
-0. 40. 80. 1000.
+MT 4
+0. 20. 40. 80. 1000.
 #
 1binvh1f 120 tau_iso_vs_mt_ ' tau iso vs m_{T} ' 500 0. 50.
-MT 3
-0. 40. 80. 1000.
+MT 4
+0. 20. 40. 80. 1000.
 #
 1binvh1f 130 tau_outside_photons_pt_vs_mt_ ' relative photons pT ouside cone vs m_{T} ' 100 0. 1.
+MT 4
+0. 20. 40. 80. 1000.
+#
+1binvvh1f 140 muon_iso_vs_mt_ ' muon isolation vs m_{T} ' 10 0. 0.005 0.01 0.02 0.04 0.06 0.1 0.15 0.2 0.3
+MT 4
+0. 20. 40. 80. 1000.
+#
+1binvh1f 150 muon_pt_vs_mt_ ' muon p_{T} vs m_{T} ' 40 0. 200.
+MT 4
+0. 20. 40. 80. 1000.
+#
+1binvh1f 160 met_pt_vs_mt_ ' MET vs m_{T} ' 40 0. 200.
+MT 4
+0. 20. 40. 80. 1000.
+#
+1binvh1f 170 delta_phi_muon_met_vs_mt_ ' #Delta#Phi(#mu,MET) vs m_{T} ' 10 -3.14159265359 3.14159265359
+MT 4
+0. 20. 40. 80. 1000.
+#
+1binvh1f 180 delta_phi_tau_met_vs_mt_ ' #Delta#Phi(#tau,MET) vs m_{T} ' 10 -3.14159265359 3.14159265359
+MT 4
+0. 20. 40. 80. 1000.
+
+# histos in bins of mT and mu isolation
+2binvh1f 200 tau_pt_vs_mt_muiso_ ' p_{T}(#tau) vs m_{T} ' 20 0. 200.
 MT 3
 0. 40. 80. 1000.
+MUISO 4
+0. 0.02 0.05 0.1 0.5
+#
+2binvh1f 220 tau_pdgId_vs_mt_muiso_ ' pdg id vs m_{T} ' 45 -22.5 22.5
+MT 3
+0. 40. 80. 1000.
+MUISO 4
+0. 0.02 0.05 0.1 0.5
+#
+2binvh1f 240 tau_iso_vs_mt_muiso_ ' tau iso vs m_{T} ' 500 0. 50.
+MT 3
+0. 40. 80. 1000.
+MUISO 4
+0. 0.02 0.05 0.1 0.5
+#
+2binvh1f 260 tau_outside_photons_pt_vs_mt_muiso_ ' relative photons pT ouside cone vs m_{T} ' 100 0. 1.
+MT 3
+0. 40. 80. 1000.
+MUISO 4
+0. 0.02 0.05 0.1 0.5
 
 
 

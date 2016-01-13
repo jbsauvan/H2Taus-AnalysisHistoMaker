@@ -151,6 +151,17 @@ void AnalysisWJets::fillHistos(unsigned selection, const std::string& sys)
     m_histos.Fill1BinHisto(110+hoffset, event().mt(), fabs(event().tauMatch().pdgId)*(event().tau().sign_flip!=0 ? event().tau().sign_flip : 1), weight, sysNum);
     m_histos.Fill1BinHisto(120+hoffset, event().mt(), event().tau().byCombinedIsolationDeltaBetaCorrRaw3Hits, weight, sysNum);
     m_histos.Fill1BinHisto(130+hoffset, event().mt(), event().tau().photonPtSumOutsideSignalCone/event().tau().Pt(), weight, sysNum);
+    m_histos.Fill1BinHisto(140+hoffset, event().mt(), event().muon().reliso05, weight, sysNum);
+    m_histos.Fill1BinHisto(150+hoffset, event().mt(), event().muon().Pt(), weight, sysNum);
+    m_histos.Fill1BinHisto(160+hoffset, event().mt(), event().met_pt(), weight, sysNum);
+    m_histos.Fill1BinHisto(170+hoffset, event().mt(), event().delta_phi_muon_met(), weight, sysNum);
+    m_histos.Fill1BinHisto(180+hoffset, event().mt(), event().delta_phi_tau_met(), weight, sysNum);
+
+    // Histos in bins of MT and muon isolation
+    m_histos.Fill2BinHisto(200+hoffset, event().mt(), event().muon().reliso05, event().tau().Pt(), weight, sysNum);
+    m_histos.Fill2BinHisto(220+hoffset, event().mt(), event().muon().reliso05, fabs(event().tauMatch().pdgId)*(event().tau().sign_flip!=0 ? event().tau().sign_flip : 1), weight, sysNum);
+    m_histos.Fill2BinHisto(240+hoffset, event().mt(), event().muon().reliso05, event().tau().byCombinedIsolationDeltaBetaCorrRaw3Hits, weight, sysNum);
+    m_histos.Fill2BinHisto(260+hoffset, event().mt(), event().muon().reliso05, event().tau().photonPtSumOutsideSignalCone/event().tau().Pt(), weight, sysNum);
 }
 
 

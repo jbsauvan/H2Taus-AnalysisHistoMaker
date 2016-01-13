@@ -55,7 +55,8 @@ for sample in samples:
     batch[-1].local      = True
 
     # Muon cuts
-    batch[-1].cuts.extend(["l1_reliso05<0.1","l1_muonid_medium>0.5","l1_pt>19"])
+    #batch[-1].cuts.extend(["l1_reliso05<0.1","l1_muonid_medium>0.5","l1_pt>19"])
+    batch[-1].cuts.extend(["l1_muonid_medium>0.5","l1_pt>19"])
     # Tau cuts
     batch[-1].cuts.extend(["l2_againstMuon3>1.5","l2_againstElectronMVA5>0.5","l2_decayModeFinding"])
     batch[-1].cuts.extend(["veto_dilepton<0.5", "veto_thirdlepton<0.5", "veto_otherlepton<0.5"])

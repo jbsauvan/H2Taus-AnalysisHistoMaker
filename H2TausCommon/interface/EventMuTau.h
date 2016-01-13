@@ -54,15 +54,19 @@ namespace AnHiMa
             void connectVariables(TChain* inputChain);
             void update();
 
-            int event()           const {return (int)m_event;}
-            int lumi()            const {return (int)m_lumi;}
-            int run()             const {return (int)m_run;}
-            int n_vertices()      const {return (int)m_n_vertices;}
-            float rho()           const {return m_rho;}
-            float weight()        const {return m_weight;}
-            float weight_vertex() const {return m_weight_vertex;}
-            float mt()            const {return m_mt;}
-            float mvis()          const {return m_mvis;}
+            int event()                const {return (int)m_event;}
+            int lumi()                 const {return (int)m_lumi;}
+            int run()                  const {return (int)m_run;}
+            int n_vertices()           const {return (int)m_n_vertices;}
+            float rho()                const {return m_rho;}
+            float weight()             const {return m_weight;}
+            float weight_vertex()      const {return m_weight_vertex;}
+            float mt()                 const {return m_mt;}
+            float mvis()               const {return m_mvis;}
+            float met_pt()             const {return m_met_pt;}
+            float delta_phi_muon_met() const {return m_delta_phi_l1_met;}
+            float delta_phi_tau_met()  const {return m_delta_phi_l2_met;}
+
 
             const Muon& muon()            const {return m_muon;}
             const Tau& tau()              const {return m_tau;}
@@ -83,6 +87,9 @@ namespace AnHiMa
             double m_weight_vertex;
             double m_mt;
             double m_mvis;
+            double m_met_pt;
+            double m_delta_phi_l1_met;
+            double m_delta_phi_l2_met;
 
             Muon m_muon;
             Tau m_tau;

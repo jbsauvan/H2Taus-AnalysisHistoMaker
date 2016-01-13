@@ -47,6 +47,9 @@ void EventMuTau::connectVariables(TChain* inputChain)
     inputChain->SetBranchStatus("weight_vertex"                            , true);
     inputChain->SetBranchStatus("mt"                                       , true);
     inputChain->SetBranchStatus("mvis"                                     , true);
+    inputChain->SetBranchStatus("met_pt"                                   , true);
+    inputChain->SetBranchStatus("delta_phi_l1_met"                         , true);
+    inputChain->SetBranchStatus("delta_phi_l2_met"                         , true);
     inputChain->SetBranchStatus("l1_pt"                                    , true);
     inputChain->SetBranchStatus("l1_eta"                                   , true);
     inputChain->SetBranchStatus("l1_phi"                                   , true);
@@ -122,15 +125,18 @@ void EventMuTau::connectVariables(TChain* inputChain)
 
 
     // Connect event branches
-    inputChain->SetBranchAddress("run"            , &m_run);
-    inputChain->SetBranchAddress("lumi"           , &m_lumi);
-    inputChain->SetBranchAddress("event"          , &m_event);
-    inputChain->SetBranchAddress("n_vertices"     , &m_n_vertices);
-    inputChain->SetBranchAddress("rho"            , &m_rho);
-    inputChain->SetBranchAddress("weight"         , &m_weight);
-    inputChain->SetBranchAddress("weight_vertex"  , &m_weight_vertex);
-    inputChain->SetBranchAddress("mt"             , &m_mt);
-    inputChain->SetBranchAddress("mvis"           , &m_mvis);
+    inputChain->SetBranchAddress("run"              , &m_run);
+    inputChain->SetBranchAddress("lumi"             , &m_lumi);
+    inputChain->SetBranchAddress("event"            , &m_event);
+    inputChain->SetBranchAddress("n_vertices"       , &m_n_vertices);
+    inputChain->SetBranchAddress("rho"              , &m_rho);
+    inputChain->SetBranchAddress("weight"           , &m_weight);
+    inputChain->SetBranchAddress("weight_vertex"    , &m_weight_vertex);
+    inputChain->SetBranchAddress("mt"               , &m_mt);
+    inputChain->SetBranchAddress("mvis"             , &m_mvis);
+    inputChain->SetBranchAddress("met_pt"           , &m_met_pt);
+    inputChain->SetBranchAddress("delta_phi_l1_met" , &m_delta_phi_l1_met);
+    inputChain->SetBranchAddress("delta_phi_l2_met" , &m_delta_phi_l2_met);
     // connect first muon branch
     inputChain->SetBranchAddress("l1_pt"               , &m_muon.pt               );
     inputChain->SetBranchAddress("l1_eta"              , &m_muon.eta              );
