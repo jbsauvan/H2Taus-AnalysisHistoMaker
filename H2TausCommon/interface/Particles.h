@@ -27,11 +27,12 @@
 namespace AnHiMa
 {
 
-    class GenParticle: public TLorentzVector
+
+    class Particle: public TLorentzVector
     {
         public:
-            GenParticle();
-            ~GenParticle();
+            Particle();
+            ~Particle();
 
             double pt;
             double eta;
@@ -42,6 +43,9 @@ namespace AnHiMa
 
             void computeChargeFromPdgId();
     };
+
+
+    typedef Particle GenParticle;
 
     class Muon: public TLorentzVector
     {

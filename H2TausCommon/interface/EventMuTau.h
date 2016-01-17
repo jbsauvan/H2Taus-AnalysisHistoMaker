@@ -62,8 +62,11 @@ namespace AnHiMa
             float weight()             const {return m_weight;}
             float weight_vertex()      const {return m_weight_vertex;}
             float mt()                 const {return m_mt;}
+            float mt_gen()             const {return m_mt_gen;}
             float mvis()               const {return m_mvis;}
             float met_pt()             const {return m_met_pt;}
+            float met_gen_pt()         const {return m_met_gen_pt;}
+            float met_gen_phi()        const {return m_met_gen_phi;}
             float delta_phi_muon_met() const {return m_delta_phi_l1_met;}
             float delta_phi_tau_met()  const {return m_delta_phi_l2_met;}
 
@@ -71,6 +74,7 @@ namespace AnHiMa
             const Muon& muon()            const {return m_muon;}
             const Tau& tau()              const {return m_tau;}
             const GenParticle& tauMatch() const {return m_tauMatch;}
+            const Particle& tauJetMatch() const {return m_tauJetMatch;}
 
 
         private:
@@ -86,14 +90,18 @@ namespace AnHiMa
             double m_weight;
             double m_weight_vertex;
             double m_mt;
+            double m_mt_gen;
             double m_mvis;
             double m_met_pt;
+            double m_met_gen_pt;
+            double m_met_gen_phi;
             double m_delta_phi_l1_met;
             double m_delta_phi_l2_met;
 
             Muon m_muon;
             Tau m_tau;
             GenParticle m_tauMatch;
+            Particle m_tauJetMatch;
 
     };
 }

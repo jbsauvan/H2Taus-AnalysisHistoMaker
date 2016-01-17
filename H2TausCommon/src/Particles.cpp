@@ -25,19 +25,19 @@ using namespace AnHiMa;
 
 
 /*****************************************************************/
-GenParticle::GenParticle():TLorentzVector()
+Particle::Particle():TLorentzVector()
 /*****************************************************************/
 {
 }
 /*****************************************************************/
-GenParticle::~GenParticle()
+Particle::~Particle()
 /*****************************************************************/
 {
 }
 
 
 /*****************************************************************/
-void GenParticle::computeChargeFromPdgId()
+void Particle::computeChargeFromPdgId()
 /*****************************************************************/
 {
     switch(abs(int(pdgId)))

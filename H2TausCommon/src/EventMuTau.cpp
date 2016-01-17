@@ -48,6 +48,8 @@ void EventMuTau::connectVariables(TChain* inputChain)
     inputChain->SetBranchStatus("mt"                                       , true);
     inputChain->SetBranchStatus("mvis"                                     , true);
     inputChain->SetBranchStatus("met_pt"                                   , true);
+    inputChain->SetBranchStatus("genmet_pt"                                , true);
+    inputChain->SetBranchStatus("genmet_phi"                               , true);
     inputChain->SetBranchStatus("delta_phi_l1_met"                         , true);
     inputChain->SetBranchStatus("delta_phi_l2_met"                         , true);
     inputChain->SetBranchStatus("l1_pt"                                    , true);
@@ -109,6 +111,11 @@ void EventMuTau::connectVariables(TChain* inputChain)
     inputChain->SetBranchStatus("l2_neutralIsoPtSum"                          , true);
     inputChain->SetBranchStatus("l2_puCorrPtSum"                              , true);
     inputChain->SetBranchStatus("l2_nc_ratio"                                 , true);
+    inputChain->SetBranchStatus("l2_jet_pt"                                   , true);
+    inputChain->SetBranchStatus("l2_jet_eta"                                  , true);
+    inputChain->SetBranchStatus("l2_jet_phi"                                  , true);
+    inputChain->SetBranchStatus("l2_jet_mass"                                 , true);
+    inputChain->SetBranchStatus("l2_jet_charge"                               , true);
     inputChain->SetBranchStatus("l2_gen_match"                                , true);
     inputChain->SetBranchStatus("l2_gen_pt"                                   , true);
     inputChain->SetBranchStatus("l2_gen_eta"                                  , true);
@@ -135,8 +142,10 @@ void EventMuTau::connectVariables(TChain* inputChain)
     inputChain->SetBranchAddress("mt"               , &m_mt);
     inputChain->SetBranchAddress("mvis"             , &m_mvis);
     inputChain->SetBranchAddress("met_pt"           , &m_met_pt);
-    inputChain->SetBranchAddress("delta_phi_l1_met" , &m_delta_phi_l1_met);
-    inputChain->SetBranchAddress("delta_phi_l2_met" , &m_delta_phi_l2_met);
+    inputChain->SetBranchAddress("genmet_pt"        , &m_met_gen_pt);
+    inputChain->SetBranchAddress("genmet_phi"       , &m_met_gen_phi);
+    inputChain->SetBranchAddress("delta_phi_l1_met" , &m_delta_phi_l2_met); // FIXME: swap l1 and l2 in trees
+    inputChain->SetBranchAddress("delta_phi_l2_met" , &m_delta_phi_l1_met);
     // connect first muon branch
     inputChain->SetBranchAddress("l1_pt"               , &m_muon.pt               );
     inputChain->SetBranchAddress("l1_eta"              , &m_muon.eta              );
@@ -199,6 +208,11 @@ void EventMuTau::connectVariables(TChain* inputChain)
     inputChain->SetBranchAddress("l2_puCorrPtSum"                              , &m_tau.puCorrPtSum                             );
     inputChain->SetBranchAddress("l2_nc_ratio"                                 , &m_tau.nc_ratio                                );
     inputChain->SetBranchAddress("l2_gen_match"                                , &m_tau.gen_match                               );
+    inputChain->SetBranchAddress("l2_jet_pt"                                   , &m_tauJetMatch.pt                              );
+    inputChain->SetBranchAddress("l2_jet_eta"                                  , &m_tauJetMatch.eta                             );
+    inputChain->SetBranchAddress("l2_jet_phi"                                  , &m_tauJetMatch.phi                             );
+    inputChain->SetBranchAddress("l2_jet_charge"                               , &m_tauJetMatch.charge                          );
+    inputChain->SetBranchAddress("l2_jet_mass"                                 , &m_tauJetMatch.mass                            );
     inputChain->SetBranchAddress("l2_gen_pt"                                   , &m_tauMatch.pt                                 );
     inputChain->SetBranchAddress("l2_gen_eta"                                  , &m_tauMatch.eta                                );
     inputChain->SetBranchAddress("l2_gen_phi"                                  , &m_tauMatch.phi                                );
@@ -305,18 +319,28 @@ bool EventMuTau::passSelectionWJetsStudy(int selection)
             pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits < 2);
             pass &= (tau().charge*muon().charge<0);
             break;
-        case 2: //  OS
+        case 2: // Loose10 reverse tau isolation medium + OS
+            pass &= (tau().byCombinedIsolationDeltaBetaCorrRaw3Hits < 10.);
+            pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits < 2);
             pass &= (tau().charge*muon().charge<0);
             break;
-        case 3: // Tau isolation medium + SS
+        case 3: // Loose20 reverse tau isolation medium + OS
+            pass &= (tau().byCombinedIsolationDeltaBetaCorrRaw3Hits < 20.);
+            pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits < 2);
+            pass &= (tau().charge*muon().charge<0);
+            break;
+        case 4: //  OS
+            pass &= (tau().charge*muon().charge<0);
+            break;
+        case 5: // Tau isolation medium + SS
             pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits >= 2);
             pass &= (tau().charge*muon().charge>0);
             break;
-        case 4: // Reverse tau isolation medium + SS
+        case 6: // Reverse tau isolation medium + SS
             pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits < 2);
             pass &= (tau().charge*muon().charge>0);
             break;
-        case 5: // SS
+        case 7: // SS
             pass &= (tau().charge*muon().charge>0);
         default:
             break;
@@ -348,12 +372,19 @@ void EventMuTau::callback(void* object)
 void EventMuTau::buildEvent()
 /*****************************************************************/
 {
+    // Build TLorentzVector
     m_muon.SetPtEtaPhiM(muon().pt, muon().eta, muon().phi, muon().mass);
     m_tau.SetPtEtaPhiM(tau().pt,tau().eta,tau().phi,tau().mass);
     m_tauMatch.SetPtEtaPhiM(tauMatch().pt,tauMatch().eta,tauMatch().phi,tauMatch().mass);
+    m_tauJetMatch.SetPtEtaPhiM(tauJetMatch().pt,tauJetMatch().eta,tauJetMatch().phi,tauJetMatch().mass);
+    // Recompute parton charge from pdg ID
     m_tauMatch.computeChargeFromPdgId();
+    // Compute tau sign-flip
     m_tau.sign_flip = (tau().charge*tauMatch().charge<0 ? -1 : 1);
     if(tau().charge==0 || tauMatch().charge==0) m_tau.sign_flip = 0;
+    //
+    // Compute gen mT
+    m_mt_gen = sqrt(2.*muon().Pt()*met_pt()*(1.-cos(met_gen_phi()-muon().Phi())));
 }
 
 

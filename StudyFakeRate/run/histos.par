@@ -96,6 +96,7 @@ h1f 25 tau_againstElectronMVA5 ' tau-ele discriminant ' 30 0. 3.
 h1f 26 tau_iso ' tau isolation ' 200 0. 20.
 h1f 27 tau_pdgId ' pdg ID ' 45 -22.5 22.5
 
+
 # MuTau
 h1f_sys 50 mvis ' M_{vis} [GeV] ' 60 0. 300.
 h1f_sys 51 mt   ' M_{T} [GeV] ' 40 0. 200.
@@ -176,7 +177,7 @@ end_HistosMuTau
 ###########################################################
 ### Histograms used to study W+jets
 ###########################################################
-HistosMuTauWJets: FakeRate_Iso_Medium_OS_, FakeRate_InvertIso_Medium_OS_(1000), FakeRate_OS_(2000), FakeRate_Iso_Medium_SS_(3000), FakeRate_InvertIso_Medium_SS_(4000), FakeRate_SS_(5000)
+HistosMuTauWJets: FakeRate_Iso_Medium_OS_, FakeRate_InvertIso_Medium_OS_(1000), FakeRate_Loose10InvertIso_Medium_OS_(2000), FakeRate_Loose20InvertIso_Medium_OS_(3000), FakeRate_OS_(4000), FakeRate_Iso_Medium_SS_(5000), FakeRate_InvertIso_Medium_SS_(6000), FakeRate_SS_(7000)
 
 
 # General event 
@@ -197,10 +198,13 @@ h1f 22 tau_decayMode ' decay^{#tau} ' 15 -0.5 14.5
 h1f 23 tau_pdgId ' pdg id ' 45 -22.5 22.5
 h1f 24 tau_iso ' tau iso ' 500 0. 50.
 h1f 25 tau_outside_photons_pt ' relative photons pT outside cone ' 100 0. 1.
+1binvbh1f 26 tau_gen_pt ' p_{T}(#tau,gen) [GeV] ' 12 20. 30. 40. 50. 60. 70. 80. 90. 100. 120. 150. 200.
+1binvbh1f 27 tau_jet_pt ' p_{T}(#tau,jet) [GeV] ' 12 20. 30. 40. 50. 60. 70. 80. 90. 100. 120. 150. 200.
 
 # MuTau
 h1f_sys 50 mvis ' M_{vis} [GeV] ' 60 0. 300.
 h1f_sys 51 mt   ' M_{T} [GeV] ' 40 0. 200.
+h1f_sys 52 mt_gen   ' M_{T}^{gen} [GeV] ' 40 0. 200.
 
 # histos in bins of mT
 1binvvh1f 100 tau_pt_vs_mt_ ' p_{T}(#tau) vs m_{T} ' 14 20. 22. 24. 26. 30. 35. 40. 50. 60. 70. 90. 120. 150. 200.
@@ -238,27 +242,35 @@ MT 4
 1binvh1f 180 delta_phi_tau_met_vs_mt_ ' #Delta#Phi(#tau,MET) vs m_{T} ' 10 -3.14159265359 3.14159265359
 MT 4
 0. 20. 40. 80. 1000.
+#
+1binvvh1f 190 tau_gen_pt_vs_mt_ ' p_{T}^{#tau,gen} vs m_{T} '  12 20. 30. 40. 50. 60. 70. 80. 90. 100. 120. 150. 200.
+MT 4
+0. 20. 40. 80. 1000.
+#
+1binvvh1f 200 tau_jet_pt_vs_mt_ ' p_{T}^{#tau,jet} vs m_{T} '  12 20. 30. 40. 50. 60. 70. 80. 90. 100. 120. 150. 200.
+MT 4
+0. 20. 40. 80. 1000.
 
 # histos in bins of mT and mu isolation
-2binvh1f 200 tau_pt_vs_mt_muiso_ ' p_{T}(#tau) vs m_{T} ' 20 0. 200.
+2binvh1f 300 tau_pt_vs_mt_muiso_ ' p_{T}(#tau) vs m_{T} ' 20 0. 200.
 MT 3
 0. 40. 80. 1000.
 MUISO 4
 0. 0.02 0.05 0.1 0.5
 #
-2binvh1f 220 tau_pdgId_vs_mt_muiso_ ' pdg id vs m_{T} ' 45 -22.5 22.5
+2binvh1f 320 tau_pdgId_vs_mt_muiso_ ' pdg id vs m_{T} ' 45 -22.5 22.5
 MT 3
 0. 40. 80. 1000.
 MUISO 4
 0. 0.02 0.05 0.1 0.5
 #
-2binvh1f 240 tau_iso_vs_mt_muiso_ ' tau iso vs m_{T} ' 500 0. 50.
+2binvh1f 340 tau_iso_vs_mt_muiso_ ' tau iso vs m_{T} ' 500 0. 50.
 MT 3
 0. 40. 80. 1000.
 MUISO 4
 0. 0.02 0.05 0.1 0.5
 #
-2binvh1f 260 tau_outside_photons_pt_vs_mt_muiso_ ' relative photons pT ouside cone vs m_{T} ' 100 0. 1.
+2binvh1f 360 tau_outside_photons_pt_vs_mt_muiso_ ' relative photons pT ouside cone vs m_{T} ' 100 0. 1.
 MT 3
 0. 40. 80. 1000.
 MUISO 4

@@ -94,7 +94,7 @@ void AnalysisWJets::execute()
 /*****************************************************************/
 {
     event().update();
-    for(unsigned sel=0; sel<=5; sel++)
+    for(unsigned sel=0; sel<=7; sel++)
     {
         unsigned selectionId = sel;
         if(event().passSelectionWJetsStudy(selectionId))
@@ -140,10 +140,13 @@ void AnalysisWJets::fillHistos(unsigned selection, const std::string& sys)
     m_histos.FillHisto(23+hoffset, fabs(event().tauMatch().pdgId)*(event().tau().sign_flip!=0 ? event().tau().sign_flip : 1), weight, sysNum);
     m_histos.FillHisto(24+hoffset, event().tau().byCombinedIsolationDeltaBetaCorrRaw3Hits, weight, sysNum);
     m_histos.FillHisto(25+hoffset, event().tau().photonPtSumOutsideSignalCone/event().tau().Pt(), weight, sysNum);
+    m_histos.FillHisto(26+hoffset, event().tauMatch().Pt(), weight, sysNum);    
+    m_histos.FillHisto(27+hoffset, event().tauJetMatch().Pt(), weight, sysNum);    
 
     // MuTau histos
     m_histos.FillHisto(50+hoffset, event().mvis(), weight, sysNum);
     m_histos.FillHisto(51+hoffset, event().mt(), weight, sysNum);
+    m_histos.FillHisto(52+hoffset, event().mt_gen(), weight, sysNum);
 
 
     // Histos in bins of MT
@@ -156,12 +159,14 @@ void AnalysisWJets::fillHistos(unsigned selection, const std::string& sys)
     m_histos.Fill1BinHisto(160+hoffset, event().mt(), event().met_pt(), weight, sysNum);
     m_histos.Fill1BinHisto(170+hoffset, event().mt(), event().delta_phi_muon_met(), weight, sysNum);
     m_histos.Fill1BinHisto(180+hoffset, event().mt(), event().delta_phi_tau_met(), weight, sysNum);
+    m_histos.Fill1BinHisto(190+hoffset, event().mt(), event().tauMatch().Pt(), weight, sysNum);
+    m_histos.Fill1BinHisto(200+hoffset, event().mt(), event().tauJetMatch().Pt(), weight, sysNum);
 
     // Histos in bins of MT and muon isolation
-    m_histos.Fill2BinHisto(200+hoffset, event().mt(), event().muon().reliso05, event().tau().Pt(), weight, sysNum);
-    m_histos.Fill2BinHisto(220+hoffset, event().mt(), event().muon().reliso05, fabs(event().tauMatch().pdgId)*(event().tau().sign_flip!=0 ? event().tau().sign_flip : 1), weight, sysNum);
-    m_histos.Fill2BinHisto(240+hoffset, event().mt(), event().muon().reliso05, event().tau().byCombinedIsolationDeltaBetaCorrRaw3Hits, weight, sysNum);
-    m_histos.Fill2BinHisto(260+hoffset, event().mt(), event().muon().reliso05, event().tau().photonPtSumOutsideSignalCone/event().tau().Pt(), weight, sysNum);
+    m_histos.Fill2BinHisto(300+hoffset, event().mt(), event().muon().reliso05, event().tau().Pt(), weight, sysNum);
+    m_histos.Fill2BinHisto(320+hoffset, event().mt(), event().muon().reliso05, fabs(event().tauMatch().pdgId)*(event().tau().sign_flip!=0 ? event().tau().sign_flip : 1), weight, sysNum);
+    m_histos.Fill2BinHisto(340+hoffset, event().mt(), event().muon().reliso05, event().tau().byCombinedIsolationDeltaBetaCorrRaw3Hits, weight, sysNum);
+    m_histos.Fill2BinHisto(360+hoffset, event().mt(), event().muon().reliso05, event().tau().photonPtSumOutsideSignalCone/event().tau().Pt(), weight, sysNum);
 }
 
 
