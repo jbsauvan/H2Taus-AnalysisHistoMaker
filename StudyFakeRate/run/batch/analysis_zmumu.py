@@ -5,7 +5,7 @@ batch = AnhimaBatchLauncher()
 batch.name = "FakeRate_ZMuMu"
 batch.exe = "/afs/cern.ch/work/j/jsauvan/Projects/Htautau_Run2/CMSSW/CMSSW_7_4_15/bin/slc6_amd64_gcc491/fakerate.exe"
 batch.baseDir = "/afs/cern.ch/work/j/jsauvan/Projects/Htautau_Run2/CMSSW/CMSSW_7_4_15/src/AnHiMaCMG/StudyFakeRate/"
-batch.inputFiles.extend(["/afs/cern.ch/user/s/steggema/work/public/mm/MiniAODv2/DYJetsToLL_M50_LO/H2TauTauTreeProducerMuMu/tree.root"])
+batch.inputFiles.extend(["/afs/cern.ch/user/s/steggema/work/public/mm/190116/DYJetsToLL_M50_LO/H2TauTauTreeProducerMuMu/tree.root"])
 batch.tree = "tree"
 batch.outputDirectory = "/afs/cern.ch/work/j/jsauvan/Projects/Htautau_Run2/Histos/StudyFakeRate/ZMuMu/"
 batch.outputFile = "fakerates_ZMuMu.root"

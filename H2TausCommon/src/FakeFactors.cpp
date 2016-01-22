@@ -209,6 +209,16 @@ double FakeFactors::retrieveFakeFactor(const std::string& name, const EventMuTau
         values.push_back(event.tau().Pt());
         values.push_back(event.tau().decayMode);
     }
+    else if(name.find("VsJetPtDecay")!=std::string::npos)
+    {
+        values.push_back(event.tauJetMatch().Pt());
+        values.push_back(event.tau().decayMode);
+    }
+    else if(name.find("VsJetPtPt")!=std::string::npos)
+    {
+        values.push_back(event.tauJetMatch().Pt());
+        values.push_back(event.tau().Pt());
+    }
     else if(name.find("VsPtPdgId")!=std::string::npos)
     {
         values.push_back(event.tau().Pt());
@@ -243,11 +253,18 @@ double FakeFactors::retrieveFakeFactor(const std::string& name, const EventMuTau
         if((value>=6 && value<=20) || value>=22 || value==0) value = 2.; // FIXME: find a better way to discard values not used to determine the fake rates
         values.push_back( value * (event.tau().sign_flip!=0 ? event.tau().sign_flip : 1));
     }
+    else if(name.find("VsJetPt")!=std::string::npos)
+    {
+        values.push_back(event.tauJetMatch().Pt());
+    }
 
     // Retrieve fake factor depending on type of object
     if(type=="1DGraph")
     {
         TGraphAsymmErrors* graph = dynamic_cast<TGraphAsymmErrors*>(object);
+        // Don't extrapolate. Suppose lowest point is point 0 and highest point is the last one
+        if(values[0]>graph->GetX()[graph->GetN()-1]) values[0]=graph->GetX()[graph->GetN()-1];
+        else if(values[0]<graph->GetX()[0]) values[0]=graph->GetX()[0];
         factor = graph->Eval(values[0]);
         // Apply randon fluctuations if requested
         if(fluctuate)

@@ -1,15 +1,15 @@
 /**
- *  @file  AnalysisFakeRateApply.h
+ *  @file  AnalysisFakeRateWJetsHighMT.h
  *  @brief  
  *
  *
  *  @author  Jean-Baptiste Sauvan <sauvan@llr.in2p3.fr>
  *
- *  @date    20/11/2015
+ *  @date    01/04/2016
  *
  *  @internal
- *     Created :  20/11/2015
- * Last update :  20/11/2015 14:09:35
+ *     Created :  01/04/2016
+ * Last update :  01/04/2016 02:05:28 PM
  *          by :  JB Sauvan
  *
  * =====================================================================================
@@ -20,14 +20,12 @@
 
 
 
-#ifndef AnalysisFakeRateApply_h
-#define AnalysisFakeRateApply_h
+#ifndef AnalysisFakeRateWJetsHighMT_h
+#define AnalysisFakeRateWJetsHighMT_h
 
 #include "AnHiMaCMG/Core/interface/IAnalysis.h"
 #include "AnHiMaCMG/Core/interface/EventAware.h"
 #include "AnHiMaCMG/H2TausCommon/interface/EventMuTau.h"
-#include "AnHiMaCMG/H2TausCommon/interface/FakeFactors.h"
-
 
 
 class TObject;
@@ -35,20 +33,18 @@ class TObject;
 namespace AnHiMa
 {
 
-    class AnalysisFakeRateApply: public IAnalysis, EventAware<EventMuTau>
+    class AnalysisFakeRateWJetsHighMT: public IAnalysis, EventAware<EventMuTau>
     {
         public:
-            AnalysisFakeRateApply();
-            ~AnalysisFakeRateApply();
+            AnalysisFakeRateWJetsHighMT();
+            ~AnalysisFakeRateWJetsHighMT();
 
             bool initialize(const std::string& parameterFile);
 
             void execute();
 
         private:
-            void fillHistos(unsigned, const std::string&);
-
-            FakeFactors m_fakeFactors;
+            void fillHistos(unsigned);
 
     };
 }

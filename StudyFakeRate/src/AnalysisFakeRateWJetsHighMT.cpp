@@ -1,3 +1,19 @@
+/**
+ *  @file  AnalysisFakeRateWJetsHighMT.cpp
+ *  @brief  
+ *
+ *
+ *  @author  Jean-Baptiste Sauvan <sauvan@llr.in2p3.fr>
+ *
+ *  @date    01/04/2016
+ *
+ *  @internal
+ *     Created :  01/04/2016
+ * Last update :  01/04/2016 02:05:51 PM
+ *          by :  JB Sauvan
+ *
+ * =====================================================================================
+ */
 
 
 
@@ -8,8 +24,10 @@
 #include <fstream>
 
 #include "TVector2.h"
+#include "TGraphAsymmErrors.h"
+#include "TH2F.h"
 
-#include "AnHiMaCMG/StudyFakeRate/interface/AnalysisFakeRate.h"
+#include "AnHiMaCMG/StudyFakeRate/interface/AnalysisFakeRateWJetsHighMT.h"
 #include "AnHiMaCMG/Core/interface/Utilities.h"
 
 
@@ -21,7 +39,17 @@ using namespace std;
 
 
 /*****************************************************************/
-AnalysisFakeRate::AnalysisFakeRate():IAnalysis()
+AnalysisFakeRateWJetsHighMT::AnalysisFakeRateWJetsHighMT():IAnalysis()
+/*****************************************************************/
+{
+
+
+}
+
+
+
+/*****************************************************************/
+AnalysisFakeRateWJetsHighMT::~AnalysisFakeRateWJetsHighMT()
 /*****************************************************************/
 {
 
@@ -30,48 +58,35 @@ AnalysisFakeRate::AnalysisFakeRate():IAnalysis()
 
 
 /*****************************************************************/
-AnalysisFakeRate::~AnalysisFakeRate()
-/*****************************************************************/
-{
-}
-
-
-
-/*****************************************************************/
-bool AnalysisFakeRate::initialize(const string& parameterFile)
+bool AnalysisFakeRateWJetsHighMT::initialize(const string& parameterFile)
 /*****************************************************************/
 {
     bool status = IAnalysis::initialize(parameterFile);
     if(!status) return status;
     event().connectVariables(m_inputChain);
 
-    // Read parameters
-    //string pileupParamsFile = m_reader.params().GetValue("PileupParams", "/home/llr/cms/sauvan/CMSSW/HGCAL/CMSSW_6_2_0_SLHC19/src/AnHiMaCMG/ElectronClusterThreshold/data/thresholdParameters.txt");
-
     return true;
 }
 
 
 /*****************************************************************/
-void AnalysisFakeRate::execute()
+void AnalysisFakeRateWJetsHighMT::execute()
 /*****************************************************************/
 {
     event().update();
     for(unsigned sel=0; sel<=5; sel++)
     {
-        if(event().passSelection(sel)) fillHistos(sel);
+        if(event().passSelectionFakeFactors(sel)) fillHistos(sel);
     }
 }
 
 /*****************************************************************/
-void AnalysisFakeRate::fillHistos(unsigned selection)
+void AnalysisFakeRateWJetsHighMT::fillHistos(unsigned selection)
 /*****************************************************************/
 {
-
     short sysNum = 0;
     float weight = event().weight();
     int hoffset  = 1000*selection;
-
 
 
     // Event histos
@@ -81,17 +96,9 @@ void AnalysisFakeRate::fillHistos(unsigned selection)
     //
 
     // Muon histos
-     m_histos.FillHisto(10+hoffset, event().muon(0).Pt(), weight, sysNum);    
-     m_histos.FillHisto(11+hoffset, event().muon(0).Eta(), weight, sysNum);
-     m_histos.FillHisto(12+hoffset, event().muon(0).Phi(), weight, sysNum);
-     m_histos.FillHisto(13+hoffset, event().muon(0).reliso05, weight, sysNum);
-
-     m_histos.FillHisto(20+hoffset, event().muon(1).Pt(), weight, sysNum);    
-     m_histos.FillHisto(21+hoffset, event().muon(1).Eta(), weight, sysNum);
-     m_histos.FillHisto(22+hoffset, event().muon(1).Phi(), weight, sysNum);
-     m_histos.FillHisto(23+hoffset, event().muon(1).reliso05, weight, sysNum);
-
-     m_histos.FillHisto(50+hoffset, event().muonPair().M(), weight, sysNum);
+     m_histos.FillHisto(10+hoffset, event().muon().Pt(), weight, sysNum);    
+     m_histos.FillHisto(11+hoffset, event().muon().Eta(), weight, sysNum);
+     m_histos.FillHisto(12+hoffset, event().muon().Phi(), weight, sysNum);
 
      // Tau histos
      m_histos.FillHisto(100+hoffset, event().tau().Pt(), weight, sysNum);    
@@ -119,5 +126,7 @@ void AnalysisFakeRate::fillHistos(unsigned selection)
      m_histos.Fill1BinHisto(340+hoffset, fabs(event().tauMatch().pdgId)*(event().tau().sign_flip!=0 ? event().tau().sign_flip : 1), event().tau().Pt(), weight, sysNum);
      m_histos.Fill1BinHisto(360+hoffset, event().tau().Pt(), event().tauJetMatch().Pt(), weight, sysNum);
      m_histos.Fill1BinHisto(370+hoffset, event().tau().decayMode, event().tauJetMatch().Pt(), weight, sysNum);
+
 }
+
 

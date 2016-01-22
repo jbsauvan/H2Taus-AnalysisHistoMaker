@@ -1,15 +1,15 @@
 /**
- *  @file  AnalysisFakeRateApply.h
+ *  @file  AnalysisWJetsContamination.h
  *  @brief  
  *
  *
  *  @author  Jean-Baptiste Sauvan <sauvan@llr.in2p3.fr>
  *
- *  @date    20/11/2015
+ *  @date    01/04/2016
  *
  *  @internal
- *     Created :  20/11/2015
- * Last update :  20/11/2015 14:09:35
+ *     Created :  01/04/2016
+ * Last update :  01/04/2016 02:05:28 PM
  *          by :  JB Sauvan
  *
  * =====================================================================================
@@ -20,8 +20,8 @@
 
 
 
-#ifndef AnalysisFakeRateApply_h
-#define AnalysisFakeRateApply_h
+#ifndef AnalysisWJetsContamination_h
+#define AnalysisWJetsContamination_h
 
 #include "AnHiMaCMG/Core/interface/IAnalysis.h"
 #include "AnHiMaCMG/Core/interface/EventAware.h"
@@ -29,17 +29,16 @@
 #include "AnHiMaCMG/H2TausCommon/interface/FakeFactors.h"
 
 
-
 class TObject;
 
 namespace AnHiMa
 {
 
-    class AnalysisFakeRateApply: public IAnalysis, EventAware<EventMuTau>
+    class AnalysisWJetsContamination: public IAnalysis, EventAware<EventMuTau>
     {
         public:
-            AnalysisFakeRateApply();
-            ~AnalysisFakeRateApply();
+            AnalysisWJetsContamination();
+            ~AnalysisWJetsContamination();
 
             bool initialize(const std::string& parameterFile);
 

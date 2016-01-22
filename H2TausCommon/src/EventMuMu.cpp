@@ -149,6 +149,11 @@ void EventMuMu::connectVariables(TChain* inputChain)
     inputChain->SetBranchStatus("tau1_neutralIsoPtSumWeight"                    , true);
     inputChain->SetBranchStatus("tau1_footprintCorrection"                      , true);
     inputChain->SetBranchStatus("tau1_photonPtSumOutsideSignalCone"             , true);
+    inputChain->SetBranchStatus("tau1_jet_pt"                                   , true);
+    inputChain->SetBranchStatus("tau1_jet_eta"                                  , true);
+    inputChain->SetBranchStatus("tau1_jet_phi"                                  , true);
+    inputChain->SetBranchStatus("tau1_jet_mass"                                 , true);
+    inputChain->SetBranchStatus("tau1_jet_charge"                               , true);
     inputChain->SetBranchStatus("tau1_gen_match"                                , true);
     inputChain->SetBranchStatus("tau1_gen_pt"                                   , true);
     inputChain->SetBranchStatus("tau1_gen_eta"                                  , true);
@@ -260,6 +265,11 @@ void EventMuMu::connectVariables(TChain* inputChain)
     inputChain->SetBranchAddress("tau1_neutralIsoPtSumWeight"                    , &m_tau.neutralIsoPtSumWeight                   );
     inputChain->SetBranchAddress("tau1_footprintCorrection"                      , &m_tau.footprintCorrection                     );
     inputChain->SetBranchAddress("tau1_photonPtSumOutsideSignalCone"             , &m_tau.photonPtSumOutsideSignalCone            );
+    inputChain->SetBranchAddress("tau1_jet_pt"                                   , &m_tauJetMatch.pt                              );
+    inputChain->SetBranchAddress("tau1_jet_eta"                                  , &m_tauJetMatch.eta                             );
+    inputChain->SetBranchAddress("tau1_jet_phi"                                  , &m_tauJetMatch.phi                             );
+    inputChain->SetBranchAddress("tau1_jet_charge"                               , &m_tauJetMatch.charge                          );
+    inputChain->SetBranchAddress("tau1_jet_mass"                                 , &m_tauJetMatch.mass                            );
     inputChain->SetBranchAddress("tau1_gen_match"                                , &m_tau.gen_match                               );
     inputChain->SetBranchAddress("tau1_gen_pt"                                   , &m_tauMatch.pt                                 );
     inputChain->SetBranchAddress("tau1_gen_eta"                                  , &m_tauMatch.eta                                );
@@ -327,14 +337,18 @@ void EventMuMu::callback(void* object)
 void EventMuMu::buildEvent()
 /*****************************************************************/
 {
+    // Build muon pair
     m_muons[0].SetPtEtaPhiM(muon(0).pt, muon(0).eta, muon(0).phi, muon(0).mass);
     m_muons[1].SetPtEtaPhiM(muon(1).pt, muon(1).eta, muon(1).phi, muon(1).mass);
-
     m_muonPair.reset(new TParticlePair<Muon>(m_muons[0],m_muons[1]));
-
+    // Build tau 4-vectors
     m_tau.SetPtEtaPhiM(tau().pt,tau().eta,tau().phi,tau().mass);
     m_tauMatch.SetPtEtaPhiM(tauMatch().pt,tauMatch().eta,tauMatch().phi,tauMatch().mass);
+    if(tauJetMatch().pt>0.) m_tauJetMatch.SetPtEtaPhiM(tauJetMatch().pt,tauJetMatch().eta,tauJetMatch().phi,tauJetMatch().mass);
+    else m_tauJetMatch.SetPtEtaPhiM(0,0,0,0);
+    // Recompute parton charge from pdg ID 
     m_tauMatch.computeChargeFromPdgId();
+    // Compute tau sign-flip
     m_tau.sign_flip = (m_tau.charge*m_tauMatch.charge<0 ? -1 : 1);
     if(tau().charge==0 || tauMatch().charge==0) m_tau.sign_flip = 0;
 }

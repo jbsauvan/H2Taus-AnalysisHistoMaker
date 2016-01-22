@@ -267,6 +267,39 @@ bool EventMuTau::passSelection(int selection)
 }
 
 /*****************************************************************/
+bool EventMuTau::passSelectionFakeFactors(int selection)
+/*****************************************************************/
+{
+    bool pass = true;
+    pass &= (tau().pt > 0.);
+    pass &= (mt()>40.);
+    pass &= (tau().charge*muon().charge<0); //FIXME: only OS for the moment
+    switch(selection)
+    {
+        case 0: // Tau isolation raw < 1.5 GeV
+            pass &= (tau().byCombinedIsolationDeltaBetaCorrRaw3Hits < 1.5);
+            break;
+        case 1: // Reversed isolation raw > 1.5 GeV
+            pass &= (tau().byCombinedIsolationDeltaBetaCorrRaw3Hits > 1.5);
+            break;
+        case 2: // No isolation
+            break;
+        case 3: // Tau isolation medium
+            pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits >= 2);
+            break;
+        case 4: // Reverse tau isolation medium
+            pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits < 2);
+            break;
+        case 5: // Reversed medium isolation only reversing the raw isolation part
+            pass &= (tau().byCombinedIsolationDeltaBetaCorrRaw3Hits > 1.5 && tau().photonPtSumOutsideSignalCone/tau().Pt()<0.1);
+            break;
+        default:
+            break;
+    };
+    return pass;
+}
+
+/*****************************************************************/
 bool EventMuTau::passSelectionForPolarization(int selection)
 /*****************************************************************/
 {
@@ -349,6 +382,48 @@ bool EventMuTau::passSelectionWJetsStudy(int selection)
     return pass;
 }
 
+/*****************************************************************/
+bool EventMuTau::passSelectionWJetsContamination(int selection)
+/*****************************************************************/
+{
+    bool pass = true;
+    pass &= (tau().pt > 0.);
+    switch(selection)
+    {
+        case 0: // high-MT + OS
+            pass &= (mt()>40.);
+            pass &= (tau().charge*muon().charge<0);
+            break;
+        case 1: // high-MT + SS
+            pass &= (mt()>40.);
+            pass &= (tau().charge*muon().charge>0);
+            break;
+        case 2: // high-MT + OS + medium iso
+            pass &= (mt()>40.);
+            pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits >= 2);
+            pass &= (tau().charge*muon().charge<0);
+            break;
+        case 3: // high-MT + SS + medium iso
+            pass &= (mt()>40.);
+            pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits >= 2);
+            pass &= (tau().charge*muon().charge>0);
+            break;
+        case 4: // high-MT + OS + anti medium iso
+            pass &= (mt()>40.);
+            pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits < 2);
+            pass &= (tau().charge*muon().charge<0);
+            break;
+        case 5: // high-MT + SS + anti medium iso
+            pass &= (mt()>40.);
+            pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits < 2);
+            pass &= (tau().charge*muon().charge>0);
+            break;
+        default:
+            break;
+    };
+
+    return pass;
+}
 
 
 /*****************************************************************/

@@ -51,10 +51,7 @@ AnalysisFakeRateApply::AnalysisFakeRateApply():IAnalysis()
 AnalysisFakeRateApply::~AnalysisFakeRateApply()
 /*****************************************************************/
 {
-    for(auto& name_histo : m_fakeFactors)
-    {
-        name_histo.second.second->Delete();
-    }
+
 }
 
 
@@ -76,21 +73,10 @@ bool AnalysisFakeRateApply::initialize(const string& parameterFile)
         std::string fileName   = m_reader.params().GetValue(std::string("FakeFactor." + to_string(i+1) + ".File").c_str(), "");
         std::string objectName = m_reader.params().GetValue(std::string("FakeFactor." + to_string(i+1) + ".Object").c_str(), "");
         std::string type       = m_reader.params().GetValue(std::string("FakeFactor." + to_string(i+1) + ".Type").c_str(), "");
-        TFile* file = TFile::Open(fileName.c_str());
-        if(!file)
-        {
-            std::cout<<"ERROR: Cannot open file "<<fileName<<"\n";
-            return false;
-        }
-        TObject* object = file->Get(objectName.c_str());
-        if(!object)
-        {
-            std::cout<<"ERROR: Cannot load object "<<objectName<<" in file "<<fileName<<"\n";
-            return false;
-        }
-        if(object->InheritsFrom("TH1")) dynamic_cast<TH1*>(object)->SetDirectory(0);
-        file->Close();
-        m_fakeFactors[name] = std::make_pair(type, object);
+
+        status = m_fakeFactors.addFakeFactor(name, fileName, objectName, type);
+        if(!status) return status;
+
         std::cout<<"INFO:  Fake factor #"<<i+1<<"\n";
         std::cout<<"INFO:    Name   = "<<name<<"\n";
         std::cout<<"INFO:    File   = "<<fileName<<"\n";
@@ -131,7 +117,7 @@ void AnalysisFakeRateApply::fillHistos(unsigned selection, const std::string& sy
 
     short sysNum = systematicNumber(sys);
     float weight = event().weight();
-    float fakeFactor = (sys!="" ? retrieveFakeFactor(sys) : 1.);
+    float fakeFactor = (sys!="" ? m_fakeFactors.retrieveFakeFactor(sys, event()) : 1.);
     weight *= fakeFactor;
     int hoffset  = 1000*selection;
 
@@ -191,86 +177,3 @@ void AnalysisFakeRateApply::fillHistos(unsigned selection, const std::string& sy
 }
 
 
-
-
-/*****************************************************************/
-double AnalysisFakeRateApply::retrieveFakeFactor(const std::string& sys)
-/*****************************************************************/
-{
-    const auto& name_object = m_fakeFactors.find(sys);
-    if(name_object==m_fakeFactors.end())
-    {
-        std::cout<<"WARNING: Cannot retrieve fake factor "<<sys<<". Please define it in the config file\n";
-        return 1.;
-    }
-    const auto& type_object = name_object->second;
-    TObject* object = type_object.second;
-    const std::string& type = type_object.first;
-    double factor = 1.;
-    std::vector<double> values;
-    // CAREFUL: it has to be checked that it doesn't go in the wrong place because
-    // of strings included in other strings. That's why 2D fake factors come first.
-    // 2D fake factor
-    if(sys.find("VsPtEta")!=std::string::npos)
-    {
-        values.push_back(event().tau().Pt());
-        values.push_back(fabs(event().tau().Eta())); // Careful: This is absolute value of eta
-    }
-    else if(sys.find("VsPtDecay")!=std::string::npos)
-    {
-        values.push_back(event().tau().Pt());
-        values.push_back(event().tau().decayMode);
-    }
-    else if(sys.find("VsPtPdgId")!=std::string::npos)
-    {
-        values.push_back(event().tau().Pt());
-        double valueId = fabs(event().tauMatch().pdgId);
-        if((valueId>=6 && valueId<=20) || valueId>=22 || valueId==0) valueId = 2.; // FIXME: find a better way to discard values not used to determine the fake rates
-        values.push_back( valueId * (event().tau().sign_flip!=0 ? event().tau().sign_flip : 1));
-    }
-    // 1D fake factor
-    else if(sys.find("Inclusive")!=std::string::npos)
-    {
-        values.push_back(1.);
-    }
-    else if(sys.find("VsPt")!=std::string::npos)
-    {
-        values.push_back(event().tau().Pt());
-    }
-    else if(sys.find("VsEta")!=std::string::npos)
-    {
-        values.push_back(event().tau().Eta());
-    }
-    else if(sys.find("VsNVtx")!=std::string::npos)
-    {
-        values.push_back(event().n_vertices());
-    }
-    else if(sys.find("VsDecay")!=std::string::npos)
-    {
-        values.push_back(event().tau().decayMode);
-    }
-    else if(sys.find("VsPdgId")!=std::string::npos)
-    {
-        double value = fabs(event().tauMatch().pdgId);
-        if((value>=6 && value<=20) || value>=22 || value==0) value = 2.; // FIXME: find a better way to discard values not used to determine the fake rates
-        values.push_back( value * (event().tau().sign_flip!=0 ? event().tau().sign_flip : 1));
-    }
-
-    // Retrieve fake factor depending on type of object
-    if(type=="1DGraph")
-    {
-        factor = dynamic_cast<TGraphAsymmErrors*>(object)->Eval(values[0]);
-    }
-    else if(type=="2DHisto")
-    {
-        TH2F* histo = dynamic_cast<TH2F*>(object);
-        int bx = histo->GetXaxis()->FindBin(values[0]);
-        int by = histo->GetYaxis()->FindBin(values[1]);
-        factor = histo->GetBinContent(bx,by);
-    }
-    else
-    {
-        std::cout<<"ERROR: Unknown type of fake factor\n";
-    }
-    return factor;
-}

@@ -32,6 +32,7 @@ h1f 104 tau_againstMuon3 ' tau-muon discriminant ' 60 0. 6.
 h1f 105 tau_againstElectronMVA5 ' tau-ele discriminant ' 30 0. 3.
 h1f 106 tau_iso ' tau isolation ' 200 0. 20.
 h1f 107 tau_pdgId ' pdg id ' 45 -22.5 22.5
+1binvbh1f 108 tau_jet_pt ' p_{T}(#jet) [GeV] ' 10 10. 20. 30. 40. 50. 60. 80. 100. 150. 300.
 
 # 2D histograms
 2binvbh2f 200 tau_pt_vs_eta ' #eta^{#tau} vs p_{T}(#tau) [GeV] ' 
@@ -49,6 +50,15 @@ h1f 107 tau_pdgId ' pdg id ' 45 -22.5 22.5
 2binvbh2f 203 tau_pt_vs_mergedPdgId ' pdg ID vs p_{T}(#tau) [GeV] ' 
 5 20. 25. 30. 60. 200.
 9 -5.5 -0.5 0.5 1.5 3.5 4.5 5.5 21.5 22.5
+#
+2binvbh2f 204 tau_jet_pt_vs_pt ' p_{T}(#tau) [GeV] vs p_{T}(jet) [GeV] ' 
+7 10. 20. 30. 40. 60. 100. 300.
+4 20. 30. 60. 200.
+#
+2binvbh2f 205 tau_jet_pt_vs_decayMode ' decay^{#tau} vs p_{T}(jet) [GeV]  ' 
+7 10. 20. 30. 40. 60. 100. 300.
+16 -0.5 0.5 1.5 2.5 3.5 4.5 5.5 6.5 7.5 8.5 9.5 10.5 11.5 12.5 13.5 14.5
+
 
 # arrays
 1binvvh1f 300 tau_pt_vs_eta_ ' p_{T}(#tau) [GeV] ' 7 20. 22. 25. 30. 40. 60. 200.
@@ -64,8 +74,16 @@ PDGID 13
 -5.5 -4.5 -3.5 -2.5 -1.5 -0.5 0.5 1.5 2.5 3.5 4.5 5.5 21.5 22.5
 #
 1binvvh1f 340 tau_pt_vs_mergedPdgId_ ' p_{T}(#tau) [GeV] ' 5 20. 25. 30. 60. 200.
-PDGID 9
+PDGID 8
 -5.5 -0.5 0.5 1.5 3.5 4.5 5.5 21.5 22.5
+#
+1binvvh1f 360 tau_jet_pt_vs_pt_ ' p_{T}(#tau) [GeV] ' 6 10. 30. 50. 70. 100. 300.
+PT 3
+20. 30. 60. 200.
+#
+1binvvh1f 370 tau_jet_pt_vs_decayMode_ ' p_{T}(#jet) [GeV] ' 7 10. 20. 30. 40. 60. 100. 300.
+DECAY 3
+-0.5 0.5 1.5 10.5
 
 end_HistosZMuMu
 
@@ -317,4 +335,38 @@ MATCH 6 1. 0.5
 end_HistosMuTauStat
 
 
+###########################################################
+### Histograms used to study W+jets highMT contamination (by signal + other backgrounds)
+###########################################################
+HistosMuTauWJetsContamination: FakeRate_HighMT_OS_, FakeRate_HighMT_SS_(1000), FakeRate_HighMT_Iso_Medium_OS_(2000), FakeRate_HighMT_Iso_Medium_SS_(3000), FakeRate_HighMT_InvertIso_Medium_OS_(4000), FakeRate_HighMT_InvertIso_Medium_SS_(5000) 
+
+
+# General event 
+h1f_sys 0 nevents ' Number of events ' 1 0.5 1.5
+h1f 1 nvertices ' Number of vertices ' 50 0. 50.
+h1f 2 rho ' #rho ' 50 0. 50.
+h1f_sys 3 weight ' Fake weight ' 1001 0. 1.001
+
+# muon
+h1f 10 l1_pt ' p_{T}^{l1} [GeV] ' 100 0. 100.
+h1f 11 l1_eta ' #eta^{l1} ' 50 -2.5 2.5
+h1f 12 l1_phi ' #phi^{l1} ' 50 -3.14159265359 3.14159265359 
+
+# Tau
+1binvbh1f 20 tau_pt ' p_{T}(#tau) [GeV] ' 14 20. 22. 24. 26. 30. 35. 40. 50. 60. 70. 90. 120. 150. 200.
+h1f 21 tau_eta ' #eta^{#tau} ' 12 -2.4 2.4
+h1f 22 tau_decayMode ' decay^{#tau} ' 15 -0.5 14.5
+h1f 23 tau_pdgId ' pdg id ' 45 -22.5 22.5
+h1f 24 tau_iso ' tau iso ' 500 0. 50.
+h1f 25 tau_strip_pt ' relative photons pT outside cone ' 100 0. 1.
+1binvbh1f 26 tau_jet_pt ' p_{T}(#tau,jet) [GeV] ' 13 10. 20. 30. 40. 50. 60. 70. 80. 90. 100. 120. 150. 200.
+
+# MuTau
+h1f_sys 50 mvis ' M_{vis} [GeV] ' 60 0. 300.
+h1f_sys 51 mt   ' M_{T} [GeV] ' 40 0. 200.
+
+
+
+
+end_HistosMuTauWJetsContamination
 

@@ -65,6 +65,7 @@ namespace AnHiMa
             const TParticlePair<Muon>& muonPair() const {return *m_muonPair;}
             const Tau& tau()             const {return m_tau;}
             const GenParticle& tauMatch()  const {return m_tauMatch;}
+            const Particle& tauJetMatch() const {return m_tauJetMatch;}
 
 
         private:
@@ -86,6 +87,7 @@ namespace AnHiMa
             std::unique_ptr< TParticlePair<Muon> > m_muonPair;
             Tau m_tau;
             GenParticle m_tauMatch;
+            Particle m_tauJetMatch;
 
     };
 }

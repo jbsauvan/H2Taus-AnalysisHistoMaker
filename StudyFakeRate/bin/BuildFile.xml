@@ -10,3 +10,9 @@
 <bin file="main_mutau_stat.cpp" name="fakeratestat.exe">
   <use name="AnHiMaCMG/StudyFakeRate"/>
 </bin>
+<bin file="main_mutau_wjetscontamination.cpp" name="fakeratewjetscontamination.exe">
+  <use name="AnHiMaCMG/StudyFakeRate"/>
+</bin>
+<bin file="main_mutau_fakeratewjetshighmt.cpp" name="fakeratewjetshighmt.exe">
+  <use name="AnHiMaCMG/StudyFakeRate"/>
+</bin>
