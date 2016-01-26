@@ -49,6 +49,9 @@ namespace AnHiMa
             bool passSelection(int selection=0);
             void connectVariables(TChain* inputChain);
             void update();
+            void setIsData(bool isData) {m_isData = isData;}
+
+            bool isData() {return m_isData;}
 
             int event()           const {return (int)m_event;}
             int lumi()            const {return (int)m_lumi;}
@@ -71,6 +74,8 @@ namespace AnHiMa
         private:
             static void callback(void*);
             void buildEvent();
+
+            bool m_isData;
 
             double m_event;
             double m_lumi;

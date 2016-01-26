@@ -26,6 +26,7 @@
 #include "AnHiMaCMG/Core/interface/IAnalysis.h"
 #include "AnHiMaCMG/Core/interface/EventAware.h"
 #include "AnHiMaCMG/H2TausCommon/interface/EventMuMu.h"
+#include "AnHiMaCMG/H2TausCommon/interface/PUWeights.h"
 
 
 
@@ -43,7 +44,9 @@ namespace AnHiMa
             void execute();
 
         private:
-            void fillHistos(unsigned);
+            void fillHistos(unsigned, const std::string&);
+
+            PUWeights m_puWeights;
     };
 }
 

@@ -290,6 +290,7 @@ bool EventMuMu::passSelection(int selection)
 {
     bool pass = true;
     pass &= (tau().pt > 0.);
+    pass &= (muonPair().M()>66. && muonPair().M()<116.); // Cut around Z mass
     switch(selection)
     {
         case 0: // Tau isolation raw < 1.5 GeV

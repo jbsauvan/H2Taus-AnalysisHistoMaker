@@ -46,7 +46,21 @@ bool AnalysisFakeRate::initialize(const string& parameterFile)
     event().connectVariables(m_inputChain);
 
     // Read parameters
-    //string pileupParamsFile = m_reader.params().GetValue("PileupParams", "/home/llr/cms/sauvan/CMSSW/HGCAL/CMSSW_6_2_0_SLHC19/src/AnHiMaCMG/ElectronClusterThreshold/data/thresholdParameters.txt");
+    std::string puWeightsDataFileName  = m_reader.params().GetValue("PUWeightsDataFile", "");
+    std::string puWeightsMCFileName    = m_reader.params().GetValue("PUWeightsMCFile", "");
+    std::string puWeightsDataHistoName = m_reader.params().GetValue("PUWeightsDataHisto", "pileup");
+    std::string puWeightsMCHistoName   = m_reader.params().GetValue("PUWeightsMCHisto", "pu_mc");
+    // 
+    event().setIsData(m_reader.params().GetValue("IsData", false));
+
+    std::cout<<"IsData             = " << event().isData() << "\n";
+    std::cout<<"PUWeightsDataFile  = " << puWeightsDataFileName << "\n";
+    std::cout<<"PUWeightsMCFile    = " << puWeightsMCFileName << "\n";
+    std::cout<<"PUWeightsDataHisto = " << puWeightsDataHistoName << "\n";
+    std::cout<<"PUWeightsMCHisto   = " << puWeightsMCHistoName << "\n";
+
+    bool ok = m_puWeights.initialize(puWeightsDataFileName, puWeightsMCFileName, puWeightsDataHistoName, puWeightsMCHistoName);
+    if(!ok) return false;
 
     return true;
 }
@@ -59,17 +73,29 @@ void AnalysisFakeRate::execute()
     event().update();
     for(unsigned sel=0; sel<=5; sel++)
     {
-        if(event().passSelection(sel)) fillHistos(sel);
+        if(event().passSelection(sel))
+        {
+            for(const auto& sys : systematicList())
+            {
+                fillHistos(sel, sys);
+            }
+        }
     }
 }
 
 /*****************************************************************/
-void AnalysisFakeRate::fillHistos(unsigned selection)
+void AnalysisFakeRate::fillHistos(unsigned selection, const std::string& sys)
 /*****************************************************************/
 {
-
-    short sysNum = 0;
+    short sysNum = systematicNumber(sys);
     float weight = event().weight();
+    float puWeight = 1.;
+    if(sys!="NoPUReweight" && !event().isData()) // apply PU reweighting
+    {
+        puWeight = m_puWeights.weight(event().npu());
+        weight *= puWeight;
+        //std::cout<<"NPU = "<<event().npu()<<" Weight = " << puWeight<<"\n";
+    }
     int hoffset  = 1000*selection;
 
 
@@ -78,6 +104,7 @@ void AnalysisFakeRate::fillHistos(unsigned selection)
     m_histos.FillHisto(0+hoffset, 1., weight, sysNum); // Number of events
     m_histos.FillHisto(1+hoffset, event().n_vertices(), weight, sysNum); 
     m_histos.FillHisto(2+hoffset, event().rho(), weight, sysNum); 
+    m_histos.FillHisto(3+hoffset, event().npu(), weight, sysNum); 
     //
 
     // Muon histos
@@ -94,6 +121,7 @@ void AnalysisFakeRate::fillHistos(unsigned selection)
      m_histos.FillHisto(50+hoffset, event().muonPair().M(), weight, sysNum);
 
      // Tau histos
+     m_histos.FillHisto(99+hoffset,  event().tau().Pt(), weight, sysNum);
      m_histos.FillHisto(100+hoffset, event().tau().Pt(), weight, sysNum);    
      m_histos.FillHisto(101+hoffset, event().tau().Eta(), weight, sysNum);
      m_histos.FillHisto(102+hoffset, event().tau().Phi(), weight, sysNum);
