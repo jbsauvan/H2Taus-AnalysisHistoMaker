@@ -1,6 +1,9 @@
 <bin file="main_zmumu.cpp" name="fakerate.exe">
   <use name="AnHiMaCMG/StudyFakeRate"/>
 </bin>
+<bin file="main_zmumu_mtstudy.cpp" name="fakerate_zmumu_mtstudy.exe">
+  <use name="AnHiMaCMG/StudyFakeRate"/>
+</bin>
 <bin file="main_mutau.cpp" name="fakerateapply.exe">
   <use name="AnHiMaCMG/StudyFakeRate"/>
 </bin>
@@ -14,5 +17,8 @@
   <use name="AnHiMaCMG/StudyFakeRate"/>
 </bin>
 <bin file="main_mutau_fakeratewjetshighmt.cpp" name="fakeratewjetshighmt.exe">
+  <use name="AnHiMaCMG/StudyFakeRate"/>
+</bin>
+<bin file="main_mutau_fakerateqcdss.cpp" name="fakerate_mutau_qcdss.exe">
   <use name="AnHiMaCMG/StudyFakeRate"/>
 </bin>

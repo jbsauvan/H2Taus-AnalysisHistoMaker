@@ -300,6 +300,39 @@ bool EventMuTau::passSelectionFakeFactors(int selection)
 }
 
 /*****************************************************************/
+bool EventMuTau::passSelectionFakeFactorsQCDSS(int selection)
+/*****************************************************************/
+{
+    bool pass = true;
+    pass &= (tau().pt > 0.);
+    pass &= (mt()<40.);
+    pass &= (tau().charge*muon().charge>0); 
+    switch(selection)
+    {
+        case 0: // Tau isolation raw < 1.5 GeV
+            pass &= (tau().byCombinedIsolationDeltaBetaCorrRaw3Hits < 1.5);
+            break;
+        case 1: // Reversed isolation raw > 1.5 GeV
+            pass &= (tau().byCombinedIsolationDeltaBetaCorrRaw3Hits > 1.5);
+            break;
+        case 2: // No isolation
+            break;
+        case 3: // Tau isolation medium
+            pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits >= 2);
+            break;
+        case 4: // Reverse tau isolation medium
+            pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits < 2);
+            break;
+        case 5: // Reversed medium isolation only reversing the raw isolation part
+            pass &= (tau().byCombinedIsolationDeltaBetaCorrRaw3Hits > 1.5 && tau().photonPtSumOutsideSignalCone/tau().Pt()<0.1);
+            break;
+        default:
+            break;
+    };
+    return pass;
+}
+
+/*****************************************************************/
 bool EventMuTau::passSelectionForPolarization(int selection)
 /*****************************************************************/
 {

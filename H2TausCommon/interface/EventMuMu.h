@@ -47,6 +47,7 @@ namespace AnHiMa
             ~EventMuMu();
 
             bool passSelection(int selection=0);
+            bool passSelectionMTStudy(int iso=0, int mt=0);
             void connectVariables(TChain* inputChain);
             void update();
             void setIsData(bool isData) {m_isData = isData;}
@@ -63,6 +64,7 @@ namespace AnHiMa
             float weight_vertex() const {return m_weight_vertex;}
             float mt()            const {return m_mt;}
             float mvis()          const {return m_mvis;}
+            float dimuon_mt()     const {return m_dimuon_mt;}
 
             const Muon& muon(unsigned i) const {return m_muons.at(i);}
             const TParticlePair<Muon>& muonPair() const {return *m_muonPair;}
@@ -87,6 +89,7 @@ namespace AnHiMa
             double m_weight_vertex;
             double m_mt;
             double m_mvis;
+            double m_dimuon_mt;
 
             std::vector<Muon> m_muons;
             std::unique_ptr< TParticlePair<Muon> > m_muonPair;

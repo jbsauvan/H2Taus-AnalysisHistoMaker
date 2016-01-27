@@ -20,8 +20,9 @@
 
 #include <iostream>
 #include "AnHiMaCMG/H2TausCommon/interface/EventMuMu.h"
-#include <TChain.h>
+#include "TChain.h"
 #include "TMath.h"
+#include "TVector2.h"
 
 
 using namespace AnHiMa;
@@ -318,6 +319,45 @@ bool EventMuMu::passSelection(int selection)
 
 
 /*****************************************************************/
+bool EventMuMu::passSelectionMTStudy(int iso, int mt)
+/*****************************************************************/
+{
+    bool pass = true;
+    pass &= (tau().pt > 0.);
+    pass &= (muonPair().M()>66. && muonPair().M()<116.); // Cut around Z mass
+    switch(iso)
+    {
+        case 0: // No isolation
+            break;
+        case 1: // Tau isolation medium
+            pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits >= 2);
+            break;
+        case 2: // Reverse tau isolation medium
+            pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits < 2);
+            break;
+        default:
+            break;
+    };
+    switch(mt)
+    {
+        case 0: // no mT cut
+            break;
+        case 1: // low mT
+            pass &= (dimuon_mt()<40.);
+            break;
+        case 2: // mT > 70GeV
+            pass &= (dimuon_mt()>70.);
+            break;
+        default:
+            break;
+    };
+    return pass;
+}
+
+
+
+
+/*****************************************************************/
 void EventMuMu::update()
 /*****************************************************************/
 {
@@ -352,6 +392,10 @@ void EventMuMu::buildEvent()
     // Compute tau sign-flip
     m_tau.sign_flip = (m_tau.charge*m_tauMatch.charge<0 ? -1 : 1);
     if(tau().charge==0 || tauMatch().charge==0) m_tau.sign_flip = 0;
+
+    // Compute muon pair mT
+    double muonDPhi = TVector2::Phi_mpi_pi(muon(1).Phi()-muon(0).Phi());
+    m_dimuon_mt = sqrt( 2.*muon(0).Et()*muon(1).Et()*(1.-cos(muonDPhi)) ); 
 }
 
 
