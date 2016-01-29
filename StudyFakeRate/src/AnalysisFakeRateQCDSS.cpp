@@ -100,6 +100,9 @@ void AnalysisFakeRateQCDSS::fillHistos(unsigned selection)
      m_histos.FillHisto(10+hoffset, event().muon().Pt(), weight, sysNum);    
      m_histos.FillHisto(11+hoffset, event().muon().Eta(), weight, sysNum);
      m_histos.FillHisto(12+hoffset, event().muon().Phi(), weight, sysNum);
+     m_histos.FillHisto(13+hoffset, event().muon().reliso05, weight, sysNum);
+
+
 
      // Tau histos
      m_histos.FillHisto(100+hoffset, event().tau().Pt(), weight, sysNum);    
@@ -111,6 +114,11 @@ void AnalysisFakeRateQCDSS::fillHistos(unsigned selection)
      m_histos.FillHisto(106+hoffset, event().tau().byCombinedIsolationDeltaBetaCorrRaw3Hits, weight, sysNum);
      m_histos.FillHisto(107+hoffset, fabs(event().tauMatch().pdgId)*(event().tau().sign_flip!=0 ? event().tau().sign_flip : 1), weight, sysNum);
      m_histos.FillHisto(108+hoffset, event().tauJetMatch().Pt(), weight, sysNum); 
+
+    // MuTau histos
+    m_histos.FillHisto(151+hoffset, event().mvis(), weight, sysNum);
+    m_histos.FillHisto(152+hoffset, event().mt(), weight, sysNum);
+
 
      // 2D histograms
      m_histos.FillHisto(200+hoffset, event().tau().Pt(), fabs(event().tau().Eta()), weight, sysNum);

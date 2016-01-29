@@ -56,13 +56,14 @@ for sample in samples:
 
     # Muon cuts
     #batch[-1].cuts.extend(["l1_reliso05<0.1","l1_muonid_medium>0.5","l1_pt>19"])
-    batch[-1].cuts.extend(["l1_muonid_medium>0.5","l1_pt>19"])
+    batch[-1].cuts.extend(["l1_muonid_medium>0.5","l1_pt>19"]) # TMP: used to study the impact of muon isolation on fake factor mT-dependency
     # Tau cuts
     batch[-1].cuts.extend(["l2_againstMuon3>1.5","l2_againstElectronMVA5>0.5","l2_decayModeFinding"])
     batch[-1].cuts.extend(["veto_dilepton<0.5", "veto_thirdlepton<0.5", "veto_otherlepton<0.5"])
     batch[-1].cuts.extend(["l2_decayModeFinding"])
     batch[-1].cuts.extend(["l2_pt>20"])
     batch[-1].cuts.extend(["l2_gen_match==6"])
+    batch[-1].cuts.extend(["genmet_pt>20"]) # TMP: used to have the same selection as Z+jets
     # Mu-Tau cuts
     #batch[-1].cuts.extend(["l1_charge*l2_charge<0"])
     # Sample specific cuts

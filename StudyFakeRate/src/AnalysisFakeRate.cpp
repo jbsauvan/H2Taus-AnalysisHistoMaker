@@ -119,6 +119,7 @@ void AnalysisFakeRate::fillHistos(unsigned selection, const std::string& sys)
      m_histos.FillHisto(23+hoffset, event().muon(1).reliso05, weight, sysNum);
 
      m_histos.FillHisto(50+hoffset, event().muonPair().M(), weight, sysNum);
+     m_histos.FillHisto(51+hoffset, event().muonPair().Pt(), weight, sysNum);
 
      // Tau histos
      m_histos.FillHisto(99+hoffset,  event().tau().Pt(), weight, sysNum);

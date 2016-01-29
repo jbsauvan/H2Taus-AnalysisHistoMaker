@@ -2,7 +2,7 @@ from AnhimaBatchLauncher import AnhimaBatchLauncher
 import glob
 
 ## Samples definition
-treeDirectory =  "/afs/cern.ch/work/s/steggema/public/mt/18112015/"
+treeDirectory =  "/afs/cern.ch/work/s/steggema/public/mt/151215/"
 treeProdName  =  "H2TauTauTreeProducerTauMu"
 
 
@@ -14,27 +14,46 @@ Dir  = "Dir"
 Cut  = "Cut"
 
 samples = []
-# MC
-samples.append({Name:"Z"        ,Dir:"DYJetsToLL_M50_LO",Cut:""})
-samples.append({Name:"W"        ,Dir:"WJetsToLNu_LO"    ,Cut:""})
-samples.append({Name:"TT"       ,Dir:"TT_pow"           ,Cut:""})
-samples.append({Name:"T_tWch"   ,Dir:"T_tWch"           ,Cut:""})
-samples.append({Name:"TBar_tWch",Dir:"TBar_tWch"        ,Cut:""})
-samples.append({Name:"ZZ"       ,Dir:"ZZp8"             ,Cut:""})
-samples.append({Name:"WZ"       ,Dir:"WZ"               ,Cut:""})
-samples.append({Name:"WW"       ,Dir:"WWTo2L2Nu"        ,Cut:""})
-samples.append({Name:"QCD"      ,Dir:"QCD_Mu15"         ,Cut:""})
-# Data
-samples.append({Name:"Data_Run15D_05Oct", Dir:"SingleMuon_Run2015D_05Oct"         ,Cut:""})
+samples.append({Name:"Z"           ,Dir:"DYJetsToLL_M50_LO",Cut:""})
+samples.append({Name:"W"           ,Dir:"WJetsToLNu_LO"    ,Cut:""})
+samples.append({Name:"TT"          ,Dir:"TT_pow_ext"       ,Cut:""})
+samples.append({Name:"T_tWch"      ,Dir:"T_tWch"           ,Cut:""})
+samples.append({Name:"TBar_tWch"   ,Dir:"TBar_tWch"        ,Cut:""})
+samples.append({Name:"QCD"         ,Dir:"QCD_Mu15"         ,Cut:""})
+#
+#samples.append({Name:"ZZTo4L"      ,Dir:"ZZTo4L"           ,Cut:""}) ## FIXME: output not there
+samples.append({Name:"ZZTo2L2Q"    ,Dir:"ZZTo2L2Q"         ,Cut:""})
+samples.append({Name:"WZTo3L"      ,Dir:"WZTo3L"           ,Cut:""})
+samples.append({Name:"WZTo2L2Q"    ,Dir:"WZTo2L2Q"         ,Cut:""})
+samples.append({Name:"WZTo1L3Nu"   ,Dir:"WZTo1L3Nu"        ,Cut:""})
+samples.append({Name:"WZTo1L1Nu2Q" ,Dir:"WZTo1L1Nu2Q"      ,Cut:""})
+samples.append({Name:"VVTo2L2Nu"   ,Dir:"VVTo2L2Nu"        ,Cut:""})
+samples.append({Name:"WWTo1L1Nu2Q" ,Dir:"WWTo1L1Nu2Q"      ,Cut:""})
+#
 samples.append({Name:"Data_Run15D_v4",    Dir:"SingleMuon_Run2015D_v4"            ,Cut:""})
+samples.append({Name:"Data_Run15D_05Oct", Dir:"SingleMuon_Run2015D_05Oct"         ,Cut:""})
+### Old samples
+# MC
+#samples.append({Name:"Z"        ,Dir:"DYJetsToLL_M50_LO",Cut:""})
+#samples.append({Name:"W"        ,Dir:"WJetsToLNu_LO"    ,Cut:""})
+#samples.append({Name:"TT"       ,Dir:"TT_pow"           ,Cut:""})
+#samples.append({Name:"T_tWch"   ,Dir:"T_tWch"           ,Cut:""})
+#samples.append({Name:"TBar_tWch",Dir:"TBar_tWch"        ,Cut:""})
+#samples.append({Name:"ZZ"       ,Dir:"ZZp8"             ,Cut:""})
+#samples.append({Name:"WZ"       ,Dir:"WZ"               ,Cut:""})
+#samples.append({Name:"WW"       ,Dir:"WWTo2L2Nu"        ,Cut:""})
+#samples.append({Name:"QCD"      ,Dir:"QCD_Mu15"         ,Cut:""})
+## Data
+#samples.append({Name:"Data_Run15D_05Oct", Dir:"SingleMuon_Run2015D_05Oct"         ,Cut:""})
+#samples.append({Name:"Data_Run15D_v4",    Dir:"SingleMuon_Run2015D_v4"            ,Cut:""})
 
 
 ## Definition of fake factors
-fakeFactorsFile1D = "/afs/cern.ch/user/j/jsauvan/workspace/Projects/Htautau_Run2/Studies/FakeRate/ComputeFakeRates/plots/FakeFactors_ZMuMu_1D/FakeFactors_ZMuMu_1D.root"
-fakeFactorsFile2D = "/afs/cern.ch/user/j/jsauvan/workspace/Projects/Htautau_Run2/Studies/FakeRate/ComputeFakeRates/plots/FakeFactors_ZMuMu_2D/FakeFactors_ZMuMu_2D.root"
-fakeFactors = []
-## !IsoMedium -> IsoMedium
-fakeFactors.append({Name:"Weight_Iso_Medium_VsPtDecay", File:fakeFactorsFile2D, Type:"2DHisto", Object:"FakeFactors_ZMuMu_2D_Iso_Medium_InvertIso_Medium_tau_pt_vs_decayMode"})
+#fakeFactorsFile1D = "/afs/cern.ch/user/j/jsauvan/workspace/Projects/Htautau_Run2/Studies/FakeRate/ComputeFakeRates/plots/FakeFactors_ZMuMu_1D/FakeFactors_ZMuMu_1D.root"
+#fakeFactorsFile2D = "/afs/cern.ch/user/j/jsauvan/workspace/Projects/Htautau_Run2/Studies/FakeRate/ComputeFakeRates/plots/FakeFactors_ZMuMu_2D/FakeFactors_ZMuMu_2D.root"
+#fakeFactors = []
+### !IsoMedium -> IsoMedium
+#fakeFactors.append({Name:"Weight_Iso_Medium_VsPtDecay", File:fakeFactorsFile2D, Type:"2DHisto", Object:"FakeFactors_ZMuMu_2D_Iso_Medium_InvertIso_Medium_tau_pt_vs_decayMode"})
 
 
 
@@ -72,17 +91,17 @@ for sample in samples:
         batch[-1].cuts.append(sample[Cut])
 
     # Fake factors
-    systematics = ""
-    for fakeFactor in fakeFactors:
-        systematics += fakeFactor[Name]
-        systematics += ":"
-    batch[-1].additionalParameters["Systematics"] = systematics[:-1]
-    #
-    batch[-1].additionalParameters["NumberOfFakeFactors"] = str(len(fakeFactors))
-    for i,fakeFactor in enumerate(fakeFactors):
-        batch[-1].additionalParameters["FakeFactor.{0}.Name".format(i+1)]   = fakeFactor[Name]
-        batch[-1].additionalParameters["FakeFactor.{0}.File".format(i+1)]   = fakeFactor[File]
-        batch[-1].additionalParameters["FakeFactor.{0}.Object".format(i+1)] = fakeFactor[Object]
-        batch[-1].additionalParameters["FakeFactor.{0}.Type".format(i+1)]   = fakeFactor[Type]
+    #systematics = ""
+    #for fakeFactor in fakeFactors:
+        #systematics += fakeFactor[Name]
+        #systematics += ":"
+    #batch[-1].additionalParameters["Systematics"] = systematics[:-1]
+    ##
+    #batch[-1].additionalParameters["NumberOfFakeFactors"] = str(len(fakeFactors))
+    #for i,fakeFactor in enumerate(fakeFactors):
+        #batch[-1].additionalParameters["FakeFactor.{0}.Name".format(i+1)]   = fakeFactor[Name]
+        #batch[-1].additionalParameters["FakeFactor.{0}.File".format(i+1)]   = fakeFactor[File]
+        #batch[-1].additionalParameters["FakeFactor.{0}.Object".format(i+1)] = fakeFactor[Object]
+        #batch[-1].additionalParameters["FakeFactor.{0}.Type".format(i+1)]   = fakeFactor[Type]
 
 

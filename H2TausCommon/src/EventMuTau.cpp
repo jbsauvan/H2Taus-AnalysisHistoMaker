@@ -267,12 +267,12 @@ bool EventMuTau::passSelection(int selection)
 }
 
 /*****************************************************************/
-bool EventMuTau::passSelectionFakeFactors(int selection)
+bool EventMuTau::passSelectionFakeFactorsWJetsHighMT(int selection)
 /*****************************************************************/
 {
     bool pass = true;
     pass &= (tau().pt > 0.);
-    pass &= (mt()>40.);
+    pass &= (mt()>70.);
     pass &= (tau().charge*muon().charge<0); //FIXME: only OS for the moment
     switch(selection)
     {
@@ -421,33 +421,34 @@ bool EventMuTau::passSelectionWJetsContamination(int selection)
 {
     bool pass = true;
     pass &= (tau().pt > 0.);
+    double highMtCut = 70.;
     switch(selection)
     {
         case 0: // high-MT + OS
-            pass &= (mt()>40.);
+            pass &= (mt()>highMtCut);
             pass &= (tau().charge*muon().charge<0);
             break;
         case 1: // high-MT + SS
-            pass &= (mt()>40.);
+            pass &= (mt()>highMtCut);
             pass &= (tau().charge*muon().charge>0);
             break;
         case 2: // high-MT + OS + medium iso
-            pass &= (mt()>40.);
+            pass &= (mt()>highMtCut);
             pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits >= 2);
             pass &= (tau().charge*muon().charge<0);
             break;
         case 3: // high-MT + SS + medium iso
-            pass &= (mt()>40.);
+            pass &= (mt()>highMtCut);
             pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits >= 2);
             pass &= (tau().charge*muon().charge>0);
             break;
         case 4: // high-MT + OS + anti medium iso
-            pass &= (mt()>40.);
+            pass &= (mt()>highMtCut);
             pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits < 2);
             pass &= (tau().charge*muon().charge<0);
             break;
         case 5: // high-MT + SS + anti medium iso
-            pass &= (mt()>40.);
+            pass &= (mt()>highMtCut);
             pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits < 2);
             pass &= (tau().charge*muon().charge>0);
             break;

@@ -13,16 +13,18 @@ h1f_sys 0 nevents ' Number of events ' 1 0.5 1.5
 h1f_sys 10 l1_pt ' p_{T}^{l1} [GeV] ' 100 0. 100.
 h1f_sys 11 l1_eta ' #eta^{l1} ' 50 -2.5 2.5
 h1f_sys 12 l1_phi ' #phi^{l1} ' 50 -3.14159265359 3.14159265359 
-h1f_sys 13 l1_reliso05 ' iso^{l1} ' 100 0. 0.2
+h1f_sys 13 l1_reliso05 ' iso^{l1} ' 500 0. 1.
 
 # Second muon
-h1f_sys 20 l2_pt ' p_{T}^{l1} [GeV] ' 100 0. 100.
-h1f_sys 21 l2_eta ' #eta^{l1} ' 50 -2.5 2.5
-h1f_sys 22 l2_phi ' #phi^{l1} ' 50 -3.14159265359 3.14159265359
-h1f_sys 23 l2_reliso05 ' iso^{l1} ' 100 0. 0.2
+h1f_sys 20 l2_pt ' p_{T}^{l2} [GeV] ' 100 0. 100.
+h1f_sys 21 l2_eta ' #eta^{l2} ' 50 -2.5 2.5
+h1f_sys 22 l2_phi ' #phi^{l2} ' 50 -3.14159265359 3.14159265359
+h1f_sys 23 l2_reliso05 ' iso^{l2} ' 100 0. 0.2
 
 # Dimuon mass
 h1f_sys 50 l1l2_mass ' M_{#mu#mu} [GeV] ' 70 50. 120.
+h1f_sys 51 l1l2_pt ' p_{T}^{#mu#mu} [GeV] ' 20 0. 200.
+
 
 # Tau
 h1f_sys 99 tau_pt_fixedbin ' p_{T}(#tau) [GeV] ' 40 0. 100.
@@ -35,6 +37,10 @@ h1f_sys 105 tau_againstElectronMVA5 ' tau-ele discriminant ' 30 0. 3.
 h1f_sys 106 tau_iso ' tau isolation ' 200 0. 20.
 h1f_sys 107 tau_pdgId ' pdg id ' 45 -22.5 22.5
 1binvbh1f_sys 108 tau_jet_pt ' p_{T}(#jet) [GeV] ' 10 10. 20. 30. 40. 50. 60. 80. 100. 150. 300.
+
+# Mu Tau
+h1f_sys 151 mvis ' M_{vis} [GeV] ' 60 0. 300.
+h1f_sys 152 mt   ' M_{T} [GeV] ' 40 0. 200.
 
 # 2D histograms
 2binvbh2f_sys 200 tau_pt_vs_eta ' #eta^{#tau} vs p_{T}(#tau) [GeV] ' 

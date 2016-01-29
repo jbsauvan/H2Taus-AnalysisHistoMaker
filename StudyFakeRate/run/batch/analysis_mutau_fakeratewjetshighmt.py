@@ -2,7 +2,7 @@ from AnhimaBatchLauncher import AnhimaBatchLauncher
 import glob
 
 ## Samples definition
-treeDirectory =  "/afs/cern.ch/work/s/steggema/public/mt/18112015/"
+treeDirectory =  "/afs/cern.ch/work/s/steggema/public/mt/151215/"
 treeProdName  =  "H2TauTauTreeProducerTauMu"
 
 
@@ -14,9 +14,28 @@ Dir  = "Dir"
 Cut  = "Cut"
 
 samples = []
+samples.append({Name:"Z"           ,Dir:"DYJetsToLL_M50_LO",Cut:""})
+samples.append({Name:"W"           ,Dir:"WJetsToLNu_LO"    ,Cut:""})
+samples.append({Name:"TT"          ,Dir:"TT_pow_ext"       ,Cut:""})
+samples.append({Name:"T_tWch"      ,Dir:"T_tWch"           ,Cut:""})
+samples.append({Name:"TBar_tWch"   ,Dir:"TBar_tWch"        ,Cut:""})
+samples.append({Name:"QCD"         ,Dir:"QCD_Mu15"         ,Cut:""})
+#
+#samples.append({Name:"ZZTo4L"      ,Dir:"ZZTo4L"           ,Cut:""}) ## FIXME: output not there
+samples.append({Name:"ZZTo2L2Q"    ,Dir:"ZZTo2L2Q"         ,Cut:""})
+samples.append({Name:"WZTo3L"      ,Dir:"WZTo3L"           ,Cut:""})
+samples.append({Name:"WZTo2L2Q"    ,Dir:"WZTo2L2Q"         ,Cut:""})
+samples.append({Name:"WZTo1L3Nu"   ,Dir:"WZTo1L3Nu"        ,Cut:""})
+samples.append({Name:"WZTo1L1Nu2Q" ,Dir:"WZTo1L1Nu2Q"      ,Cut:""})
+samples.append({Name:"VVTo2L2Nu"   ,Dir:"VVTo2L2Nu"        ,Cut:""})
+samples.append({Name:"WWTo1L1Nu2Q" ,Dir:"WWTo1L1Nu2Q"      ,Cut:""})
+#
+samples.append({Name:"Data_Run15D_v4",    Dir:"SingleMuon_Run2015D_v4"            ,Cut:""})
+samples.append({Name:"Data_Run15D_05Oct", Dir:"SingleMuon_Run2015D_05Oct"         ,Cut:""})
+### Old samples
 # MC
 #samples.append({Name:"Z"        ,Dir:"DYJetsToLL_M50_LO",Cut:""})
-samples.append({Name:"W"        ,Dir:"WJetsToLNu_LO"    ,Cut:""})
+#samples.append({Name:"W"        ,Dir:"WJetsToLNu_LO"    ,Cut:""})
 #samples.append({Name:"TT"       ,Dir:"TT_pow"           ,Cut:""})
 #samples.append({Name:"T_tWch"   ,Dir:"T_tWch"           ,Cut:""})
 #samples.append({Name:"TBar_tWch",Dir:"TBar_tWch"        ,Cut:""})

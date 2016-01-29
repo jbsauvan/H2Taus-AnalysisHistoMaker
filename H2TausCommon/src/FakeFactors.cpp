@@ -307,5 +307,12 @@ double FakeFactors::retrieveFakeFactor(const std::string& name, const EventMuTau
     {
         std::cout<<"ERROR: Unknown type of fake factor\n";
     }
+    // Apply high-mT -> low-mT correction factor
+    if(name.find("HighMT")!=std::string::npos)
+    {
+        factor *= 0.39;
+    }
+
+
     return factor;
 }
