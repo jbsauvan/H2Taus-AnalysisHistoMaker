@@ -6,7 +6,8 @@ import copy
 cmssw_base = os.environ['CMSSW_BASE']
 
 ## samples
-treeDirectory =  "/afs/cern.ch/user/s/steggema/work/public/mm/190116/"
+#treeDirectory =  "/afs/cern.ch/user/s/steggema/work/public/mm/190116/"
+treeDirectory =  "/afs/cern.ch/work/j/jsauvan/public/HTauTau/Trees/mm/v20160130/"
 treeProdName  =  "H2TauTauTreeProducerMuMu"
 
 Name = "Name"
@@ -19,30 +20,30 @@ Cut  = "Cut"
 
 samples = []
 samples.append({Name:"Z"           ,Dir:"DYJetsToLL_M50_LO",Cut:""})
-samples.append({Name:"W"           ,Dir:"WJetsToLNu_LO"    ,Cut:""})
-samples.append({Name:"TT"          ,Dir:"TT_pow_ext"       ,Cut:""})
-samples.append({Name:"T_tWch"      ,Dir:"T_tWch"           ,Cut:""})
-samples.append({Name:"TBar_tWch"   ,Dir:"TBar_tWch"        ,Cut:""})
-samples.append({Name:"QCD"         ,Dir:"QCD_Mu15"         ,Cut:""})
-#
-#samples.append({Name:"ZZTo4L"      ,Dir:"ZZTo4L"           ,Cut:""}) ## FIXME: output not there
-samples.append({Name:"ZZTo2L2Q"    ,Dir:"ZZTo2L2Q"         ,Cut:""})
-samples.append({Name:"WZTo3L"      ,Dir:"WZTo3L"           ,Cut:""})
-samples.append({Name:"WZTo2L2Q"    ,Dir:"WZTo2L2Q"         ,Cut:""})
-samples.append({Name:"WZTo1L3Nu"   ,Dir:"WZTo1L3Nu"        ,Cut:""})
-samples.append({Name:"WZTo1L1Nu2Q" ,Dir:"WZTo1L1Nu2Q"      ,Cut:""})
-samples.append({Name:"VVTo2L2Nu"   ,Dir:"VVTo2L2Nu"        ,Cut:""})
-samples.append({Name:"WWTo1L1Nu2Q" ,Dir:"WWTo1L1Nu2Q"      ,Cut:""})
-#
-samples.append({Name:"Data_Run15D_v4",    Dir:"SingleMuon_Run2015D_v4"            ,Cut:""})
-samples.append({Name:"Data_Run15D_05Oct", Dir:"SingleMuon_Run2015D_05Oct"         ,Cut:""})
+#samples.append({Name:"W"           ,Dir:"WJetsToLNu_LO"    ,Cut:""})
+#samples.append({Name:"TT"          ,Dir:"TT_pow_ext"       ,Cut:""})
+#samples.append({Name:"T_tWch"      ,Dir:"T_tWch"           ,Cut:""})
+#samples.append({Name:"TBar_tWch"   ,Dir:"TBar_tWch"        ,Cut:""})
+#samples.append({Name:"QCD"         ,Dir:"QCD_Mu15"         ,Cut:""})
+##
+##samples.append({Name:"ZZTo4L"      ,Dir:"ZZTo4L"           ,Cut:""}) ## FIXME: output not there
+#samples.append({Name:"ZZTo2L2Q"    ,Dir:"ZZTo2L2Q"         ,Cut:""})
+#samples.append({Name:"WZTo3L"      ,Dir:"WZTo3L"           ,Cut:""})
+#samples.append({Name:"WZTo2L2Q"    ,Dir:"WZTo2L2Q"         ,Cut:""})
+#samples.append({Name:"WZTo1L3Nu"   ,Dir:"WZTo1L3Nu"        ,Cut:""})
+#samples.append({Name:"WZTo1L1Nu2Q" ,Dir:"WZTo1L1Nu2Q"      ,Cut:""})
+#samples.append({Name:"VVTo2L2Nu"   ,Dir:"VVTo2L2Nu"        ,Cut:""})
+#samples.append({Name:"WWTo1L1Nu2Q" ,Dir:"WWTo1L1Nu2Q"      ,Cut:""})
+##
+#samples.append({Name:"Data_Run15D_v4",    Dir:"SingleMuon_Run2015D_v4"            ,Cut:""})
+#samples.append({Name:"Data_Run15D_05Oct", Dir:"SingleMuon_Run2015D_05Oct"         ,Cut:""})
 
 ## selection
 cuts = []
 ### Muon cuts
 #cuts.extend(["l1_gen_match==2","l2_gen_match==2"])
-cuts.extend(["l1_reliso05<0.1","l1_muonid_medium>0.5","l1_pt>19"])
-cuts.extend(["l2_reliso05<0.1","l2_muonid_medium>0.5","l2_pt>10"])
+cuts.extend(["l1_reliso05<0.1","l1_muonid_medium>0.5","l1_pt>20"])
+cuts.extend(["l2_reliso05<0.1","l2_muonid_medium>0.5","l2_pt>5"])
 cuts.extend(["l1_charge*l2_charge<0"])
 # Tau cuts
 cuts.extend(["tau1_againstMuon3>1.5","tau1_againstElectronMVA5>0.5","tau1_pt>20"])
