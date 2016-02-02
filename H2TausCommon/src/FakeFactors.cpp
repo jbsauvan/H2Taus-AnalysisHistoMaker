@@ -310,7 +310,7 @@ double FakeFactors::retrieveFakeFactor(const std::string& name, const EventMuTau
     // Apply high-mT -> low-mT correction factor
     if(name.find("HighMT")!=std::string::npos)
     {
-        factor *= 0.39;
+        factor *= 0.685578; // extrapolation factor derived from Z+jet MC, with pT(muon2)>5GeV
     }
 
 
