@@ -50,6 +50,8 @@ cuts.extend(["tau1_againstMuon3>1.5","tau1_againstElectronMVA5>0.5","tau1_pt>20"
 cuts.extend(["tau1_decayModeFinding"])
 # Event cuts
 cuts.extend(['!veto_dilepton && !veto_thirdlepton && !veto_otherlepton'])
+# Remove events with bad missing ET
+cuts.extend(['!(met_pt < 0.15 && met_phi > 0. && met_phi < 1.8)'])
 
 batch = []
 

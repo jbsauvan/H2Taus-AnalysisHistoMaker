@@ -148,7 +148,9 @@ void AnalysisFakeRateApply::fillHistos(unsigned selection, const std::string& sy
 
     // MuTau histos
     m_histos.FillHisto(50+hoffset, event().mvis(), weight, sysNum);
-    m_histos.FillHisto(51+hoffset, event().mt(), weight, sysNum);
+    m_histos.FillHisto(51+hoffset, event().mvis(), weight, sysNum);
+    m_histos.FillHisto(52+hoffset, event().mvis(), weight, sysNum);
+    m_histos.FillHisto(53+hoffset, event().mt(), weight, sysNum);
 
     // Histos depending on gen_match
     m_histos.Fill1BinHisto(100+hoffset, event().tau().gen_match, 0.5, weight, sysNum);
@@ -158,7 +160,9 @@ void AnalysisFakeRateApply::fillHistos(unsigned selection, const std::string& sy
     m_histos.Fill1BinHisto(140+hoffset, event().tau().gen_match, event().tau().decayMode, event().weight(), sysNum);
     m_histos.Fill1BinHisto(150+hoffset, event().tau().gen_match, fabs(event().tauMatch().pdgId)*(event().tau().sign_flip!=0 ? event().tau().sign_flip : 1), event().weight(), sysNum);
     m_histos.Fill1BinHisto(160+hoffset, event().tau().gen_match, event().mvis(), weight, sysNum);
-    m_histos.Fill1BinHisto(170+hoffset, event().tau().gen_match, event().mt(), weight, sysNum);
+    m_histos.Fill1BinHisto(170+hoffset, event().tau().gen_match, event().mvis(), weight, sysNum);
+    m_histos.Fill1BinHisto(180+hoffset, event().tau().gen_match, event().mvis(), weight, sysNum);
+    m_histos.Fill1BinHisto(190+hoffset, event().tau().gen_match, event().mt(), weight, sysNum);
 
     // Histos depending on pdg ID
     m_histos.Fill1BinHisto(200+hoffset, fabs(event().tauMatch().pdgId), 0.5, weight, sysNum);

@@ -3,11 +3,11 @@ from FakeFactorsLocations import fakeFactors
 import glob
 
 ## Samples definition
-treeDirectory =  "/afs/cern.ch/work/s/steggema/public/mt/151215/"
+treeDirectory =  "/afs/cern.ch/work/j/jsauvan/public/HTauTau/Trees/mt/151215/"
 treeProdName  =  "H2TauTauTreeProducerTauMu"
 
-#fakeFactorsType = 'ZMuMu'
-fakeFactorsType = 'HighMT'
+fakeFactorsType = 'ZMuMu'
+#fakeFactorsType = 'HighMT'
 
 
 if not fakeFactorsType in fakeFactors:
@@ -88,6 +88,8 @@ for sample in samples:
     batch[-1].cuts.extend(["l2_pt>20"])
     # Mu-Tau cuts
     batch[-1].cuts.extend(["l1_charge*l2_charge<0"])
+    # Remove events with bad missing ET
+    batch[-1].cuts.extend(['!(met_pt < 0.15 && met_phi > 0. && met_phi < 1.8)'])
     # Sample specific cuts
     if sample[Cut]!="":
         batch[-1].cuts.append(sample[Cut])

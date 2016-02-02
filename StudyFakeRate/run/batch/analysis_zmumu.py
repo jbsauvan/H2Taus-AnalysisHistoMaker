@@ -6,7 +6,7 @@ import copy
 cmssw_base = os.environ['CMSSW_BASE']
 
 ## samples
-treeDirectory =  "/afs/cern.ch/user/s/steggema/work/public/mm/190116/"
+treeDirectory =  "/afs/cern.ch/work/j/jsauvan/public/HTauTau/Trees/mm/190116/"
 treeProdName  =  "H2TauTauTreeProducerMuMu"
 
 Name = "Name"
@@ -49,6 +49,8 @@ cuts.extend(["tau1_againstMuon3>1.5","tau1_againstElectronMVA5>0.5","tau1_pt>20"
 cuts.extend(["tau1_decayModeFinding"])
 # Event cuts
 cuts.extend(['!veto_dilepton && !veto_thirdlepton && !veto_otherlepton'])
+# Remove events with bad missing ET
+cuts.extend(['!(met_pt < 0.15 && met_phi > 0. && met_phi < 1.8)'])
 
 batch = []
 
