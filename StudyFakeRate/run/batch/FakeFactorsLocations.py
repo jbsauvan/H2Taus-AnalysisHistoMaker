@@ -91,3 +91,42 @@ fakeFactorsHighMT.fakeFactors.append({Name:"Weight_HighMT_Iso_Medium_VsPtDecay" 
 fakeFactorsHighMT.fakeFactors.append({Name:"Weight_HighMT_Iso_Medium_VsPtPdgId"   , File:fakeFactorsHighMT.fakeFactorsFile2D, Type:"2DHisto", Object:"FakeFactors_HighMT_2D_Iso_Medium_InvertIso_Medium_tau_pt_vs_mergedPdgId"})
 fakeFactorsHighMT.fakeFactors.append({Name:"Weight_HighMT_Iso_Medium_VsJetPtDecay", File:fakeFactorsHighMT.fakeFactorsFile2D, Type:"2DHisto", Object:"FakeFactors_HighMT_2D_Iso_Medium_InvertIso_Medium_tau_jet_pt_vs_decayMode"})
 fakeFactorsHighMT.fakeFactors.append({Name:"Weight_HighMT_Iso_Medium_VsJetPtPt"   , File:fakeFactorsHighMT.fakeFactorsFile2D, Type:"2DHisto", Object:"FakeFactors_HighMT_2D_Iso_Medium_InvertIso_Medium_tau_jet_pt_vs_pt"})
+
+
+#####################################################
+### QCDSS
+fakeFactorsQCDSS = FakeFactors()
+fakeFactors['QCDSS'] = fakeFactorsQCDSS
+fakeFactorsQCDSS.fakeFactorsFile1D = "/afs/cern.ch/user/j/jsauvan/workspace/Projects/Htautau_Run2/Studies/FakeRate/ComputeFakeRates/plots/FakeFactors_QCDSS_1D/FakeFactors_QCDSS_1D.root"
+fakeFactorsQCDSS.fakeFactorsFile2D = "/afs/cern.ch/user/j/jsauvan/workspace/Projects/Htautau_Run2/Studies/FakeRate/ComputeFakeRates/plots/FakeFactors_QCDSS_2D/FakeFactors_QCDSS_2D.root"
+## IsoRaw > 1.5 GeV -> IsoRaw < 1.5 GeV
+# 1D
+fakeFactorsQCDSS.fakeFactors.append({Name:"Weight_QCDSS_IsoRaw_1_5_Inclusive"   , File:fakeFactorsQCDSS.fakeFactorsFile1D, Type:"1DGraph", Object:"FakeFactors_QCDSS_1D_IsoRaw_1_5_InvertIsoRaw_1_5_nevents"})
+#fakeFactorsQCDSS.fakeFactors.append({Name:"Weight_QCDSS_IsoRaw_1_5_VsNVtx"      , File:fakeFactorsQCDSS.fakeFactorsFile1D, Type:"1DGraph", Object:"FakeFactors_QCDSS_1D_IsoRaw_1_5_InvertIsoRaw_1_5_nvertices"})
+fakeFactorsQCDSS.fakeFactors.append({Name:"Weight_QCDSS_IsoRaw_1_5_VsPt"        , File:fakeFactorsQCDSS.fakeFactorsFile1D, Type:"1DGraph", Object:"FakeFactors_QCDSS_1D_IsoRaw_1_5_InvertIsoRaw_1_5_tau_pt"})
+#fakeFactorsQCDSS.fakeFactors.append({Name:"Weight_QCDSS_IsoRaw_1_5_VsEta"       , File:fakeFactorsQCDSS.fakeFactorsFile1D, Type:"1DGraph", Object:"FakeFactors_QCDSS_1D_IsoRaw_1_5_InvertIsoRaw_1_5_tau_eta"})
+fakeFactorsQCDSS.fakeFactors.append({Name:"Weight_QCDSS_IsoRaw_1_5_VsDecay"     , File:fakeFactorsQCDSS.fakeFactorsFile1D, Type:"1DGraph", Object:"FakeFactors_QCDSS_1D_IsoRaw_1_5_InvertIsoRaw_1_5_tau_decayMode"})
+fakeFactorsQCDSS.fakeFactors.append({Name:"Weight_QCDSS_IsoRaw_1_5_VsPdgId"     , File:fakeFactorsQCDSS.fakeFactorsFile1D, Type:"1DGraph", Object:"FakeFactors_QCDSS_1D_IsoRaw_1_5_InvertIsoRaw_1_5_tau_pdgId"})
+fakeFactorsQCDSS.fakeFactors.append({Name:"Weight_QCDSS_IsoRaw_1_5_VsJetPt"     , File:fakeFactorsQCDSS.fakeFactorsFile1D, Type:"1DGraph", Object:"FakeFactors_QCDSS_1D_IsoRaw_1_5_InvertIsoRaw_1_5_tau_jet_pt"})
+# 2D
+#fakeFactorsQCDSS.fakeFactors.append({Name:"Weight_QCDSS_IsoRaw_1_5_VsPtEta"     , File:fakeFactorsQCDSS.fakeFactorsFile2D, Type:"2DHisto", Object:"FakeFactors_QCDSS_2D_IsoRaw_1_5_InvertIsoRaw_1_5_tau_pt_vs_eta"})
+fakeFactorsQCDSS.fakeFactors.append({Name:"Weight_QCDSS_IsoRaw_1_5_VsPtDecay"   , File:fakeFactorsQCDSS.fakeFactorsFile2D, Type:"2DHisto", Object:"FakeFactors_QCDSS_2D_IsoRaw_1_5_InvertIsoRaw_1_5_tau_pt_vs_decayMode"})
+fakeFactorsQCDSS.fakeFactors.append({Name:"Weight_QCDSS_IsoRaw_1_5_VsPtPdgId"   , File:fakeFactorsQCDSS.fakeFactorsFile2D, Type:"2DHisto", Object:"FakeFactors_QCDSS_2D_IsoRaw_1_5_InvertIsoRaw_1_5_tau_pt_vs_mergedPdgId"})
+fakeFactorsQCDSS.fakeFactors.append({Name:"Weight_QCDSS_IsoRaw_1_5_VsJetPtDecay", File:fakeFactorsQCDSS.fakeFactorsFile2D, Type:"2DHisto", Object:"FakeFactors_QCDSS_2D_IsoRaw_1_5_InvertIsoRaw_1_5_tau_jet_pt_vs_decayMode"})
+fakeFactorsQCDSS.fakeFactors.append({Name:"Weight_QCDSS_IsoRaw_1_5_VsJetPtPt"   , File:fakeFactorsQCDSS.fakeFactorsFile2D, Type:"2DHisto", Object:"FakeFactors_QCDSS_2D_IsoRaw_1_5_InvertIsoRaw_1_5_tau_jet_pt_vs_pt"})
+
+## !IsoMedium -> IsoMedium
+# 1D
+fakeFactorsQCDSS.fakeFactors.append({Name:"Weight_QCDSS_Iso_Medium_Inclusive"   , File:fakeFactorsQCDSS.fakeFactorsFile1D, Type:"1DGraph", Object:"FakeFactors_QCDSS_1D_Iso_Medium_InvertIso_Medium_nevents"})
+#fakeFactorsQCDSS.fakeFactors.append({Name:"Weight_QCDSS_Iso_Medium_VsNVtx"      , File:fakeFactorsQCDSS.fakeFactorsFile1D, Type:"1DGraph", Object:"FakeFactors_QCDSS_1D_Iso_Medium_InvertIso_Medium_nvertices"})
+fakeFactorsQCDSS.fakeFactors.append({Name:"Weight_QCDSS_Iso_Medium_VsPt"        , File:fakeFactorsQCDSS.fakeFactorsFile1D, Type:"1DGraph", Object:"FakeFactors_QCDSS_1D_Iso_Medium_InvertIso_Medium_tau_pt"})
+#fakeFactorsQCDSS.fakeFactors.append({Name:"Weight_QCDSS_Iso_Medium_VsEta"       , File:fakeFactorsQCDSS.fakeFactorsFile1D, Type:"1DGraph", Object:"FakeFactors_QCDSS_1D_Iso_Medium_InvertIso_Medium_tau_eta"})
+fakeFactorsQCDSS.fakeFactors.append({Name:"Weight_QCDSS_Iso_Medium_VsDecay"     , File:fakeFactorsQCDSS.fakeFactorsFile1D, Type:"1DGraph", Object:"FakeFactors_QCDSS_1D_Iso_Medium_InvertIso_Medium_tau_decayMode"})
+fakeFactorsQCDSS.fakeFactors.append({Name:"Weight_QCDSS_Iso_Medium_VsPdgId"     , File:fakeFactorsQCDSS.fakeFactorsFile1D, Type:"1DGraph", Object:"FakeFactors_QCDSS_1D_Iso_Medium_InvertIso_Medium_tau_pdgId"})
+fakeFactorsQCDSS.fakeFactors.append({Name:"Weight_QCDSS_Iso_Medium_VsJetPt"     , File:fakeFactorsQCDSS.fakeFactorsFile1D, Type:"1DGraph", Object:"FakeFactors_QCDSS_1D_Iso_Medium_InvertIso_Medium_tau_jet_pt"})
+# 2D
+#fakeFactorsQCDSS.fakeFactors.append({Name:"Weight_QCDSS_Iso_Medium_VsPtEta"     , File:fakeFactorsQCDSS.fakeFactorsFile2D, Type:"2DHisto", Object:"FakeFactors_QCDSS_2D_Iso_Medium_InvertIso_Medium_tau_pt_vs_eta"})
+fakeFactorsQCDSS.fakeFactors.append({Name:"Weight_QCDSS_Iso_Medium_VsPtDecay"   , File:fakeFactorsQCDSS.fakeFactorsFile2D, Type:"2DHisto", Object:"FakeFactors_QCDSS_2D_Iso_Medium_InvertIso_Medium_tau_pt_vs_decayMode"})
+fakeFactorsQCDSS.fakeFactors.append({Name:"Weight_QCDSS_Iso_Medium_VsPtPdgId"   , File:fakeFactorsQCDSS.fakeFactorsFile2D, Type:"2DHisto", Object:"FakeFactors_QCDSS_2D_Iso_Medium_InvertIso_Medium_tau_pt_vs_mergedPdgId"})
+fakeFactorsQCDSS.fakeFactors.append({Name:"Weight_QCDSS_Iso_Medium_VsJetPtDecay", File:fakeFactorsQCDSS.fakeFactorsFile2D, Type:"2DHisto", Object:"FakeFactors_QCDSS_2D_Iso_Medium_InvertIso_Medium_tau_jet_pt_vs_decayMode"})
+fakeFactorsQCDSS.fakeFactors.append({Name:"Weight_QCDSS_Iso_Medium_VsJetPtPt"   , File:fakeFactorsQCDSS.fakeFactorsFile2D, Type:"2DHisto", Object:"FakeFactors_QCDSS_2D_Iso_Medium_InvertIso_Medium_tau_jet_pt_vs_pt"})

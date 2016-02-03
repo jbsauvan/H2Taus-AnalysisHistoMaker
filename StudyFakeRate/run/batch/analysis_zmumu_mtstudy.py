@@ -53,6 +53,8 @@ cuts.extend(['!veto_dilepton && !veto_thirdlepton && !veto_otherlepton'])
 # Remove events with bad missing ET
 cuts.extend(['!(met_pt < 0.15 && met_phi > 0. && met_phi < 1.8)'])
 
+muon2PtCuts = [6,7,8,9,10,12,14,16,18,20]
+
 batch = []
 
 for sample in samples:
@@ -76,13 +78,14 @@ for sample in samples:
     if sample[Cut]!='': batch[-1].cuts.append(sample[Cut])
 
     ## parameters
-    #batch[-1].additionalParameters["Systematics"] = 'NoPUReweight'
+    systematics = ['Muon2PtCut_{CUT}'.format(CUT=cut) for cut in muon2PtCuts]
+    batch[-1].additionalParameters["Systematics"] = ':'.join(systematics)
     #
-    batch[-1].additionalParameters['IsData'] = ('True' if 'Data' in sample[Name] else 'False')
-    batch[-1].additionalParameters["PUWeightsDataFile"]  = '{CMSSW_BASE}/src/CMGTools/H2TauTau/data/data_pu_11-11-2015_75mb.root'.format(CMSSW_BASE=cmssw_base)
-    batch[-1].additionalParameters["PUWeightsMCFile"]    = '{CMSSW_BASE}/src/CMGTools/H2TauTau/data/mc_true_pu.root'.format(CMSSW_BASE=cmssw_base)
-    batch[-1].additionalParameters["PUWeightsDataHisto"] = 'pileup'
-    batch[-1].additionalParameters["PUWeightsMCHisto"]   = 'pu_mc'
+    #batch[-1].additionalParameters['IsData'] = ('True' if 'Data' in sample[Name] else 'False')
+    #batch[-1].additionalParameters["PUWeightsDataFile"]  = '{CMSSW_BASE}/src/CMGTools/H2TauTau/data/data_pu_11-11-2015_75mb.root'.format(CMSSW_BASE=cmssw_base)
+    #batch[-1].additionalParameters["PUWeightsMCFile"]    = '{CMSSW_BASE}/src/CMGTools/H2TauTau/data/mc_true_pu.root'.format(CMSSW_BASE=cmssw_base)
+    #batch[-1].additionalParameters["PUWeightsDataHisto"] = 'pileup'
+    #batch[-1].additionalParameters["PUWeightsMCHisto"]   = 'pu_mc'
 
 
 

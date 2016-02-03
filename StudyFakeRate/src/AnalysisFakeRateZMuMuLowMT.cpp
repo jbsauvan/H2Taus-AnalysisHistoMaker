@@ -46,21 +46,21 @@ bool AnalysisFakeRateZMuMuLowMT::initialize(const string& parameterFile)
     event().connectVariables(m_inputChain);
 
     // Read parameters
-    std::string puWeightsDataFileName  = m_reader.params().GetValue("PUWeightsDataFile", "");
-    std::string puWeightsMCFileName    = m_reader.params().GetValue("PUWeightsMCFile", "");
-    std::string puWeightsDataHistoName = m_reader.params().GetValue("PUWeightsDataHisto", "pileup");
-    std::string puWeightsMCHistoName   = m_reader.params().GetValue("PUWeightsMCHisto", "pu_mc");
-    // 
-    event().setIsData(m_reader.params().GetValue("IsData", false));
+    //std::string puWeightsDataFileName  = m_reader.params().GetValue("PUWeightsDataFile", "");
+    //std::string puWeightsMCFileName    = m_reader.params().GetValue("PUWeightsMCFile", "");
+    //std::string puWeightsDataHistoName = m_reader.params().GetValue("PUWeightsDataHisto", "pileup");
+    //std::string puWeightsMCHistoName   = m_reader.params().GetValue("PUWeightsMCHisto", "pu_mc");
+    //// 
+    //event().setIsData(m_reader.params().GetValue("IsData", false));
 
-    std::cout<<"IsData             = " << event().isData() << "\n";
-    std::cout<<"PUWeightsDataFile  = " << puWeightsDataFileName << "\n";
-    std::cout<<"PUWeightsMCFile    = " << puWeightsMCFileName << "\n";
-    std::cout<<"PUWeightsDataHisto = " << puWeightsDataHistoName << "\n";
-    std::cout<<"PUWeightsMCHisto   = " << puWeightsMCHistoName << "\n";
+    //std::cout<<"IsData             = " << event().isData() << "\n";
+    //std::cout<<"PUWeightsDataFile  = " << puWeightsDataFileName << "\n";
+    //std::cout<<"PUWeightsMCFile    = " << puWeightsMCFileName << "\n";
+    //std::cout<<"PUWeightsDataHisto = " << puWeightsDataHistoName << "\n";
+    //std::cout<<"PUWeightsMCHisto   = " << puWeightsMCHistoName << "\n";
 
-    bool ok = m_puWeights.initialize(puWeightsDataFileName, puWeightsMCFileName, puWeightsDataHistoName, puWeightsMCHistoName);
-    if(!ok) return false;
+    //bool ok = m_puWeights.initialize(puWeightsDataFileName, puWeightsMCFileName, puWeightsDataHistoName, puWeightsMCHistoName);
+    //if(!ok) return false;
 
     return true;
 }
@@ -79,6 +79,14 @@ void AnalysisFakeRateZMuMuLowMT::execute()
             {
                 for(const auto& sys : systematicList())
                 {
+                    std::vector<std::string> sysTokens;
+                    tokenize(sys, sysTokens, "Muon2PtCut_");
+                    float muon2PtCut = 5.;
+                    if(sysTokens.size()>0)
+                    {
+                        fromString(muon2PtCut, sysTokens.back());
+                    }
+                    if(event().muon(1).Pt()<muon2PtCut) continue;
                     fillHistos(iso, mt, sys);
                 }
             }

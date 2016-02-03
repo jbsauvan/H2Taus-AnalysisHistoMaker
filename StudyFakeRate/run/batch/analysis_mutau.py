@@ -6,8 +6,9 @@ import glob
 treeDirectory =  "/afs/cern.ch/work/j/jsauvan/public/HTauTau/Trees/mt/151215/"
 treeProdName  =  "H2TauTauTreeProducerTauMu"
 
-fakeFactorsType = 'ZMuMu'
+#fakeFactorsType = 'ZMuMu'
 #fakeFactorsType = 'HighMT'
+fakeFactorsType = 'QCDSS'
 
 
 if not fakeFactorsType in fakeFactors:
