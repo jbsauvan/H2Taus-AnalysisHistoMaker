@@ -1,5 +1,5 @@
 /**
- *  @file  AnalysisFakeRateApply.cpp
+ *  @file  AnalysisFakeRateApplyBackup.cpp
  *  @brief  
  *
  *
@@ -26,7 +26,7 @@
 #include "TGraphAsymmErrors.h"
 #include "TH2F.h"
 
-#include "AnHiMaCMG/StudyFakeRate/interface/AnalysisFakeRateApply.h"
+#include "AnHiMaCMG/StudyFakeRate/interface/AnalysisFakeRateApplyBackup.h"
 #include "AnHiMaCMG/Core/interface/Utilities.h"
 
 
@@ -38,7 +38,7 @@ using namespace std;
 
 
 /*****************************************************************/
-AnalysisFakeRateApply::AnalysisFakeRateApply():IAnalysis()
+AnalysisFakeRateApplyBackup::AnalysisFakeRateApplyBackup():IAnalysis()
 /*****************************************************************/
 {
 
@@ -48,7 +48,7 @@ AnalysisFakeRateApply::AnalysisFakeRateApply():IAnalysis()
 
 
 /*****************************************************************/
-AnalysisFakeRateApply::~AnalysisFakeRateApply()
+AnalysisFakeRateApplyBackup::~AnalysisFakeRateApplyBackup()
 /*****************************************************************/
 {
 
@@ -57,7 +57,7 @@ AnalysisFakeRateApply::~AnalysisFakeRateApply()
 
 
 /*****************************************************************/
-bool AnalysisFakeRateApply::initialize(const string& parameterFile)
+bool AnalysisFakeRateApplyBackup::initialize(const string& parameterFile)
 /*****************************************************************/
 {
     bool status = IAnalysis::initialize(parameterFile);
@@ -89,14 +89,13 @@ bool AnalysisFakeRateApply::initialize(const string& parameterFile)
 
 
 /*****************************************************************/
-void AnalysisFakeRateApply::execute()
+void AnalysisFakeRateApplyBackup::execute()
 /*****************************************************************/
 {
     event().update();
     for(unsigned applyMTcut=0; applyMTcut<=1; applyMTcut++ )
     {
-        // no isolation, medium isolation, anti- medium isolation
-        for(unsigned sel=0; sel<3; sel++)
+        for(unsigned sel=0; sel<=5; sel++)
         {
             unsigned selectionId = applyMTcut*20+sel;
             if(event().passSelection(selectionId))
@@ -111,7 +110,7 @@ void AnalysisFakeRateApply::execute()
 }
 
 /*****************************************************************/
-void AnalysisFakeRateApply::fillHistos(unsigned selection, const std::string& sys)
+void AnalysisFakeRateApplyBackup::fillHistos(unsigned selection, const std::string& sys)
 /*****************************************************************/
 {
 
@@ -165,6 +164,20 @@ void AnalysisFakeRateApply::fillHistos(unsigned selection, const std::string& sy
     m_histos.Fill1BinHisto(180+hoffset, event().tau().gen_match, event().mvis(), weight, sysNum);
     m_histos.Fill1BinHisto(190+hoffset, event().tau().gen_match, event().mt(), weight, sysNum);
 
+    // Histos depending on pdg ID
+    m_histos.Fill1BinHisto(200+hoffset, fabs(event().tauMatch().pdgId), 0.5, weight, sysNum);
+    m_histos.Fill1BinHisto(225+hoffset, fabs(event().tauMatch().pdgId), fakeFactor, event().weight(), sysNum);
+    m_histos.Fill1BinHisto(250+hoffset, fabs(event().tauMatch().pdgId), event().tau().Pt(), event().weight(), sysNum);
+    m_histos.Fill1BinHisto(275+hoffset, fabs(event().tauMatch().pdgId), event().tau().Eta(), event().weight(), sysNum);
+    m_histos.Fill1BinHisto(300+hoffset, fabs(event().tauMatch().pdgId), event().tau().decayMode, event().weight(), sysNum);
+    m_histos.Fill1BinHisto(325+hoffset, fabs(event().tauMatch().pdgId), fabs(event().tauMatch().pdgId)*(event().tau().sign_flip!=0 ? event().tau().sign_flip : 1), event().weight(), sysNum);
+    m_histos.Fill1BinHisto(350+hoffset, fabs(event().tauMatch().pdgId), event().mvis(), weight, sysNum);
+    m_histos.Fill1BinHisto(375+hoffset, fabs(event().tauMatch().pdgId), event().mt(), weight, sysNum);
+
+    // Correlation plots
+    //m_histos.FillHisto(200+hoffset, event().mvis(), event().tau().Pt(), weight, sysNum);
+    //m_histos.FillHisto(201+hoffset, event().mvis(), event().tau().Eta(), weight, sysNum);
+    //m_histos.FillHisto(202+hoffset, event().mvis(), event().tau().decayMode, weight, sysNum);
 }
 
 

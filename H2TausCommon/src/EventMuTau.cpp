@@ -239,6 +239,32 @@ bool EventMuTau::passSelection(int selection)
     pass &= (tau().pt > 0.);
     switch(selection%20)
     {
+        case 0: // No isolation
+            break;
+        case 1: // Tau isolation medium
+            pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits >= 2);
+            break;
+        case 2: // Reverse tau isolation medium
+            pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits < 2);
+            break;
+        default:
+            break;
+    };
+    if(selection/20==1) // apply mT cut
+    {
+        pass &= (mt()<40.);
+    }
+    return pass;
+}
+
+/*****************************************************************/
+bool EventMuTau::passSelectionBackup(int selection)
+/*****************************************************************/
+{
+    bool pass = true;
+    pass &= (tau().pt > 0.);
+    switch(selection%20)
+    {
         case 0: // Tau isolation raw < 1.5 GeV
             pass &= (tau().byCombinedIsolationDeltaBetaCorrRaw3Hits < 1.5);
             break;

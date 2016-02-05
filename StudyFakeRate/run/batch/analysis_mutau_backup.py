@@ -1,5 +1,5 @@
 from AnhimaBatchLauncher import AnhimaBatchLauncher
-from FakeFactorsLocationsMinimal import fakeFactorsMC,fakeFactorsData
+from FakeFactorsLocations import fakeFactors
 import glob
 
 ## Samples definition
@@ -11,14 +11,13 @@ treeProdName  =  "H2TauTauTreeProducerTauMu"
 fakeFactorsType = 'QCDSS'
 
 
-if (not fakeFactorsType in fakeFactorsMC) or (not fakeFactorsType in fakeFactorsData):
+if not fakeFactorsType in fakeFactors:
     raise StandardError('Unknown fake factor type')
 
 
 ztt_cut = 'l2_gen_match == 5'
 zl_cut  = 'l2_gen_match < 5'
 zj_cut  = 'l2_gen_match == 6'
-lepton_cut  = 'l2_gen_match < 6'
 
 
 Name = "Name"
@@ -47,21 +46,7 @@ samples.append({Name:"WWTo1L1Nu2Q" ,Dir:"WWTo1L1Nu2Q"      ,Cut:""})
 #
 samples.append({Name:"Data_Run15D_v4",    Dir:"SingleMuon_Run2015D_v4"            ,Cut:""})
 samples.append({Name:"Data_Run15D_05Oct", Dir:"SingleMuon_Run2015D_05Oct"         ,Cut:""})
-## Non fake backgrounds
-samples.append({Name:"ZTT"           ,Dir:"DYJetsToLL_M50_LO", Cut:ztt_cut})
-samples.append({Name:"ZL"            ,Dir:"DYJetsToLL_M50_LO", Cut:zl_cut})
-#samples.append({Name:"W_L"           ,Dir:"WJetsToLNu_LO"    , Cut:lepton_cut}) ## almost no non-fakes
-samples.append({Name:"TT_L"          ,Dir:"TT_pow_ext"       , Cut:lepton_cut})
-samples.append({Name:"T_tWch_L"      ,Dir:"T_tWch"           , Cut:lepton_cut})
-samples.append({Name:"TBar_tWch_L"   ,Dir:"TBar_tWch"        , Cut:lepton_cut})
-samples.append({Name:"ZZTo2L2Q_L"    ,Dir:"ZZTo2L2Q"       , Cut:lepton_cut})
-samples.append({Name:"WZTo3L_L"      ,Dir:"WZTo3L"         , Cut:lepton_cut})
-samples.append({Name:"WZTo2L2Q_L"    ,Dir:"WZTo2L2Q"       , Cut:lepton_cut})
-samples.append({Name:"WZTo1L3Nu_L"   ,Dir:"WZTo1L3Nu"      , Cut:lepton_cut})
-samples.append({Name:"WZTo1L1Nu2Q_L" ,Dir:"WZTo1L1Nu2Q"    , Cut:lepton_cut})
-samples.append({Name:"VVTo2L2Nu_L"   ,Dir:"VVTo2L2Nu"      , Cut:lepton_cut})
-samples.append({Name:"WWTo1L1Nu2Q_L" ,Dir:"WWTo1L1Nu2Q"    , Cut:lepton_cut})
-### Old samples                                                   
+### Old samples
 #samples.append({Name:"ZL"       ,Dir:"DYJetsToLL_M50_LO",Cut:zl_cut})
 ##
 #samples.append({Name:"ZJ"       ,Dir:"DYJetsToLL_M50_LO",Cut:""})
@@ -111,10 +96,8 @@ for sample in samples:
         batch[-1].cuts.append(sample[Cut])
 
     # Fake factors
-    isData = ('Data' in sample[Name])
-    #batch[-1].additionalParameters['IsData'] = str(isData)
     systematics = ""
-    selectedFakeFactors = (fakeFactorsData[fakeFactorsType].fakeFactors if isData else fakeFactorsMC[fakeFactorsType].fakeFactors)
+    selectedFakeFactors = fakeFactors[fakeFactorsType].fakeFactors
     for fakeFactor in selectedFakeFactors:
         systematics += fakeFactor[Name]
         systematics += ":"

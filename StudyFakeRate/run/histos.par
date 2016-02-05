@@ -151,7 +151,7 @@ end_HistosZMuMuMT
 ###########################################################
 ### Histograms used to check fake rates
 ###########################################################
-HistosMuTau: FakeRate_IsoRaw_1_5_, FakeRate_InvertIsoRaw_1_5_(1000), FakeRate_NoIso_(2000), FakeRate_Iso_Medium_(3000), FakeRate_InvertIso_Medium_(4000), FakeRate_InvertIsoRaw_3_(5000),  FakeRate_MT40_IsoRaw_1_5_(20000), FakeRate_MT40_InvertIsoRaw_1_5_(21000), FakeRate_MT40_NoIso_(22000), FakeRate_MT40_Iso_Medium_(23000), FakeRate_MT40_InvertIso_Medium_(24000), FakeRate_MT40_InvertIsoRaw_3_(25000)
+HistosMuTau:  FakeRate_NoIso_, FakeRate_Iso_Medium_(1000), FakeRate_InvertIso_Medium_(2000), FakeRate_MT40_NoIso_(20000), FakeRate_MT40_Iso_Medium_(21000), FakeRate_MT40_InvertIso_Medium_(22000)
 
 # General event 
 h1f_sys 0 nevents ' Number of events ' 1 0.5 1.5
@@ -217,50 +217,10 @@ MATCH 6
 1binfh1f_sys 190 mt_vs_match ' M_{T} [GeV] ' 40 0. 200.
 MATCH 6 1. 0.5
 
-## histo dependent on pdgID
-###
-1binfh1f_sys 200 nevents_vs_pdgid ' Number of events ' 1 0.5 1.5
-PDGID 22 1. 0.5
-#
-1binfh1f_sys 225 weight_vs_pdgid ' Fake weight ' 1000 0. 1.
-MATCH 6 1. 0.5
-PDGID 22 1. 0.5
-#
-1binvvh1f 250 tau_pt_vs_pdgid ' p_{T}(#tau) [GeV] ' 14 20. 22. 24. 26. 30. 35. 40. 50. 60. 70. 90. 120. 150. 200.
-PDGID 22
-0.5 1.5 2.5 3.5 4.5 5.5 6.5 7.5 8.5 9.5 10.5 11.5 12.5 13.5 14.5 15.5 16.5 17.5 18.5 19.5 20.5 21.5 22.5
-#
-1binfh1f 275 tau_eta_vs_pdgid ' #eta^{#tau} ' 12 -2.4 2.4
-PDGID 22 1. 0.5
-#
-1binfh1f 300 tau_decayMode_vs_pdgid ' decay^{#tau} ' 15 -0.5 14.5
-PDGID 22 1. 0.5
-#
-1binfh1f 325 tau_pdgId_vs_pdgid ' pdg ID ' 45 -22.5 22.5 
-PDGID 22 1. 0.5
-#
-1binfh1f_sys 350 mvis_vs_pdgid ' M_{vis} [GeV] ' 60 0. 300.
-PDGID 22 1. 0.5
-#
-1binfh1f_sys 375 mt_vs_pdgid ' M_{T} [GeV] ' 40 0. 200.
-PDGID 22 1. 0.5
-
-# Correlation plots
-#2binvbh2f 200 tau_pt_vs_mvis ' p_{T}^{#tau} vs M_{vis} ' 
-#14 0. 20. 25. 30. 35. 40. 50. 60. 70. 90. 120. 150. 200. 300
-#14 20. 22. 24. 26. 30. 35. 40. 50. 60. 70. 90. 120. 150. 200.
-##
-#2binvbh2f 201 tau_eta_vs_mvis ' #eta^{#tau} vs M_{vis} ' 
-#14 0. 20. 25. 30. 35. 40. 50. 60. 70. 90. 120. 150. 200. 300
-#12 -2.4 -2. -1.6 -1.2 -0.8 -0.4 0. 0.4 0.8 1.2 1.6 2. 2.4
-##
-#2binvbh2f 202 tau_decay_vs_mvis ' decay mode vs M_{vis} ' 
-#14 0. 20. 25. 30. 35. 40. 50. 60. 70. 90. 120. 150. 200. 300
-#15 0. 1. 2. 3. 4. 5. 6. 7. 8. 9. 10. 11. 12. 13. 14. 15.
-#
-
 
 end_HistosMuTau
+
+
 
 
 ###########################################################
@@ -441,3 +401,118 @@ h1f_sys 51 mt   ' M_{T} [GeV] ' 40 0. 200.
 
 end_HistosMuTauWJetsContamination
 
+
+
+###########################################################
+### !!BACKUP!! Histograms used to check fake rates
+###########################################################
+HistosMuTauBackup: FakeRate_IsoRaw_1_5_, FakeRate_InvertIsoRaw_1_5_(1000), FakeRate_NoIso_(2000), FakeRate_Iso_Medium_(3000), FakeRate_InvertIso_Medium_(4000), FakeRate_InvertIsoRaw_3_(5000),  FakeRate_MT40_IsoRaw_1_5_(20000), FakeRate_MT40_InvertIsoRaw_1_5_(21000), FakeRate_MT40_NoIso_(22000), FakeRate_MT40_Iso_Medium_(23000), FakeRate_MT40_InvertIso_Medium_(24000), FakeRate_MT40_InvertIsoRaw_3_(25000)
+
+# General event 
+h1f_sys 0 nevents ' Number of events ' 1 0.5 1.5
+h1f 1 nvertices ' Number of vertices ' 50 0. 50.
+h1f 2 rho ' #rho ' 50 0. 50.
+h1f_sys 3 weight ' Fake weight ' 1001 0. 1.001
+
+# First muon
+h1f 10 l1_pt ' p_{T}^{l1} [GeV] ' 100 0. 100.
+h1f 11 l1_eta ' #eta^{l1} ' 50 -2.5 2.5
+h1f 12 l1_phi ' #phi^{l1} ' 50 -3.14159265359 3.14159265359 
+h1f 13 l1_reliso05 ' iso^{l1} ' 100 0. 0.2
+
+# Tau
+1binvbh1f 20 tau_pt ' p_{T}(#tau) [GeV] ' 14 20. 22. 24. 26. 30. 35. 40. 50. 60. 70. 90. 120. 150. 200.
+h1f 21 tau_eta ' #eta^{#tau} ' 12 -2.4 2.4
+h1f 22 tau_phi ' #phi^{#tau} ' 50 -3.14159265359 3.14159265359
+h1f 23 tau_decayMode ' decay^{#tau} ' 15 -0.5 14.5
+h1f 24 tau_againstMuon3 ' tau-muon discriminant ' 60 0. 6.
+h1f 25 tau_againstElectronMVA5 ' tau-ele discriminant ' 30 0. 3.
+h1f 26 tau_iso ' tau isolation ' 200 0. 20.
+h1f 27 tau_pdgId ' pdg ID ' 45 -22.5 22.5
+
+
+# MuTau
+h1f_sys 50 mvis ' M_{vis} [GeV] ' 60 0. 300.
+1binvbh1f_sys 51 mvis_stdbins ' M_{vis} [GeV] ' 27 0. 10. 20. 30. 40. 50. 60. 70. 80. 90. 100. 110. 120. 130. 140. 150. 160. 170. 180. 190. 200. 225. 250. 275. 300. 325. 350. 
+1binvbh1f_sys 52 mvis_mssmbins ' M_{vis} [GeV] ' 19 0. 20. 40. 60. 80. 100. 120. 140. 160. 180. 200. 250. 300. 350. 400. 500. 700. 1000. 1500. 
+h1f_sys 53 mt   ' M_{T} [GeV] ' 40 0. 200.
+
+## histo dependent on gen_match
+###
+1binfh1f_sys 100 nevents_vs_match ' Number of events ' 1 0.5 1.5
+MATCH 6 1. 0.5
+#
+1binfh1f_sys 110 weight_vs_match ' Fake weight ' 1000 0. 1.
+MATCH 6 1. 0.5
+#
+1binvvh1f 120 tau_pt_vs_match ' p_{T}(#tau) [GeV] ' 14 20. 22. 24. 26. 30. 35. 40. 50. 60. 70. 90. 120. 150. 200.
+MATCH 6
+0.5 1.5 2.5 3.5 4.5 5.5 6.5
+#
+1binfh1f 130 tau_eta_vs_match ' #eta^{#tau} ' 12 -2.4 2.4
+MATCH 6 1. 0.5
+#
+1binfh1f 140 tau_decayMode_vs_match ' decay^{#tau} ' 15 -0.5 14.5
+MATCH 6 1. 0.5
+#
+1binfh1f 150 tau_pdgId_vs_match ' pdg ID ' 45 -22.5 22.5 
+MATCH 6 1. 0.5
+#
+1binfh1f_sys 160 mvis_vs_match ' M_{vis} [GeV] ' 60 0. 300.
+MATCH 6 1. 0.5
+#
+1binvvh1f_sys 170 mvis_stdbins_vs_match ' M_{vis} [GeV] ' 27 0. 10. 20. 30. 40. 50. 60. 70. 80. 90. 100. 110. 120. 130. 140. 150. 160. 170. 180. 190. 200. 225. 250. 275. 300. 325. 350.
+MATCH 6 
+0.5 1.5 2.5 3.5 4.5 5.5 6.5
+#
+1binvvh1f_sys 180 mvis_mssmbins_vs_match ' M_{vis} [GeV] ' 19 0. 20. 40. 60. 80. 100. 120. 140. 160. 180. 200. 250. 300. 350. 400. 500. 700. 1000. 1500.
+MATCH 6 
+0.5 1.5 2.5 3.5 4.5 5.5 6.5
+#
+1binfh1f_sys 190 mt_vs_match ' M_{T} [GeV] ' 40 0. 200.
+MATCH 6 1. 0.5
+
+## histo dependent on pdgID
+###
+1binfh1f_sys 200 nevents_vs_pdgid ' Number of events ' 1 0.5 1.5
+PDGID 22 1. 0.5
+#
+1binfh1f_sys 225 weight_vs_pdgid ' Fake weight ' 1000 0. 1.
+MATCH 6 1. 0.5
+PDGID 22 1. 0.5
+#
+1binvvh1f 250 tau_pt_vs_pdgid ' p_{T}(#tau) [GeV] ' 14 20. 22. 24. 26. 30. 35. 40. 50. 60. 70. 90. 120. 150. 200.
+PDGID 22
+0.5 1.5 2.5 3.5 4.5 5.5 6.5 7.5 8.5 9.5 10.5 11.5 12.5 13.5 14.5 15.5 16.5 17.5 18.5 19.5 20.5 21.5 22.5
+#
+1binfh1f 275 tau_eta_vs_pdgid ' #eta^{#tau} ' 12 -2.4 2.4
+PDGID 22 1. 0.5
+#
+1binfh1f 300 tau_decayMode_vs_pdgid ' decay^{#tau} ' 15 -0.5 14.5
+PDGID 22 1. 0.5
+#
+1binfh1f 325 tau_pdgId_vs_pdgid ' pdg ID ' 45 -22.5 22.5 
+PDGID 22 1. 0.5
+#
+1binfh1f_sys 350 mvis_vs_pdgid ' M_{vis} [GeV] ' 60 0. 300.
+PDGID 22 1. 0.5
+#
+1binfh1f_sys 375 mt_vs_pdgid ' M_{T} [GeV] ' 40 0. 200.
+PDGID 22 1. 0.5
+
+# Correlation plots
+#2binvbh2f 200 tau_pt_vs_mvis ' p_{T}^{#tau} vs M_{vis} ' 
+#14 0. 20. 25. 30. 35. 40. 50. 60. 70. 90. 120. 150. 200. 300
+#14 20. 22. 24. 26. 30. 35. 40. 50. 60. 70. 90. 120. 150. 200.
+##
+#2binvbh2f 201 tau_eta_vs_mvis ' #eta^{#tau} vs M_{vis} ' 
+#14 0. 20. 25. 30. 35. 40. 50. 60. 70. 90. 120. 150. 200. 300
+#12 -2.4 -2. -1.6 -1.2 -0.8 -0.4 0. 0.4 0.8 1.2 1.6 2. 2.4
+##
+#2binvbh2f 202 tau_decay_vs_mvis ' decay mode vs M_{vis} ' 
+#14 0. 20. 25. 30. 35. 40. 50. 60. 70. 90. 120. 150. 200. 300
+#15 0. 1. 2. 3. 4. 5. 6. 7. 8. 9. 10. 11. 12. 13. 14. 15.
+#
+
+
+end_HistosMuTauBackup
