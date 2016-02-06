@@ -20,6 +20,7 @@
 #include "TFile.h"
 #include "TGraphAsymmErrors.h"
 #include "TF1.h"
+#include "TH1F.h"
 #include "TH2F.h"
 
 
@@ -97,6 +98,18 @@ bool  FakeFactors::addFakeFactor(const std::string& name, const std::string& fil
             //std::cout<<"\n";
             object = static_cast<TObject*>(graph);
         }
+        else if(type=="1DHisto")
+        {
+            TH1F* histo = dynamic_cast<TH1F*>(object);
+            for(int bx=0; bx<=histo->GetNbinsX()+1;bx++)
+            {
+                double factor = histo->GetBinContent(bx);
+                double error  = histo->GetBinError(bx); 
+                factor = std::max(0.,m_random.Gaus(factor, error));
+                histo->SetBinContent(bx, factor);
+            }
+            object = static_cast<TObject*>(histo);
+        }
         else if(type=="2DHisto")
         {
             TH2F* histo = dynamic_cast<TH2F*>(object);
@@ -128,6 +141,17 @@ bool  FakeFactors::addFakeFactor(const std::string& name, const std::string& fil
             }
             object = static_cast<TObject*>(graph);
         }
+        else if(type=="1DHisto")
+        {
+            TH1F* histo = dynamic_cast<TH1F*>(object);
+            for(int bx=0; bx<=histo->GetNbinsX()+1;bx++)
+            {
+                    double factor = histo->GetBinContent(bx);
+                    double error  = histo->GetBinError(bx); 
+                    histo->SetBinContent(bx, factor+error);
+            }
+            object = static_cast<TObject*>(histo);
+        }
         else if(type=="2DHisto")
         {
             TH2F* histo = dynamic_cast<TH2F*>(object);
@@ -157,6 +181,17 @@ bool  FakeFactors::addFakeFactor(const std::string& name, const std::string& fil
                 graph->SetPoint(p, graph->GetX()[p], std::max(0.,factor-errorDown));
             }
             object = static_cast<TObject*>(graph);
+        }
+        else if(type=="1DHisto")
+        {
+            TH1F* histo = dynamic_cast<TH1F*>(object);
+            for(int bx=0; bx<=histo->GetNbinsX()+1;bx++)
+            {
+                    double factor = histo->GetBinContent(bx);
+                    double error  = histo->GetBinError(bx); 
+                    histo->SetBinContent(bx,std::max(0., factor-error));
+            }
+            object = static_cast<TObject*>(histo);
         }
         else if(type=="2DHisto")
         {
@@ -257,6 +292,10 @@ double FakeFactors::retrieveFakeFactor(const std::string& name, const EventMuTau
     {
         values.push_back(event.tauJetMatch().Pt());
     }
+    else if(name.find("VsMVis")!=std::string::npos)
+    {
+        values.push_back(event.mvis());
+    }
 
     // Retrieve fake factor depending on type of object
     if(type=="1DGraph")
@@ -293,6 +332,12 @@ double FakeFactors::retrieveFakeFactor(const std::string& name, const EventMuTau
             //std::cout<<" "<<factor<<"\n";
             //f->Delete();
         }
+    }
+    else if(type=="1DHisto")
+    {
+        TH1F* histo = dynamic_cast<TH1F*>(object);
+        int bx = histo->GetXaxis()->FindBin(values[0]);
+        factor = histo->GetBinContent(bx);
     }
     else if(type=="2DHisto")
     {
