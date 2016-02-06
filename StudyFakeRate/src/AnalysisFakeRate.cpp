@@ -89,13 +89,13 @@ void AnalysisFakeRate::fillHistos(unsigned selection, const std::string& sys)
 {
     short sysNum = systematicNumber(sys);
     float weight = event().weight();
-    float puWeight = 1.;
-    if(sys!="NoPUReweight" && !event().isData()) // apply PU reweighting
-    {
-        puWeight = m_puWeights.weight(event().npu());
-        weight *= puWeight;
-        //std::cout<<"NPU = "<<event().npu()<<" Weight = " << puWeight<<"\n";
-    }
+    //float puWeight = 1.;
+    //if(sys!="NoPUReweight" && !event().isData()) // apply PU reweighting
+    //{
+        //puWeight = m_puWeights.weight(event().npu());
+        //weight *= puWeight;
+        ////std::cout<<"NPU = "<<event().npu()<<" Weight = " << puWeight<<"\n";
+    //}
     int hoffset  = 1000*selection;
 
 
@@ -119,7 +119,8 @@ void AnalysisFakeRate::fillHistos(unsigned selection, const std::string& sys)
      m_histos.FillHisto(23+hoffset, event().muon(1).reliso05, weight, sysNum);
 
      m_histos.FillHisto(50+hoffset, event().muonPair().M(), weight, sysNum);
-     m_histos.FillHisto(51+hoffset, event().muonPair().Pt(), weight, sysNum);
+     m_histos.FillHisto(51+hoffset, event().muonPair().M(), weight, sysNum);
+     m_histos.FillHisto(52+hoffset, event().muonPair().Pt(), weight, sysNum);
 
      // Tau histos
      m_histos.FillHisto(99+hoffset,  event().tau().Pt(), weight, sysNum);

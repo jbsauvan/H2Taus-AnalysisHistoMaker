@@ -75,7 +75,7 @@ for sample in samples:
     if sample[Cut]!='': batch[-1].cuts.append(sample[Cut])
 
     ## parameters
-    batch[-1].additionalParameters["Systematics"] = 'NoPUReweight'
+    #batch[-1].additionalParameters["Systematics"] = 'NoPUReweight'
     #
     batch[-1].additionalParameters['IsData'] = ('True' if 'Data' in sample[Name] else 'False')
     batch[-1].additionalParameters["PUWeightsDataFile"]  = '{CMSSW_BASE}/src/CMGTools/H2TauTau/data/data_pu_11-11-2015_75mb.root'.format(CMSSW_BASE=cmssw_base)

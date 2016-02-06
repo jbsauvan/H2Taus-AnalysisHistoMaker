@@ -23,7 +23,8 @@ h1f_sys 23 l2_reliso05 ' iso^{l2} ' 100 0. 0.2
 
 # Dimuon mass
 h1f_sys 50 l1l2_mass ' M_{#mu#mu} [GeV] ' 70 50. 120.
-h1f_sys 51 l1l2_pt ' p_{T}^{#mu#mu} [GeV] ' 20 0. 200.
+h1f_sys 51 l1l2_highmass ' M_{#mu#mu} [GeV] ' 45 0. 900.
+h1f_sys 52 l1l2_pt ' p_{T}^{#mu#mu} [GeV] ' 20 0. 200.
 
 
 # Tau
