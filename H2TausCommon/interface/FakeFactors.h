@@ -38,12 +38,16 @@ namespace AnHiMa
             ~FakeFactors();
 
             bool addFakeFactor(const std::string&, const std::string&, const std::string&, const std::string&);
+            void createCombinedFakeFactorFormulas();
             double retrieveFakeFactor(const std::string&, const EventMuTau&, bool fluctuate=false);
 
 
         private:
             TRandom3 m_random;
-            std::map<std::string, std::pair<std::string, TObject*>> m_fakeFactors;
+            std::vector<std::string> m_fakeFactorNames;
+            std::map<std::string, std::pair<std::string, TObject*>> m_fakeFactors; // name, type, object
+            std::map<std::string, std::string> m_fakeFactorFormulas;
+            std::map<std::string, std::vector<std::string>> m_formulaVariables;
 
     };
 }

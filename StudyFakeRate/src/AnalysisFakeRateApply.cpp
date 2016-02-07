@@ -83,6 +83,7 @@ bool AnalysisFakeRateApply::initialize(const string& parameterFile)
         std::cout<<"INFO:    Object = "<<objectName<<"\n";
         std::cout<<"INFO:    Type   = "<<type<<"\n";
     }
+    m_fakeFactors.createCombinedFakeFactorFormulas();
 
     return true;
 }
