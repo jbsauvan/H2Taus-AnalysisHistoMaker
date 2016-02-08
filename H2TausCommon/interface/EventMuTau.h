@@ -49,6 +49,8 @@ namespace AnHiMa
             ~EventMuTau();
 
             bool passSelection(int selection=0);
+            // FIXME: change this ****** naming
+            bool passSelectionSignal(int iso=0, int applyMT=0, int sign=0);
             bool passSelectionBackup(int selection=0);
             bool passSelectionFakeFactorsWJetsHighMT(int selection=0);
             bool passSelectionFakeFactorsQCDSS(int selection=0);

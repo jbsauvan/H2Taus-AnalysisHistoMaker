@@ -235,18 +235,20 @@ void FakeFactors::createCombinedFakeFactorFormulas()
     for(const auto& name_formula : m_fakeFactorFormulas)
     {
         std::string formula = name_formula.second;
+        //std::cerr<<name_formula.first<<" ("<<formula<<")\n";
         // find fake factors included in the formula
-        for(const auto& name_object : m_fakeFactors)
+        for(const auto& name : m_fakeFactorNames)
         {
-            std::string tag = "["+name_object.first+"]";
+            std::string tag = "["+name+"]";
             if(formula.find(tag)!=std::string::npos) 
             {
-                m_formulaVariables[name_formula.first].push_back(name_object.first);
+                m_formulaVariables[name_formula.first].push_back(name);
                 std::stringstream var;
                 var << "x[" << m_formulaVariables[name_formula.first].size()-1 << "]";
                 findAndReplace(formula, tag, var.str());
             }
         }
+        //std::cerr<<" --> "<<formula<<"\n";
         TFormula* form = new TFormula(name_formula.first.c_str(), formula.c_str());
         m_fakeFactors[name_formula.first] = std::make_pair(std::string("Combined"), static_cast<TObject*>(form));
     }
@@ -270,14 +272,19 @@ double FakeFactors::retrieveFakeFactor(const std::string& name, const EventMuTau
     double factor = 1.;
     if(type=="Combined")
     {
-
+        //std::cerr<<"("<<name;
+        //std::cerr<<"[";
         std::vector<double> vars;
         for(const auto& factor : m_formulaVariables[name])
         {
+            //std::cerr<<factor<<"=";
             double var = retrieveFakeFactor(factor, event, fluctuate);
             vars.push_back(var);
+            //std::cerr<<var<<", ";
         }
+        //std::cerr<<"]=";
         TFormula* formula = dynamic_cast<TFormula*>(object);
+        //std::cerr<<formula->EvalPar(&vars[0])<<")\n";
         return formula->EvalPar(&vars[0]);
 
     }
@@ -349,6 +356,10 @@ double FakeFactors::retrieveFakeFactor(const std::string& name, const EventMuTau
         {
             values.push_back(event.mvis());
         }
+        else if(name.find("VsMT")!=std::string::npos)
+        {
+            values.push_back(event.mt());
+        }
 
         // Retrieve fake factor depending on type of object
         if(type=="1DGraph")
@@ -406,10 +417,11 @@ double FakeFactors::retrieveFakeFactor(const std::string& name, const EventMuTau
             std::cout<<"ERROR: Unknown type of fake factor\n";
         }
         // Apply high-mT -> low-mT correction factor
-        if(name.find("HighMT")!=std::string::npos)
-        {
-            factor *= 0.685578; // extrapolation factor derived from Z+jet MC, with pT(muon2)>5GeV
-        }
+        // NOW DONE IN CONFIG
+        //if(name.find("HighMT")!=std::string::npos)
+        //{
+            //factor *= 0.685578; // extrapolation factor derived from Z+jet MC, with pT(muon2)>5GeV
+        //}
     }
 
 

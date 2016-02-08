@@ -27,6 +27,12 @@ fractionsTT  = {Name:"Fraction_TT_VsMVis"     , File:fractionsFile, Type:"1DHist
 fractionsZJ  = {Name:"Fraction_ZJ_VsMVis"     , File:fractionsFile, Type:"1DHisto", Object:"h_backgroundFraction_lowMT_mvis_ZJ"}
 fractionsVV  = {Name:"Fraction_VV_VsMVis"     , File:fractionsFile, Type:"1DHisto", Object:"h_backgroundFraction_lowMT_mvis_VV"}
 
+##############################################
+## High-MT correction
+##############################################
+highMTCorrectionFile = "/afs/cern.ch/user/j/jsauvan/workspace/Projects/Htautau_Run2/Studies/FakeRate/ComputeFakeRates/plots/FakeFactors_WJets/FakeFactors_WJets_highMTCorrections.root"
+highMTCorrection = {Name:"HighMTCorr_VsMT"      , File:highMTCorrectionFile, Type:"1DGraph", Object:"HighMTCorrection_WJets_Iso_Medium_OS_InvertIso_Medium_OS_mt"}
+
 
 ###############################################
 ##  MC fake factors
@@ -42,16 +48,26 @@ fakeFactorsMC['ZMuMu'].fakeFactors.append({Name:"Weight_Iso_Medium_VsDecay"     
 # 2D
 fakeFactorsMC['ZMuMu'].fakeFactors.append({Name:"Weight_Iso_Medium_VsPtDecay"   , File:fakeFactorsMC['ZMuMu'].fakeFactorsFile2D, Type:"2DHisto", Object:"FakeFactors_ZMuMu_2D_Iso_Medium_InvertIso_Medium_tau_pt_vs_decayMode"})
 #####################################################
-### HighMT
-fakeFactorsMC['HighMT'] = FakeFactors()
-fakeFactorsMC['HighMT'].fakeFactorsFile1D = "/afs/cern.ch/user/j/jsauvan/workspace/Projects/Htautau_Run2/Studies/FakeRate/ComputeFakeRates/plots/FakeFactors_HighMT_1D/FakeFactors_HighMT_1D.root"
-fakeFactorsMC['HighMT'].fakeFactorsFile2D = "/afs/cern.ch/user/j/jsauvan/workspace/Projects/Htautau_Run2/Studies/FakeRate/ComputeFakeRates/plots/FakeFactors_HighMT_2D/FakeFactors_HighMT_2D.root"
+### HighMT Raw
+fakeFactorsMC['HighMTRaw'] = FakeFactors()
+fakeFactorsMC['HighMTRaw'].fakeFactorsFile1D = "/afs/cern.ch/user/j/jsauvan/workspace/Projects/Htautau_Run2/Studies/FakeRate/ComputeFakeRates/plots/FakeFactors_HighMT_1D/FakeFactors_HighMT_1D.root"
+fakeFactorsMC['HighMTRaw'].fakeFactorsFile2D = "/afs/cern.ch/user/j/jsauvan/workspace/Projects/Htautau_Run2/Studies/FakeRate/ComputeFakeRates/plots/FakeFactors_HighMT_2D/FakeFactors_HighMT_2D.root"
 ## !IsoMedium -> IsoMedium
 # 1D
-fakeFactorsMC['HighMT'].fakeFactors.append({Name:"Weight_HighMT_Iso_Medium_VsPt"        , File:fakeFactorsMC['HighMT'].fakeFactorsFile1D, Type:"1DGraph", Object:"FakeFactors_HighMT_1D_Iso_Medium_InvertIso_Medium_tau_pt"})
-fakeFactorsMC['HighMT'].fakeFactors.append({Name:"Weight_HighMT_Iso_Medium_VsDecay"     , File:fakeFactorsMC['HighMT'].fakeFactorsFile1D, Type:"1DGraph", Object:"FakeFactors_HighMT_1D_Iso_Medium_InvertIso_Medium_tau_decayMode"})
+fakeFactorsMC['HighMTRaw'].fakeFactors.append({Name:"Weight_HighMTRaw_Iso_Medium_VsPt"        , File:fakeFactorsMC['HighMTRaw'].fakeFactorsFile1D, Type:"1DGraph", Object:"FakeFactors_HighMT_1D_Iso_Medium_InvertIso_Medium_tau_pt"})
+fakeFactorsMC['HighMTRaw'].fakeFactors.append({Name:"Weight_HighMTRaw_Iso_Medium_VsDecay"     , File:fakeFactorsMC['HighMTRaw'].fakeFactorsFile1D, Type:"1DGraph", Object:"FakeFactors_HighMT_1D_Iso_Medium_InvertIso_Medium_tau_decayMode"})
 # 2D
-fakeFactorsMC['HighMT'].fakeFactors.append({Name:"Weight_HighMT_Iso_Medium_VsPtDecay"   , File:fakeFactorsMC['HighMT'].fakeFactorsFile2D, Type:"2DHisto", Object:"FakeFactors_HighMT_2D_Iso_Medium_InvertIso_Medium_tau_pt_vs_decayMode"})
+fakeFactorsMC['HighMTRaw'].fakeFactors.append({Name:"Weight_HighMTRaw_Iso_Medium_VsPtDecay"   , File:fakeFactorsMC['HighMTRaw'].fakeFactorsFile2D, Type:"2DHisto", Object:"FakeFactors_HighMT_2D_Iso_Medium_InvertIso_Medium_tau_pt_vs_decayMode"})
+#####################################################
+### HighMT Corr
+template = '[{CORR}]*[{RAW}]'
+fakeFactorsMC['HighMT'] = FakeFactors()
+## !IsoMedium -> IsoMedium
+# 1D
+fakeFactorsMC['HighMT'].fakeFactors.append({Name:"Weight_HighMT_Iso_Medium_VsPt"     , File:'', Type:"Combined", Object:template.format(CORR=highMTCorrection[Name],RAW=fakeFactorsMC['HighMTRaw'].fakeFactors[0][Name])})
+fakeFactorsMC['HighMT'].fakeFactors.append({Name:"Weight_HighMT_Iso_Medium_VsDecay"  , File:'', Type:"Combined", Object:template.format(CORR=highMTCorrection[Name],RAW=fakeFactorsMC['HighMTRaw'].fakeFactors[1][Name])})
+# 2D
+fakeFactorsMC['HighMT'].fakeFactors.append({Name:"Weight_HighMT_Iso_Medium_VsPtDecay", File:'', Type:"Combined", Object:template.format(CORR=highMTCorrection[Name],RAW=fakeFactorsMC['HighMTRaw'].fakeFactors[2][Name])})
 #####################################################
 ### QCDSS
 fakeFactorsMC['QCDSS'] = FakeFactors()
@@ -90,16 +106,26 @@ fakeFactorsData['ZMuMu'].fakeFactors.append({Name:"Weight_Iso_Medium_VsDecay"   
 # 2D
 fakeFactorsData['ZMuMu'].fakeFactors.append({Name:"Weight_Iso_Medium_VsPtDecay"   , File:fakeFactorsData['ZMuMu'].fakeFactorsFile2D, Type:"2DHisto", Object:"FakeFactors_Data_ZMuMu_2D_Iso_Medium_InvertIso_Medium_tau_pt_vs_decayMode"})
 #####################################################
-### HighMT
-fakeFactorsData['HighMT'] = FakeFactors()
-fakeFactorsData['HighMT'].fakeFactorsFile1D = "/afs/cern.ch/user/j/jsauvan/workspace/Projects/Htautau_Run2/Studies/FakeRate/ComputeFakeRates/plots/FakeFactors_Data_HighMT_1D/FakeFactors_Data_HighMT_1D.root"
-fakeFactorsData['HighMT'].fakeFactorsFile2D = "/afs/cern.ch/user/j/jsauvan/workspace/Projects/Htautau_Run2/Studies/FakeRate/ComputeFakeRates/plots/FakeFactors_Data_HighMT_2D/FakeFactors_Data_HighMT_2D.root"
+### HighMT Raw
+fakeFactorsData['HighMTRaw'] = FakeFactors()
+fakeFactorsData['HighMTRaw'].fakeFactorsFile1D = "/afs/cern.ch/user/j/jsauvan/workspace/Projects/Htautau_Run2/Studies/FakeRate/ComputeFakeRates/plots/FakeFactors_Data_HighMT_1D/FakeFactors_Data_HighMT_1D.root"
+fakeFactorsData['HighMTRaw'].fakeFactorsFile2D = "/afs/cern.ch/user/j/jsauvan/workspace/Projects/Htautau_Run2/Studies/FakeRate/ComputeFakeRates/plots/FakeFactors_Data_HighMT_2D/FakeFactors_Data_HighMT_2D.root"
 ## !IsoMedium -> IsoMedium
 # 1D
-fakeFactorsData['HighMT'].fakeFactors.append({Name:"Weight_HighMT_Iso_Medium_VsPt"        , File:fakeFactorsData['HighMT'].fakeFactorsFile1D, Type:"1DGraph", Object:"FakeFactors_Data_HighMT_1D_Iso_Medium_InvertIso_Medium_tau_pt"})
-fakeFactorsData['HighMT'].fakeFactors.append({Name:"Weight_HighMT_Iso_Medium_VsDecay"     , File:fakeFactorsData['HighMT'].fakeFactorsFile1D, Type:"1DGraph", Object:"FakeFactors_Data_HighMT_1D_Iso_Medium_InvertIso_Medium_tau_decayMode"})
+fakeFactorsData['HighMTRaw'].fakeFactors.append({Name:"Weight_HighMTRaw_Iso_Medium_VsPt"        , File:fakeFactorsData['HighMTRaw'].fakeFactorsFile1D, Type:"1DGraph", Object:"FakeFactors_Data_HighMT_1D_Iso_Medium_InvertIso_Medium_tau_pt"})
+fakeFactorsData['HighMTRaw'].fakeFactors.append({Name:"Weight_HighMTRaw_Iso_Medium_VsDecay"     , File:fakeFactorsData['HighMTRaw'].fakeFactorsFile1D, Type:"1DGraph", Object:"FakeFactors_Data_HighMT_1D_Iso_Medium_InvertIso_Medium_tau_decayMode"})
 # 2D
-fakeFactorsData['HighMT'].fakeFactors.append({Name:"Weight_HighMT_Iso_Medium_VsPtDecay"   , File:fakeFactorsData['HighMT'].fakeFactorsFile2D, Type:"2DHisto", Object:"FakeFactors_Data_HighMT_2D_Iso_Medium_InvertIso_Medium_tau_pt_vs_decayMode"})
+fakeFactorsData['HighMTRaw'].fakeFactors.append({Name:"Weight_HighMTRaw_Iso_Medium_VsPtDecay"   , File:fakeFactorsData['HighMTRaw'].fakeFactorsFile2D, Type:"2DHisto", Object:"FakeFactors_Data_HighMT_2D_Iso_Medium_InvertIso_Medium_tau_pt_vs_decayMode"})
+#####################################################
+### HighMT Corr
+template = '[{CORR}]*[{RAW}]'
+fakeFactorsData['HighMT'] = FakeFactors()
+## !IsoMedium -> IsoMedium
+# 1D
+fakeFactorsData['HighMT'].fakeFactors.append({Name:"Weight_HighMT_Iso_Medium_VsPt"     , File:'', Type:"Combined", Object:template.format(CORR=highMTCorrection[Name],RAW=fakeFactorsData['HighMTRaw'].fakeFactors[0][Name])})
+fakeFactorsData['HighMT'].fakeFactors.append({Name:"Weight_HighMT_Iso_Medium_VsDecay"  , File:'', Type:"Combined", Object:template.format(CORR=highMTCorrection[Name],RAW=fakeFactorsData['HighMTRaw'].fakeFactors[1][Name])})
+# 2D
+fakeFactorsData['HighMT'].fakeFactors.append({Name:"Weight_HighMT_Iso_Medium_VsPtDecay", File:'', Type:"Combined", Object:template.format(CORR=highMTCorrection[Name],RAW=fakeFactorsData['HighMTRaw'].fakeFactors[2][Name])})
 #####################################################
 ### QCDSS
 fakeFactorsData['QCDSS'] = FakeFactors()

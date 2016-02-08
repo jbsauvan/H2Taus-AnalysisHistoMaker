@@ -182,6 +182,9 @@ h1f_sys 50 mvis ' M_{vis} [GeV] ' 60 0. 300.
 1binvbh1f_sys 51 mvis_stdbins ' M_{vis} [GeV] ' 27 0. 10. 20. 30. 40. 50. 60. 70. 80. 90. 100. 110. 120. 130. 140. 150. 160. 170. 180. 190. 200. 225. 250. 275. 300. 325. 350. 
 1binvbh1f_sys 52 mvis_mssmbins ' M_{vis} [GeV] ' 19 0. 20. 40. 60. 80. 100. 120. 140. 160. 180. 200. 250. 300. 350. 400. 500. 700. 1000. 1500. 
 h1f_sys 53 mt   ' M_{T} [GeV] ' 40 0. 200.
+2binvbh2f_sys 54 mvis_vs_mt   ' m_{vis} vs m_{T} [GeV] ' 
+18 0. 10. 20. 30. 40. 50. 60. 70. 80. 90. 100. 120. 140. 160. 180. 200. 250. 350.
+15 0. 10. 20. 30. 40. 50. 60. 70. 80. 90. 100. 120. 140. 160. 200.
 
 ## histo dependent on gen_match
 ###
@@ -220,6 +223,45 @@ MATCH 6 1. 0.5
 
 
 end_HistosMuTau
+
+###########################################################
+### Histograms in signal region
+###########################################################
+HistosMuTauSignal:  FakeRate_Iso_Medium_, FakeRate_MT40_Iso_Medium_(1000), FakeRate_SS_Iso_Medium_(2000), FakeRate_SS_MT40_Iso_Medium_(3000)
+
+# General event 
+h1f_sys 0 nevents ' Number of events ' 1 0.5 1.5
+h1f 1 nvertices ' Number of vertices ' 50 0. 50.
+h1f 2 rho ' #rho ' 50 0. 50.
+h1f_sys 3 weight ' Fake weight ' 1001 0. 1.001
+
+# First muon
+h1f 10 l1_pt ' p_{T}^{l1} [GeV] ' 100 0. 100.
+h1f 11 l1_eta ' #eta^{l1} ' 50 -2.5 2.5
+h1f 12 l1_phi ' #phi^{l1} ' 50 -3.14159265359 3.14159265359 
+h1f 13 l1_reliso05 ' iso^{l1} ' 100 0. 0.2
+
+# Tau
+1binvbh1f 20 tau_pt ' p_{T}(#tau) [GeV] ' 14 20. 22. 24. 26. 30. 35. 40. 50. 60. 70. 90. 120. 150. 200.
+h1f 21 tau_eta ' #eta^{#tau} ' 12 -2.4 2.4
+h1f 22 tau_phi ' #phi^{#tau} ' 50 -3.14159265359 3.14159265359
+h1f 23 tau_decayMode ' decay^{#tau} ' 15 -0.5 14.5
+h1f 24 tau_againstMuon3 ' tau-muon discriminant ' 60 0. 6.
+h1f 25 tau_againstElectronMVA5 ' tau-ele discriminant ' 30 0. 3.
+h1f 26 tau_iso ' tau isolation ' 200 0. 20.
+h1f 27 tau_pdgId ' pdg ID ' 45 -22.5 22.5
+
+
+# MuTau
+h1f_sys 50 mvis ' M_{vis} [GeV] ' 60 0. 300.
+1binvbh1f_sys 51 mvis_stdbins ' M_{vis} [GeV] ' 27 0. 10. 20. 30. 40. 50. 60. 70. 80. 90. 100. 110. 120. 130. 140. 150. 160. 170. 180. 190. 200. 225. 250. 275. 300. 325. 350. 
+1binvbh1f_sys 52 mvis_mssmbins ' M_{vis} [GeV] ' 19 0. 20. 40. 60. 80. 100. 120. 140. 160. 180. 200. 250. 300. 350. 400. 500. 700. 1000. 1500. 
+h1f_sys 53 mt   ' M_{T} [GeV] ' 40 0. 200.
+2binvbh2f_sys 54 mvis_vs_mt   ' m_{vis} vs m_{T} [GeV] ' 
+18 0. 10. 20. 30. 40. 50. 60. 70. 80. 90. 100. 120. 140. 160. 180. 200. 250. 350.
+15 0. 10. 20. 30. 40. 50. 60. 70. 80. 90. 100. 120. 140. 160. 200.
+
+end_HistosMuTauSignal
 
 
 

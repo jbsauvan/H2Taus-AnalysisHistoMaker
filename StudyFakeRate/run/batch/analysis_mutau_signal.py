@@ -7,14 +7,6 @@ treeDirectory =  "/afs/cern.ch/work/j/jsauvan/public/HTauTau/Trees/mt/151215/"
 treeProdName  =  "H2TauTauTreeProducerTauMu"
 
 
-fakeFactorsTypes = ['ZMuMu','HighMTRaw','HighMT','QCDSS','Combined']
-
-
-for fakeFactorsType in fakeFactorsTypes:
-    if (not fakeFactorsType in fakeFactorsMC) or (not fakeFactorsType in fakeFactorsData):
-        raise StandardError('Unknown fake factor type')
-
-
 ztt_cut = 'l2_gen_match == 5'
 zl_cut  = 'l2_gen_match < 5'
 zj_cut  = 'l2_gen_match == 6'
@@ -82,14 +74,14 @@ batch = []
 for sample in samples:
     batch.append(AnhimaBatchLauncher())
     batch[-1].name = "FakeRate_MuTau_"+sample[Name]
-    batch[-1].exe = "/afs/cern.ch/work/j/jsauvan/Projects/Htautau_Run2/CMSSW/CMSSW_7_4_15/bin/slc6_amd64_gcc491/fakerateapply.exe"
+    batch[-1].exe = "/afs/cern.ch/work/j/jsauvan/Projects/Htautau_Run2/CMSSW/CMSSW_7_4_15/bin/slc6_amd64_gcc491/h2tau_mutau.exe"
     batch[-1].baseDir = "/afs/cern.ch/work/j/jsauvan/Projects/Htautau_Run2/CMSSW/CMSSW_7_4_15/src/AnHiMaCMG/StudyFakeRate/"
     batch[-1].inputFiles.append("{0}/{1}/{2}/tree.root".format(treeDirectory, sample[Dir], treeProdName))
     batch[-1].tree = "tree"
-    batch[-1].outputDirectory = "/afs/cern.ch/work/j/jsauvan/Projects/Htautau_Run2/Histos/StudyFakeRate/MuTau/AllFakeFactors/{SAMPLE}".format(SAMPLE=sample[Name])
-    batch[-1].outputFile = "fakerates_MuTau_{0}.root".format(sample[Name])
+    batch[-1].outputDirectory = "/afs/cern.ch/work/j/jsauvan/Projects/Htautau_Run2/Histos/StudyFakeRate/MuTau_Signal/{SAMPLE}".format(SAMPLE=sample[Name])
+    batch[-1].outputFile = "h2tau_MuTau_{0}.root".format(sample[Name])
     batch[-1].histoParameters = "../histos.par"
-    batch[-1].histoTag = "HistosMuTau"
+    batch[-1].histoTag = "HistosMuTauSignal"
     batch[-1].nFilesPerJob = 1
 
     batch[-1].batchSystem = "lxplus"
@@ -104,69 +96,10 @@ for sample in samples:
     batch[-1].cuts.extend(["l2_decayModeFinding"])
     batch[-1].cuts.extend(["l2_pt>20"])
     # Mu-Tau cuts
-    batch[-1].cuts.extend(["l1_charge*l2_charge<0"])
+    #batch[-1].cuts.extend(["l1_charge*l2_charge<0"])
     # Remove events with bad missing ET
     batch[-1].cuts.extend(['!(met_pt < 0.15 && met_phi > 0. && met_phi < 1.8)'])
     # Sample specific cuts
     if sample[Cut]!="":
         batch[-1].cuts.append(sample[Cut])
-
-    # Fake factors
-    isData = ('Data' in sample[Name])
-    #batch[-1].additionalParameters['IsData'] = str(isData)
-    systematics = ""
-    ifake = 0
-    for fakeFactorsType in fakeFactorsTypes:
-        selectedFakeFactors = (fakeFactorsData[fakeFactorsType].fakeFactors if isData else fakeFactorsMC[fakeFactorsType].fakeFactors)
-        for fakeFactor in selectedFakeFactors:
-            systematics += fakeFactor[Name]
-            systematics += ":"
-        for fakeFactor in selectedFakeFactors:
-            batch[-1].additionalParameters["FakeFactor.{0}.Name".format(ifake+1)]   = fakeFactor[Name]
-            batch[-1].additionalParameters["FakeFactor.{0}.File".format(ifake+1)]   = fakeFactor[File]
-            batch[-1].additionalParameters["FakeFactor.{0}.Object".format(ifake+1)] = fakeFactor[Object]
-            batch[-1].additionalParameters["FakeFactor.{0}.Type".format(ifake+1)]   = fakeFactor[Type]
-            ifake += 1
-    batch[-1].additionalParameters["Systematics"] = systematics[:-1]
-    # background fractions
-    # Fraction W
-    batch[-1].additionalParameters["FakeFactor.{0}.Name".format(ifake+1)]   = fractionsW[Name]
-    batch[-1].additionalParameters["FakeFactor.{0}.File".format(ifake+1)]   = fractionsW[File]
-    batch[-1].additionalParameters["FakeFactor.{0}.Object".format(ifake+1)] = fractionsW[Object]
-    batch[-1].additionalParameters["FakeFactor.{0}.Type".format(ifake+1)]   = fractionsW[Type]
-    ifake += 1
-    # Fraction QCD
-    batch[-1].additionalParameters["FakeFactor.{0}.Name".format(ifake+1)]   = fractionsQCD[Name]
-    batch[-1].additionalParameters["FakeFactor.{0}.File".format(ifake+1)]   = fractionsQCD[File]
-    batch[-1].additionalParameters["FakeFactor.{0}.Object".format(ifake+1)] = fractionsQCD[Object]
-    batch[-1].additionalParameters["FakeFactor.{0}.Type".format(ifake+1)]   = fractionsQCD[Type]
-    ifake += 1
-    # Fraction TT
-    batch[-1].additionalParameters["FakeFactor.{0}.Name".format(ifake+1)]   = fractionsTT[Name]
-    batch[-1].additionalParameters["FakeFactor.{0}.File".format(ifake+1)]   = fractionsTT[File]
-    batch[-1].additionalParameters["FakeFactor.{0}.Object".format(ifake+1)] = fractionsTT[Object]
-    batch[-1].additionalParameters["FakeFactor.{0}.Type".format(ifake+1)]   = fractionsTT[Type]
-    ifake += 1
-    # Fraction ZJ
-    batch[-1].additionalParameters["FakeFactor.{0}.Name".format(ifake+1)]   = fractionsZJ[Name]
-    batch[-1].additionalParameters["FakeFactor.{0}.File".format(ifake+1)]   = fractionsZJ[File]
-    batch[-1].additionalParameters["FakeFactor.{0}.Object".format(ifake+1)] = fractionsZJ[Object]
-    batch[-1].additionalParameters["FakeFactor.{0}.Type".format(ifake+1)]   = fractionsZJ[Type]
-    ifake += 1
-    # Fraction VV
-    batch[-1].additionalParameters["FakeFactor.{0}.Name".format(ifake+1)]   = fractionsVV[Name]
-    batch[-1].additionalParameters["FakeFactor.{0}.File".format(ifake+1)]   = fractionsVV[File]
-    batch[-1].additionalParameters["FakeFactor.{0}.Object".format(ifake+1)] = fractionsVV[Object]
-    batch[-1].additionalParameters["FakeFactor.{0}.Type".format(ifake+1)]   = fractionsVV[Type]
-    ifake += 1
-    # HighMT correction
-    batch[-1].additionalParameters["FakeFactor.{0}.Name".format(ifake+1)]   = highMTCorrection[Name]
-    batch[-1].additionalParameters["FakeFactor.{0}.File".format(ifake+1)]   = highMTCorrection[File]
-    batch[-1].additionalParameters["FakeFactor.{0}.Object".format(ifake+1)] = highMTCorrection[Object]
-    batch[-1].additionalParameters["FakeFactor.{0}.Type".format(ifake+1)]   = highMTCorrection[Type]
-    ifake += 1
-    #
-    batch[-1].additionalParameters["NumberOfFakeFactors"] = str(ifake)
-
-
 

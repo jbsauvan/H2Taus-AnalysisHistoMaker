@@ -153,6 +153,7 @@ void AnalysisFakeRateApply::fillHistos(unsigned selection, const std::string& sy
     m_histos.FillHisto(51+hoffset, event().mvis(), weight, sysNum);
     m_histos.FillHisto(52+hoffset, event().mvis(), weight, sysNum);
     m_histos.FillHisto(53+hoffset, event().mt(), weight, sysNum);
+    m_histos.FillHisto(54+hoffset, event().mvis(), event().mt(), weight, sysNum);
 
     // Histos depending on gen_match
     m_histos.Fill1BinHisto(100+hoffset, event().tau().gen_match, 0.5, weight, sysNum);

@@ -258,6 +258,45 @@ bool EventMuTau::passSelection(int selection)
 }
 
 /*****************************************************************/
+bool EventMuTau::passSelectionSignal(int iso, int applyMT, int sign)
+/*****************************************************************/
+{
+    bool pass = true;
+    pass &= (tau().pt > 0.);
+    switch(iso)
+    {
+        case 0: // No isolation
+            break;
+        case 1: // Tau isolation medium
+            pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits >= 2);
+            break;
+        case 2: // Reverse tau isolation medium
+            pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits < 2);
+            break;
+        default:
+            break;
+    };
+    if(applyMT==1) // apply mT cut
+    {
+        pass &= (mt()<40.);
+    }
+    switch(sign)
+    {
+        case 0: // No sign requirement
+            break;
+        case 1: // OS
+            pass &= (tau().charge*muon().charge<0);
+            break;
+        case 2: // SS
+            pass &= (tau().charge*muon().charge>0);
+            break;
+        default:
+            break;
+    };
+    return pass;
+}
+
+/*****************************************************************/
 bool EventMuTau::passSelectionBackup(int selection)
 /*****************************************************************/
 {
