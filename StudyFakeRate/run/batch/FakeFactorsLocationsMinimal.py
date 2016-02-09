@@ -13,19 +13,25 @@ class FakeFactors:
         self.fakeFactorsFile2D = ''
         self.fakeFactors = []
 
-fakeFactorsMC = {}
-fakeFactorsData = {}
+
 
 
 ##############################################
 ## Background fractions
 ##############################################
-fractionsFile = "/afs/cern.ch/user/j/jsauvan/workspace/Projects/Htautau_Run2/Studies/FakeRate/ComputeBackgroundFractions/results/backgroundFraction_lowMT_mvis.root"
-fractionsW   = {Name:"Fraction_W_VsMVis"      , File:fractionsFile, Type:"1DHisto", Object:"h_backgroundFraction_lowMT_mvis_W"}
-fractionsQCD = {Name:"Fraction_QCD_VsMVis"    , File:fractionsFile, Type:"1DHisto", Object:"h_backgroundFraction_lowMT_mvis_QCD"}
-fractionsTT  = {Name:"Fraction_TT_VsMVis"     , File:fractionsFile, Type:"1DHisto", Object:"h_backgroundFraction_lowMT_mvis_TT"}
-fractionsZJ  = {Name:"Fraction_ZJ_VsMVis"     , File:fractionsFile, Type:"1DHisto", Object:"h_backgroundFraction_lowMT_mvis_ZJ"}
-fractionsVV  = {Name:"Fraction_VV_VsMVis"     , File:fractionsFile, Type:"1DHisto", Object:"h_backgroundFraction_lowMT_mvis_VV"}
+#fractionsFile = "/afs/cern.ch/user/j/jsauvan/workspace/Projects/Htautau_Run2/Studies/FakeRate/ComputeBackgroundFractions/results/backgroundFraction_lowMT_mvis.root"
+#fractionsW   = {Name:"Fraction_W_VsMVis"      , File:fractionsFile, Type:"1DHisto", Object:"h_backgroundFraction_lowMT_mvis_W"}
+#fractionsQCD = {Name:"Fraction_QCD_VsMVis"    , File:fractionsFile, Type:"1DHisto", Object:"h_backgroundFraction_lowMT_mvis_QCD"}
+#fractionsTT  = {Name:"Fraction_TT_VsMVis"     , File:fractionsFile, Type:"1DHisto", Object:"h_backgroundFraction_lowMT_mvis_TT"}
+#fractionsZJ  = {Name:"Fraction_ZJ_VsMVis"     , File:fractionsFile, Type:"1DHisto", Object:"h_backgroundFraction_lowMT_mvis_ZJ"}
+#fractionsVV  = {Name:"Fraction_VV_VsMVis"     , File:fractionsFile, Type:"1DHisto", Object:"h_backgroundFraction_lowMT_mvis_VV"}
+
+fractionsFile = "/afs/cern.ch/user/j/jsauvan/workspace/Projects/Htautau_Run2/Studies/FakeRate/ComputeBackgroundFractions/results/backgroundFraction_Iso_Medium_mvis_vs_mt.root"
+fractionsW   = {Name:"Fraction_W_VsMVisMT"      , File:fractionsFile, Type:"2DHisto", Object:"h_backgroundFraction_Iso_Medium_mvis_vs_mt_W"}
+fractionsQCD = {Name:"Fraction_QCD_VsMVisMT"    , File:fractionsFile, Type:"2DHisto", Object:"h_backgroundFraction_Iso_Medium_mvis_vs_mt_QCD"}
+fractionsTT  = {Name:"Fraction_TT_VsMVisMT"     , File:fractionsFile, Type:"2DHisto", Object:"h_backgroundFraction_Iso_Medium_mvis_vs_mt_TT"}
+fractionsZJ  = {Name:"Fraction_ZJ_VsMVisMT"     , File:fractionsFile, Type:"2DHisto", Object:"h_backgroundFraction_Iso_Medium_mvis_vs_mt_ZJ"}
+fractionsVV  = {Name:"Fraction_VV_VsMVisMT"     , File:fractionsFile, Type:"2DHisto", Object:"h_backgroundFraction_Iso_Medium_mvis_vs_mt_VV"}
 
 ##############################################
 ## High-MT correction
@@ -34,6 +40,8 @@ highMTCorrectionFile = "/afs/cern.ch/user/j/jsauvan/workspace/Projects/Htautau_R
 highMTCorrection = {Name:"HighMTCorr_VsMT"      , File:highMTCorrectionFile, Type:"1DGraph", Object:"HighMTCorrection_WJets_Iso_Medium_OS_InvertIso_Medium_OS_mt"}
 
 
+fakeFactorsMC = {}
+fakeFactorsData = {}
 ###############################################
 ##  MC fake factors
 ###############################################

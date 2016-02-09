@@ -321,6 +321,11 @@ double FakeFactors::retrieveFakeFactor(const std::string& name, const EventMuTau
             if((valueId>=6 && valueId<=20) || valueId>=22 || valueId==0) valueId = 2.; // FIXME: find a better way to discard values not used to determine the fake rates
             values.push_back( valueId * (event.tau().sign_flip!=0 ? event.tau().sign_flip : 1));
         }
+        else if(name.find("VsMVisMT")!=std::string::npos)
+        {
+            values.push_back(event.mvis());
+            values.push_back(event.mt());
+        }
         // 1D fake factor
         else if(name.find("Inclusive")!=std::string::npos)
         {
