@@ -62,7 +62,7 @@ highMTCorrection = FakeFactor(Name="HighMTCorr_VsMT" , File=highMTCorrectionFile
 ##############################################
 ## Non-closures
 nonClosures = {}
-nonClosures['HighMT'] = FakeFactor(Name="HighMTNonClosure_VsMvis", File=nonClosureFile, Type="1DGraph", Object="HighMT_KDE_Ratio")
+nonClosures['HighMT'] = FakeFactor(Name="HighMTNonClosure_VsMVis", File=nonClosureFile, Type="1DGraph", Object="HighMT_KDE_Ratio")
 
 ##############################################
 ## Fake factors

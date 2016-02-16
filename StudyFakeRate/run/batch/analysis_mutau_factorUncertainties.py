@@ -117,11 +117,11 @@ for sample in samples:
     systematics = ""
     ifake = 0
     for fakeFactorsType in fakeFactorsTypes:
-        selectedFakeFactors = (fakeFactorsData[fakeFactorsType].fakeFactors if isData else fakeFactorsMC[fakeFactorsType].fakeFactors)
-        for fakeFactor in selectedFakeFactors:
-            systematics += fakeFactor[Name]
+        selectedFakeFactors = (fakeFactorsData[fakeFactorsType] if isData else fakeFactorsMC[fakeFactorsType])
+        for fakeFactor in selectedFakeFactors.values():
+            systematics += fakeFactor.Name
             systematics += ":"
-        for fakeFactor in selectedFakeFactors:
+        for fakeFactor in selectedFakeFactors.values():
             batch[-1].additionalParameters["FakeFactor.{0}.Name".format(ifake+1)]   = fakeFactor.Name
             batch[-1].additionalParameters["FakeFactor.{0}.File".format(ifake+1)]   = fakeFactor.File
             batch[-1].additionalParameters["FakeFactor.{0}.Object".format(ifake+1)] = fakeFactor.Object

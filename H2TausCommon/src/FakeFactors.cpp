@@ -365,6 +365,10 @@ double FakeFactors::retrieveFakeFactor(const std::string& name, const EventMuTau
         {
             values.push_back(event.mt());
         }
+        else
+        {
+            throw("Cannot find input variables for fake factor "+name);
+        }
 
         // Retrieve fake factor depending on type of object
         if(type=="1DGraph")
@@ -419,7 +423,7 @@ double FakeFactors::retrieveFakeFactor(const std::string& name, const EventMuTau
         }
         else
         {
-            std::cout<<"ERROR: Unknown type of fake factor\n";
+            throw("Unknown type of fake factor\n");
         }
         // Apply high-mT -> low-mT correction factor
         // NOW DONE IN CONFIG
