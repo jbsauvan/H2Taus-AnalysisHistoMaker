@@ -138,87 +138,87 @@ bool  FakeFactors::addFakeFactor(const std::string& name, const std::string& fil
             }
         }
         // Use Up fake factors if requested
-        bool up = (name.find("Up")!=std::string::npos ? true : false);
-        if(up)
-        {
-            if(type=="1DGraph")
-            {
-                TGraphAsymmErrors* graph = dynamic_cast<TGraphAsymmErrors*>(object);
-                for(int p=0; p<graph->GetN();p++)
-                {
-                    double factor = graph->GetY()[p];
-                    double errorUp   = graph->GetEYhigh()[p]; 
-                    graph->SetPoint(p, graph->GetX()[p], factor+errorUp);
-                }
-                object = static_cast<TObject*>(graph);
-            }
-            else if(type=="1DHisto")
-            {
-                TH1F* histo = dynamic_cast<TH1F*>(object);
-                for(int bx=0; bx<=histo->GetNbinsX()+1;bx++)
-                {
-                    double factor = histo->GetBinContent(bx);
-                    double error  = histo->GetBinError(bx); 
-                    histo->SetBinContent(bx, factor+error);
-                }
-                object = static_cast<TObject*>(histo);
-            }
-            else if(type=="2DHisto")
-            {
-                TH2F* histo = dynamic_cast<TH2F*>(object);
-                for(int bx=0; bx<=histo->GetNbinsX()+1;bx++)
-                {
-                    for(int by=0; by<=histo->GetNbinsY()+1;by++)
-                    {
-                        double factor = histo->GetBinContent(bx,by);
-                        double error  = histo->GetBinError(bx,by); 
-                        histo->SetBinContent(bx,by, factor+error);
-                    }
-                }
-                object = static_cast<TObject*>(histo);
-            }
-        }
-        // Use Down fake factors if requested
-        bool down = (name.find("Down")!=std::string::npos ? true : false);
-        if(down)
-        {
-            if(type=="1DGraph")
-            {
-                TGraphAsymmErrors* graph = dynamic_cast<TGraphAsymmErrors*>(object);
-                for(int p=0; p<graph->GetN();p++)
-                {
-                    double factor = graph->GetY()[p];
-                    double errorDown = graph->GetEYlow()[p];
-                    graph->SetPoint(p, graph->GetX()[p], std::max(0.,factor-errorDown));
-                }
-                object = static_cast<TObject*>(graph);
-            }
-            else if(type=="1DHisto")
-            {
-                TH1F* histo = dynamic_cast<TH1F*>(object);
-                for(int bx=0; bx<=histo->GetNbinsX()+1;bx++)
-                {
-                    double factor = histo->GetBinContent(bx);
-                    double error  = histo->GetBinError(bx); 
-                    histo->SetBinContent(bx,std::max(0., factor-error));
-                }
-                object = static_cast<TObject*>(histo);
-            }
-            else if(type=="2DHisto")
-            {
-                TH2F* histo = dynamic_cast<TH2F*>(object);
-                for(int bx=0; bx<=histo->GetNbinsX()+1;bx++)
-                {
-                    for(int by=0; by<=histo->GetNbinsY()+1;by++)
-                    {
-                        double factor = histo->GetBinContent(bx,by);
-                        double error  = histo->GetBinError(bx,by); 
-                        histo->SetBinContent(bx,by,std::max(0., factor-error));
-                    }
-                }
-                object = static_cast<TObject*>(histo);
-            }
-        }
+        //bool up = (name.find("Up")!=std::string::npos ? true : false);
+        //if(up)
+        //{
+            //if(type=="1DGraph")
+            //{
+                //TGraphAsymmErrors* graph = dynamic_cast<TGraphAsymmErrors*>(object);
+                //for(int p=0; p<graph->GetN();p++)
+                //{
+                    //double factor = graph->GetY()[p];
+                    //double errorUp   = graph->GetEYhigh()[p]; 
+                    //graph->SetPoint(p, graph->GetX()[p], factor+errorUp);
+                //}
+                //object = static_cast<TObject*>(graph);
+            //}
+            //else if(type=="1DHisto")
+            //{
+                //TH1F* histo = dynamic_cast<TH1F*>(object);
+                //for(int bx=0; bx<=histo->GetNbinsX()+1;bx++)
+                //{
+                    //double factor = histo->GetBinContent(bx);
+                    //double error  = histo->GetBinError(bx); 
+                    //histo->SetBinContent(bx, factor+error);
+                //}
+                //object = static_cast<TObject*>(histo);
+            //}
+            //else if(type=="2DHisto")
+            //{
+                //TH2F* histo = dynamic_cast<TH2F*>(object);
+                //for(int bx=0; bx<=histo->GetNbinsX()+1;bx++)
+                //{
+                    //for(int by=0; by<=histo->GetNbinsY()+1;by++)
+                    //{
+                        //double factor = histo->GetBinContent(bx,by);
+                        //double error  = histo->GetBinError(bx,by); 
+                        //histo->SetBinContent(bx,by, factor+error);
+                    //}
+                //}
+                //object = static_cast<TObject*>(histo);
+            //}
+        //}
+        //// Use Down fake factors if requested
+        //bool down = (name.find("Down")!=std::string::npos ? true : false);
+        //if(down)
+        //{
+            //if(type=="1DGraph")
+            //{
+                //TGraphAsymmErrors* graph = dynamic_cast<TGraphAsymmErrors*>(object);
+                //for(int p=0; p<graph->GetN();p++)
+                //{
+                    //double factor = graph->GetY()[p];
+                    //double errorDown = graph->GetEYlow()[p];
+                    //graph->SetPoint(p, graph->GetX()[p], std::max(0.,factor-errorDown));
+                //}
+                //object = static_cast<TObject*>(graph);
+            //}
+            //else if(type=="1DHisto")
+            //{
+                //TH1F* histo = dynamic_cast<TH1F*>(object);
+                //for(int bx=0; bx<=histo->GetNbinsX()+1;bx++)
+                //{
+                    //double factor = histo->GetBinContent(bx);
+                    //double error  = histo->GetBinError(bx); 
+                    //histo->SetBinContent(bx,std::max(0., factor-error));
+                //}
+                //object = static_cast<TObject*>(histo);
+            //}
+            //else if(type=="2DHisto")
+            //{
+                //TH2F* histo = dynamic_cast<TH2F*>(object);
+                //for(int bx=0; bx<=histo->GetNbinsX()+1;bx++)
+                //{
+                    //for(int by=0; by<=histo->GetNbinsY()+1;by++)
+                    //{
+                        //double factor = histo->GetBinContent(bx,by);
+                        //double error  = histo->GetBinError(bx,by); 
+                        //histo->SetBinContent(bx,by,std::max(0., factor-error));
+                    //}
+                //}
+                //object = static_cast<TObject*>(histo);
+            //}
+        //}
 
         m_fakeFactors[name] = std::make_pair(type, object);
         m_fakeFactorNames.push_back(name);

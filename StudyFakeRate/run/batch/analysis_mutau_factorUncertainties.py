@@ -1,5 +1,5 @@
 from AnhimaBatchLauncher import AnhimaBatchLauncher
-from FakeFactorsLocationsWithUncertainties import fakeFactorsMC,fakeFactorsData,fractionsW,fractionsTT,fractionsVV,fractionsZJ,fractionsQCD,highMTCorrection,nonClosures
+from FakeFactorsLocationsWithUncertainties import fakeFactorsMC,fakeFactorsData,fractionsW,fractionsTT,fractionsVV,fractionsZJ,fractionsQCD,highMTCorrection,nonClosures, binByBinShiftsData
 import glob
 
 ## Samples definition
@@ -30,21 +30,21 @@ Dir  = "Dir"
 Cut  = "Cut"
 
 samples = []
-samples.append({Name:"ZJ"          ,Dir:"DYJetsToLL_M50_LO",Cut:zj_cut})
-samples.append({Name:"W"           ,Dir:"WJetsToLNu_LO"    ,Cut:fake_cut})
-samples.append({Name:"TT"          ,Dir:"TT_pow_ext"       ,Cut:fake_cut})
-samples.append({Name:"T_tWch"      ,Dir:"T_tWch"           ,Cut:fake_cut})
-samples.append({Name:"TBar_tWch"   ,Dir:"TBar_tWch"        ,Cut:fake_cut})
-samples.append({Name:"QCD"         ,Dir:"QCD_Mu15"         ,Cut:fake_cut})
-##
-#samples.append({Name:"ZZTo4L"      ,Dir:"ZZTo4L"           ,Cut:""}) ## FIXME: output not there
-samples.append({Name:"ZZTo2L2Q"    ,Dir:"ZZTo2L2Q"         ,Cut:fake_cut})
-samples.append({Name:"WZTo3L"      ,Dir:"WZTo3L"           ,Cut:fake_cut})
-samples.append({Name:"WZTo2L2Q"    ,Dir:"WZTo2L2Q"         ,Cut:fake_cut})
-samples.append({Name:"WZTo1L3Nu"   ,Dir:"WZTo1L3Nu"        ,Cut:fake_cut})
-samples.append({Name:"WZTo1L1Nu2Q" ,Dir:"WZTo1L1Nu2Q"      ,Cut:fake_cut})
-samples.append({Name:"VVTo2L2Nu"   ,Dir:"VVTo2L2Nu"        ,Cut:fake_cut})
-samples.append({Name:"WWTo1L1Nu2Q" ,Dir:"WWTo1L1Nu2Q"      ,Cut:fake_cut})
+#samples.append({Name:"ZJ"          ,Dir:"DYJetsToLL_M50_LO",Cut:zj_cut})
+#samples.append({Name:"W"           ,Dir:"WJetsToLNu_LO"    ,Cut:fake_cut})
+#samples.append({Name:"TT"          ,Dir:"TT_pow_ext"       ,Cut:fake_cut})
+#samples.append({Name:"T_tWch"      ,Dir:"T_tWch"           ,Cut:fake_cut})
+#samples.append({Name:"TBar_tWch"   ,Dir:"TBar_tWch"        ,Cut:fake_cut})
+#samples.append({Name:"QCD"         ,Dir:"QCD_Mu15"         ,Cut:fake_cut})
+###
+##samples.append({Name:"ZZTo4L"      ,Dir:"ZZTo4L"           ,Cut:""}) ## FIXME: output not there
+#samples.append({Name:"ZZTo2L2Q"    ,Dir:"ZZTo2L2Q"         ,Cut:fake_cut})
+#samples.append({Name:"WZTo3L"      ,Dir:"WZTo3L"           ,Cut:fake_cut})
+#samples.append({Name:"WZTo2L2Q"    ,Dir:"WZTo2L2Q"         ,Cut:fake_cut})
+#samples.append({Name:"WZTo1L3Nu"   ,Dir:"WZTo1L3Nu"        ,Cut:fake_cut})
+#samples.append({Name:"WZTo1L1Nu2Q" ,Dir:"WZTo1L1Nu2Q"      ,Cut:fake_cut})
+#samples.append({Name:"VVTo2L2Nu"   ,Dir:"VVTo2L2Nu"        ,Cut:fake_cut})
+#samples.append({Name:"WWTo1L1Nu2Q" ,Dir:"WWTo1L1Nu2Q"      ,Cut:fake_cut})
 #
 samples.append({Name:"Data_Run15D_v4",    Dir:"SingleMuon_Run2015D_v4"            ,Cut:""})
 samples.append({Name:"Data_Run15D_05Oct", Dir:"SingleMuon_Run2015D_05Oct"         ,Cut:""})
@@ -117,8 +117,11 @@ for sample in samples:
     systematics = ""
     ifake = 0
     for fakeFactorsType in fakeFactorsTypes:
-        selectedFakeFactors = (fakeFactorsData[fakeFactorsType] if isData else fakeFactorsMC[fakeFactorsType])
+        #selectedFakeFactors = (fakeFactorsData[fakeFactorsType] if isData else fakeFactorsMC[fakeFactorsType])
+        selectedFakeFactors = fakeFactorsData[fakeFactorsType]
         for fakeFactor in selectedFakeFactors.values():
+            # Only apply combined fake factors
+            if fakeFactorsType!='Combined': continue
             systematics += fakeFactor.Name
             systematics += ":"
         for fakeFactor in selectedFakeFactors.values():
@@ -172,6 +175,15 @@ for sample in samples:
         batch[-1].additionalParameters["FakeFactor.{0}.Object".format(ifake+1)] = nonClosure.Object
         batch[-1].additionalParameters["FakeFactor.{0}.Type".format(ifake+1)]   = nonClosure.Type
         ifake += 1
+    # stat shifts
+    for type_shifts in binByBinShiftsData.values():
+        for fake_shifts in type_shifts.values():
+            for shift in fake_shifts.values():
+                batch[-1].additionalParameters["FakeFactor.{0}.Name".format(ifake+1)]   = shift.Name
+                batch[-1].additionalParameters["FakeFactor.{0}.File".format(ifake+1)]   = shift.File
+                batch[-1].additionalParameters["FakeFactor.{0}.Object".format(ifake+1)] = shift.Object
+                batch[-1].additionalParameters["FakeFactor.{0}.Type".format(ifake+1)]   = shift.Type
+                ifake += 1
     #
     batch[-1].additionalParameters["NumberOfFakeFactors"] = str(ifake)
 

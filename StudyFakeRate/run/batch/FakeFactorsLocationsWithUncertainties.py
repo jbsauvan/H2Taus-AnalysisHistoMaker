@@ -1,3 +1,7 @@
+import copy
+import ROOT
+
+
 Name = "Name"
 File = "File"
 Object = "Object"
@@ -62,7 +66,11 @@ highMTCorrection = FakeFactor(Name="HighMTCorr_VsMT" , File=highMTCorrectionFile
 ##############################################
 ## Non-closures
 nonClosures = {}
-nonClosures['HighMT'] = FakeFactor(Name="HighMTNonClosure_VsMVis", File=nonClosureFile, Type="1DGraph", Object="HighMT_KDE_Ratio")
+nonClosures['HighMT'] = FakeFactor(Name="HighMTNonClosure_VsMVis", File=nonClosureFile, Type="1DGraph", Object="HighMT_Histo_Smooth_Ratio")
+nonClosures['ZMuMu'] = FakeFactor(Name="ZMuMuNonClosure_VsMVis", File=nonClosureFile, Type="1DGraph", Object="ZMuMu_Histo_Smooth_Ratio")
+nonClosures['QCDSS'] = FakeFactor(Name="QCDSSNonClosure_VsMVis", File=nonClosureFile, Type="1DGraph", Object="QCDSS_Histo_Smooth_Ratio")
+
+## Fake factor sys shifts
 
 ##############################################
 ## Fake factors
@@ -74,7 +82,8 @@ for type in fakeFactorTypes:
     fakeFactorsData[type] = {}
 
 formCorrection = '[{CORR}]*[{RAW}]'
-formCombined = '[{W_QCD}]*[{QCD}]+[{W_W}]*[{W}]+[{W_Z}]*([{ZJ}]+[{TT}]+[{VV}])'
+#formCombined = '[{W_QCD}]*[{QCD}]+[{W_W}]*[{W}]+[{W_Z}]*([{ZJ}]+[{TT}]+[{VV}])'
+formCombined = '[{W_QCD}]*[{QCD}]+[{W_W}]*([{W}]+[{TT}])+[{W_Z}]*([{ZJ}]+[{VV}])'
 
 fakeFactor = 'Iso_Medium_VsPtDecay'
 ## ZMuMu 
@@ -172,11 +181,14 @@ fakeFactorsData['Combined'][fakeFactor]  = FakeFactor(
 ###############################################
 ##  Produce shifted fake factors 
 ###############################################
+fakeFactorsMCCopy = copy.deepcopy(fakeFactorsMC)
+fakeFactorsDataCopy = copy.deepcopy(fakeFactorsData)
+### Non closure
 formShift = '[{SHIFT}]*[{NOM}]'
 for type,nonClosure in nonClosures.items():
     ## MC fake factors
     # sys shift on individual fake factors
-    for name,fakeFactor in fakeFactorsMC[type].items():
+    for name,fakeFactor in fakeFactorsMCCopy[type].items():
         fakeFactorShift = FakeFactor(
             Name=fakeFactor.Name+'_ShiftNonClosure'+type,
             File='',
@@ -188,18 +200,18 @@ for type,nonClosure in nonClosures.items():
         )
         fakeFactorsMC[type][name+'_ShiftNonClosure'+type] = fakeFactorShift
     # sys shift on combined fake factors
-    for name,fakeFactor in fakeFactorsMC['Combined'].items():
-        shiftedComponent = formShift.format(SHIFT=nonClosure.Name,NOM=fakeFactorsMC[type][name].Name)
+    for name,fakeFactor in fakeFactorsMCCopy['Combined'].items():
+        shiftedComponent = formShift.format(SHIFT=nonClosure.Name,NOM=fakeFactorsMCCopy[type][name].Name)
         fakeFactorShift = FakeFactor(
             Name=fakeFactor.Name+'_ShiftNonClosure'+type,
             File='',
             Type="Combined",
-            Object=fakeFactor.Object.replace(fakeFactorsMC[type][name].Name, fakeFactorsMC[type][name].Name+'_ShiftNonClosure'+type)
+            Object=fakeFactor.Object.replace(fakeFactorsMCCopy[type][name].Name, fakeFactorsMCCopy[type][name].Name+'_ShiftNonClosure'+type)
         )
         fakeFactorsMC['Combined'][name+'_ShiftNonClosure'+type] = fakeFactorShift
     ## Data fake factors
     # sys shift on individual fake factors
-    for name,fakeFactor in fakeFactorsData[type].items():
+    for name,fakeFactor in fakeFactorsDataCopy[type].items():
         fakeFactorShift = FakeFactor(
             Name=fakeFactor.Name+'_ShiftNonClosure'+type,
             File='',
@@ -211,12 +223,141 @@ for type,nonClosure in nonClosures.items():
         )
         fakeFactorsData[type][name+'_ShiftNonClosure'+type] = fakeFactorShift
     # sys shift on combined fake factors
-    for name,fakeFactor in fakeFactorsData['Combined'].items():
-        shiftedComponent = formShift.format(SHIFT=nonClosure.Name,NOM=fakeFactorsData[type][name].Name)
+    for name,fakeFactor in fakeFactorsDataCopy['Combined'].items():
+        shiftedComponent = formShift.format(SHIFT=nonClosure.Name,NOM=fakeFactorsDataCopy[type][name].Name)
         fakeFactorShift = FakeFactor(
             Name=fakeFactor.Name+'_ShiftNonClosure'+type,
             File='',
             Type="Combined",
-            Object=fakeFactor.Object.replace(fakeFactorsData[type][name].Name, fakeFactorsData[type][name].Name+'_ShiftNonClosure'+type)
+            Object=fakeFactor.Object.replace(fakeFactorsDataCopy[type][name].Name, fakeFactorsDataCopy[type][name].Name+'_ShiftNonClosure'+type)
         )
         fakeFactorsData['Combined'][name+'_ShiftNonClosure'+type] = fakeFactorShift
+
+### FF Stat uncertainties
+formShift = '([{NOM}]+[{SHIFT}])'
+binByBinShiftsMC = {}
+statUncertDir = '/afs/cern.ch/user/j/jsauvan/Projects/Htautau_Run2/Studies/FakeRate/Uncertainties/FakeFactorStatUncertainties/results/'
+for type,fakeFactors in fakeFactorsMCCopy.items():
+    for name,fakeFactor in fakeFactors.items():
+        if fakeFactor.Type is 'Combined': continue
+        if not type in binByBinShiftsMC: binByBinShiftsMC[type] = {}
+        binByBinShiftsMC[type][name] = {}
+        fileName = fakeFactor.File.split('/')[-1].replace('.root', '_StatShift.root') 
+        uncertFile = ROOT.TFile.Open(statUncertDir+'/'+fileName)
+        keys = uncertFile.GetListOfKeys()
+        shiftedFakeFactors = []
+        for key in keys:
+            if fakeFactor.Object in key.GetName():
+                shiftedFakeFactors.append(key.GetName())
+        uncertFile.Close()
+        for shiftedFakeFactor in shiftedFakeFactors:
+            extension = shiftedFakeFactor.replace(fakeFactor.Object+'_', '')
+            # bin by bin stat uncertainty
+            fakeFactorShift = FakeFactor(
+                Name=fakeFactor.Name+'_StatUncert_'+extension,
+                File=statUncertDir+'/'+fileName,
+                Type=fakeFactor.Type,
+                Object=shiftedFakeFactor
+            )
+            binByBinShiftsMC[type][name][extension] = fakeFactorShift
+            # sys shift on individual fake factors
+            shiftedObject = formShift.format(
+                    SHIFT=fakeFactorShift.Name,
+                    NOM=fakeFactor.Name
+                )
+            fakeFactorShifted = FakeFactor(
+                Name=fakeFactor.Name+'_ShiftStat'+type+'_'+extension,
+                File='',
+                Type="Combined",
+                Object=shiftedObject
+            )
+            fakeFactorsMC[type][name+'_ShiftStat'+type+'_'+extension] = fakeFactorShifted
+            # sys shift on combined fake factors
+            ## FIXME: remove HighMT special case (maybe with iterations)
+            if type!='HighMTRaw':
+                fakeFactorCombinedShifted = FakeFactor(
+                    Name=fakeFactorsMCCopy['Combined'][name].Name+'_ShiftStat'+type+'_'+extension,
+                    File='',
+                    Type="Combined",
+                    Object=fakeFactorsMCCopy['Combined'][name].Object.replace(fakeFactor.Name, fakeFactorShifted.Name)
+                )
+                fakeFactorsMC['Combined'][name+'_ShiftStat'+type+'_'+extension] = fakeFactorCombinedShifted
+            else:
+                fakeFactorHighMTShifted = FakeFactor(
+                    Name=fakeFactorsMCCopy['HighMT'][name].Name+'_ShiftStat'+type+'_'+extension,
+                    File='',
+                    Type="Combined",
+                    Object=fakeFactorsMCCopy['HighMT'][name].Object.replace(fakeFactor.Name, fakeFactorShifted.Name)
+                )
+                fakeFactorsMC['HighMT'][name+'_ShiftStat'+type+'_'+extension] = fakeFactorHighMTShifted
+                fakeFactorCombinedShifted = FakeFactor(
+                    Name=fakeFactorsMCCopy['Combined'][name].Name+'_ShiftStat'+type+'_'+extension,
+                    File='',
+                    Type="Combined",
+                    Object=fakeFactorsMCCopy['Combined'][name].Object.replace(fakeFactorsMCCopy['HighMT'][name].Name, fakeFactorHighMTShifted.Name)
+                )
+                fakeFactorsMC['Combined'][name+'_ShiftStat'+type+'_'+extension] = fakeFactorCombinedShifted
+
+binByBinShiftsData = {}
+for type,fakeFactors in fakeFactorsDataCopy.items():
+    for name,fakeFactor in fakeFactors.items():
+        if fakeFactor.Type is 'Combined': continue
+        if not type in binByBinShiftsData: binByBinShiftsData[type] = {}
+        binByBinShiftsData[type][name] = {}
+        fileName = fakeFactor.File.split('/')[-1].replace('.root', '_StatShift.root') 
+        uncertFile = ROOT.TFile.Open(statUncertDir+'/'+fileName)
+        keys = uncertFile.GetListOfKeys()
+        shiftedFakeFactors = []
+        for key in keys:
+            if fakeFactor.Object in key.GetName():
+                shiftedFakeFactors.append(key.GetName())
+        uncertFile.Close()
+        for shiftedFakeFactor in shiftedFakeFactors:
+            extension = shiftedFakeFactor.replace(fakeFactor.Object+'_', '')
+            # bin by bin stat uncertainty
+            fakeFactorShift = FakeFactor(
+                Name=fakeFactor.Name+'_StatUncert_'+extension,
+                File=statUncertDir+'/'+fileName,
+                Type=fakeFactor.Type,
+                Object=shiftedFakeFactor
+            )
+            binByBinShiftsData[type][name][extension] = fakeFactorShift
+            # sys shift on individual fake factors
+            shiftedObject = formShift.format(
+                    SHIFT=fakeFactorShift.Name,
+                    NOM=fakeFactor.Name
+                )
+            fakeFactorShifted = FakeFactor(
+                Name=fakeFactor.Name+'_ShiftStat'+type+'_'+extension,
+                File='',
+                Type="Combined",
+                Object=shiftedObject
+            )
+            fakeFactorsData[type][name+'_ShiftStat'+type+'_'+extension] = fakeFactorShifted
+            # sys shift on combined fake factors
+            ## FIXME: remove HighMT special case (maybe with iterations)
+            if type!='HighMTRaw':
+                fakeFactorCombinedShifted = FakeFactor(
+                    Name=fakeFactorsDataCopy['Combined'][name].Name+'_ShiftStat'+type+'_'+extension,
+                    File='',
+                    Type="Combined",
+                    Object=fakeFactorsDataCopy['Combined'][name].Object.replace(fakeFactor.Name, fakeFactorShifted.Name)
+                )
+                fakeFactorsData['Combined'][name+'_ShiftStat'+type+'_'+extension] = fakeFactorCombinedShifted
+            else:
+                fakeFactorHighMTShifted = FakeFactor(
+                    Name=fakeFactorsDataCopy['HighMT'][name].Name+'_ShiftStat'+type+'_'+extension,
+                    File='',
+                    Type="Combined",
+                    Object=fakeFactorsDataCopy['HighMT'][name].Object.replace(fakeFactor.Name, fakeFactorShifted.Name)
+                )
+                fakeFactorsData['HighMT'][name+'_ShiftStat'+type+'_'+extension] = fakeFactorHighMTShifted
+                fakeFactorCombinedShifted = FakeFactor(
+                    Name=fakeFactorsDataCopy['Combined'][name].Name+'_ShiftStat'+type+'_'+extension,
+                    File='',
+                    Type="Combined",
+                    Object=fakeFactorsDataCopy['Combined'][name].Object.replace(fakeFactorsDataCopy['HighMT'][name].Name, fakeFactorHighMTShifted.Name)
+                )
+                fakeFactorsData['Combined'][name+'_ShiftStat'+type+'_'+extension] = fakeFactorCombinedShifted
+
+
