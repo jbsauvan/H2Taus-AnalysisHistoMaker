@@ -129,6 +129,10 @@ void AnalysisFakeRateApply::fillHistos(unsigned selection, const std::string& sy
     m_histos.FillHisto(1+hoffset, event().n_vertices(), weight, sysNum); 
     m_histos.FillHisto(2+hoffset, event().rho(), weight, sysNum); 
     m_histos.FillHisto(3+hoffset, fakeFactor, event().weight(), sysNum); 
+    m_histos.FillHisto(4+hoffset, event().n_jets(), weight, sysNum);
+    m_histos.FillHisto(5+hoffset, event().n_jets_puid(), weight, sysNum);
+    m_histos.FillHisto(6+hoffset, event().n_jets_20(), weight, sysNum);
+    m_histos.FillHisto(7+hoffset, event().n_jets_20_puid(), weight, sysNum);
     //
 
     // Muon histos

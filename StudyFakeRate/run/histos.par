@@ -159,6 +159,10 @@ h1f_sys 0 nevents ' Number of events ' 1 0.5 1.5
 h1f 1 nvertices ' Number of vertices ' 50 0. 50.
 h1f 2 rho ' #rho ' 50 0. 50.
 h1f_sys 3 weight ' Fake weight ' 1001 0. 1.001
+h1f_sys 4 njets       ' Number of jets ' 20 0. 20.
+h1f_sys 5 njetspuid   ' Number of jets ' 20 0. 20.
+h1f_sys 6 njets20     ' Number of jets ' 20 0. 20.
+h1f_sys 7 njets20puid ' Number of jets ' 20 0. 20.
 
 # First muon
 h1f 10 l1_pt ' p_{T}^{l1} [GeV] ' 100 0. 100.

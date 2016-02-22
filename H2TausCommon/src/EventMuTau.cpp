@@ -43,6 +43,10 @@ void EventMuTau::connectVariables(TChain* inputChain)
     inputChain->SetBranchStatus("event"                                    , true);
     inputChain->SetBranchStatus("n_vertices"                               , true);
     inputChain->SetBranchStatus("rho"                                      , true);
+    inputChain->SetBranchStatus("n_jets"                                   , true);
+    inputChain->SetBranchStatus("n_jets_puid"                              , true);
+    inputChain->SetBranchStatus("n_jets_20"                                , true);
+    inputChain->SetBranchStatus("n_jets_20_puid"                           , true);
     inputChain->SetBranchStatus("weight"                                   , true);
     inputChain->SetBranchStatus("weight_vertex"                            , true);
     inputChain->SetBranchStatus("mt"                                       , true);
@@ -136,6 +140,10 @@ void EventMuTau::connectVariables(TChain* inputChain)
     inputChain->SetBranchAddress("lumi"             , &m_lumi);
     inputChain->SetBranchAddress("event"            , &m_event);
     inputChain->SetBranchAddress("n_vertices"       , &m_n_vertices);
+    inputChain->SetBranchAddress("n_jets"           , &m_n_jets);
+    inputChain->SetBranchAddress("n_jets_puid"      , &m_n_jets_puid);
+    inputChain->SetBranchAddress("n_jets_20"        , &m_n_jets_20);
+    inputChain->SetBranchAddress("n_jets_20_puid"   , &m_n_jets_20_puid);
     inputChain->SetBranchAddress("rho"              , &m_rho);
     inputChain->SetBranchAddress("weight"           , &m_weight);
     inputChain->SetBranchAddress("weight_vertex"    , &m_weight_vertex);

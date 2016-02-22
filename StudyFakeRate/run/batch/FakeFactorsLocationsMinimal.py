@@ -89,7 +89,8 @@ fakeFactorsMC['QCDSS'].fakeFactors.append({Name:"Weight_QCDSS_Iso_Medium_VsDecay
 fakeFactorsMC['QCDSS'].fakeFactors.append({Name:"Weight_QCDSS_Iso_Medium_VsPtDecay"   , File:fakeFactorsMC['QCDSS'].fakeFactorsFile2D, Type:"2DHisto", Object:"FakeFactors_QCDSS_2D_Iso_Medium_InvertIso_Medium_tau_pt_vs_decayMode"})
 #####################################################
 ### Combined
-template = '[{W_QCD}]*[{QCD}]+[{W_W}]*[{W}]+[{W_Z}]*([{ZJ}]+[{TT}]+[{VV}])'
+#template = '[{W_QCD}]*[{QCD}]+[{W_W}]*[{W}]+[{W_Z}]*([{ZJ}]+[{TT}]+[{VV}])'
+template = '[{W_QCD}]*[{QCD}]+[{W_W}]*([{W}]+[{TT}])+[{W_Z}]*([{ZJ}]+[{VV}])'
 fakeFactorsMC['Combined'] = FakeFactors()
 ## !IsoMedium -> IsoMedium
 # 1D
@@ -147,7 +148,8 @@ fakeFactorsData['QCDSS'].fakeFactors.append({Name:"Weight_QCDSS_Iso_Medium_VsDec
 fakeFactorsData['QCDSS'].fakeFactors.append({Name:"Weight_QCDSS_Iso_Medium_VsPtDecay"   , File:fakeFactorsData['QCDSS'].fakeFactorsFile2D, Type:"2DHisto", Object:"FakeFactors_Data_QCDSS_2D_Iso_Medium_InvertIso_Medium_tau_pt_vs_decayMode"})
 #####################################################
 ### Combined
-template = '[{W_QCD}]*[{QCD}]+[{W_W}]*[{W}]+[{W_Z}]*([{ZJ}]+[{TT}]+[{VV}])'
+#template = '[{W_QCD}]*[{QCD}]+[{W_W}]*[{W}]+[{W_Z}]*([{ZJ}]+[{TT}]+[{VV}])'
+template = '[{W_QCD}]*[{QCD}]+[{W_W}]*([{W}]+[{TT}])+[{W_Z}]*([{ZJ}]+[{VV}])'
 fakeFactorsData['Combined'] = FakeFactors()
 ## !IsoMedium -> IsoMedium
 # 1D

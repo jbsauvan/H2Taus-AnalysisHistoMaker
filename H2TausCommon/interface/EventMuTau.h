@@ -65,6 +65,10 @@ namespace AnHiMa
             int run()                  const {return (int)m_run;}
             int n_vertices()           const {return (int)m_n_vertices;}
             float rho()                const {return m_rho;}
+            int n_jets()               const {return (int)m_n_jets;}
+            int n_jets_puid()          const {return (int)m_n_jets_puid;}
+            int n_jets_20()            const {return (int)m_n_jets_20;}
+            int n_jets_20_puid()       const {return (int)m_n_jets_20_puid;}
             float weight()             const {return m_weight;}
             float weight_vertex()      const {return m_weight_vertex;}
             float mt()                 const {return m_mt;}
@@ -93,6 +97,10 @@ namespace AnHiMa
             double m_npu;
             double m_n_vertices;
             double m_rho;
+            double m_n_jets;
+            double m_n_jets_puid;
+            double m_n_jets_20;
+            double m_n_jets_20_puid;
             double m_weight;
             double m_weight_vertex;
             double m_mt;
