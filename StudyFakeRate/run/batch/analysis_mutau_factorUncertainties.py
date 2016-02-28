@@ -1,18 +1,12 @@
 from AnhimaBatchLauncher import AnhimaBatchLauncher
-from FakeFactorsLocationsWithUncertainties import fakeFactorsMC,fakeFactorsData,fractionsW,fractionsTT,fractionsVV,fractionsZJ,fractionsQCD,highMTCorrection,nonClosures, binByBinShiftsData
+#from FakeFactorsLocationsWithUncertainties import fakeFactorsMC,fakeFactorsData,fractionsW,fractionsTT,fractionsVV,fractionsZJ,fractionsQCD,highMTCorrection,nonClosures, binByBinShiftsData
+import listCombinedFakeFactors
 import glob
 
 ## Samples definition
 treeDirectory =  "/afs/cern.ch/work/j/jsauvan/public/HTauTau/Trees/mt/151215/"
 treeProdName  =  "H2TauTauTreeProducerTauMu"
 
-
-fakeFactorsTypes = ['ZMuMu','HighMTRaw','HighMT','QCDSS','Combined']
-
-
-for fakeFactorsType in fakeFactorsTypes:
-    if (not fakeFactorsType in fakeFactorsMC) or (not fakeFactorsType in fakeFactorsData):
-        raise StandardError('Unknown fake factor type')
 
 
 ztt_cut = 'l2_gen_match == 5'
@@ -46,12 +40,11 @@ samples = []
 #samples.append({Name:"VVTo2L2Nu"   ,Dir:"VVTo2L2Nu"        ,Cut:fake_cut})
 #samples.append({Name:"WWTo1L1Nu2Q" ,Dir:"WWTo1L1Nu2Q"      ,Cut:fake_cut})
 #
-samples.append({Name:"Data_Run15D_v4",    Dir:"SingleMuon_Run2015D_v4"            ,Cut:""})
-samples.append({Name:"Data_Run15D_05Oct", Dir:"SingleMuon_Run2015D_05Oct"         ,Cut:""})
+
 ## Non fake backgrounds
+samples.append({Name:"W_L"           ,Dir:"WJetsToLNu_LO"    , Cut:lepton_cut}) ## almost no non-fakes
 samples.append({Name:"ZTT"           ,Dir:"DYJetsToLL_M50_LO", Cut:ztt_cut})
 samples.append({Name:"ZL"            ,Dir:"DYJetsToLL_M50_LO", Cut:zl_cut})
-samples.append({Name:"W_L"           ,Dir:"WJetsToLNu_LO"    , Cut:lepton_cut}) ## almost no non-fakes
 samples.append({Name:"TT_L"          ,Dir:"TT_pow_ext"       , Cut:lepton_cut})
 samples.append({Name:"T_tWch_L"      ,Dir:"T_tWch"           , Cut:lepton_cut})
 samples.append({Name:"TBar_tWch_L"   ,Dir:"TBar_tWch"        , Cut:lepton_cut})
@@ -62,6 +55,10 @@ samples.append({Name:"WZTo1L3Nu_L"   ,Dir:"WZTo1L3Nu"      , Cut:lepton_cut})
 samples.append({Name:"WZTo1L1Nu2Q_L" ,Dir:"WZTo1L1Nu2Q"    , Cut:lepton_cut})
 samples.append({Name:"VVTo2L2Nu_L"   ,Dir:"VVTo2L2Nu"      , Cut:lepton_cut})
 samples.append({Name:"WWTo1L1Nu2Q_L" ,Dir:"WWTo1L1Nu2Q"    , Cut:lepton_cut})
+## Data
+samples.append({Name:"Data_Run15D_v4",    Dir:"SingleMuon_Run2015D_v4"            ,Cut:""})
+samples.append({Name:"Data_Run15D_05Oct", Dir:"SingleMuon_Run2015D_05Oct"         ,Cut:""})
+
 ### Old samples                                                   
 #samples.append({Name:"ZL"       ,Dir:"DYJetsToLL_M50_LO",Cut:zl_cut})
 ##
@@ -116,74 +113,21 @@ for sample in samples:
     #batch[-1].additionalParameters['IsData'] = str(isData)
     systematics = ""
     ifake = 0
-    for fakeFactorsType in fakeFactorsTypes:
-        #selectedFakeFactors = (fakeFactorsData[fakeFactorsType] if isData else fakeFactorsMC[fakeFactorsType])
-        selectedFakeFactors = fakeFactorsData[fakeFactorsType]
-        for fakeFactor in selectedFakeFactors.values():
-            # Only apply combined fake factors
-            if fakeFactorsType!='Combined': continue
-            systematics += fakeFactor.Name
+    selectedFakeFactors = listCombinedFakeFactors.allFakeFactors
+    sysFakeFactors = listCombinedFakeFactors.combinedFakeFactor.systematics
+    systematics +=  listCombinedFakeFactors.combinedFakeFactor.name
+    systematics += ":"
+    for syss in sysFakeFactors.values():
+        for sys in syss:
+            systematics += sys.name
             systematics += ":"
-        for fakeFactor in selectedFakeFactors.values():
-            batch[-1].additionalParameters["FakeFactor.{0}.Name".format(ifake+1)]   = fakeFactor.Name
-            batch[-1].additionalParameters["FakeFactor.{0}.File".format(ifake+1)]   = fakeFactor.File
-            batch[-1].additionalParameters["FakeFactor.{0}.Object".format(ifake+1)] = fakeFactor.Object
-            batch[-1].additionalParameters["FakeFactor.{0}.Type".format(ifake+1)]   = fakeFactor.Type
-            ifake += 1
-    batch[-1].additionalParameters["Systematics"] = systematics[:-1]
-    # background fractions
-    # Fraction W
-    batch[-1].additionalParameters["FakeFactor.{0}.Name".format(ifake+1)]   = fractionsW.Name
-    batch[-1].additionalParameters["FakeFactor.{0}.File".format(ifake+1)]   = fractionsW.File
-    batch[-1].additionalParameters["FakeFactor.{0}.Object".format(ifake+1)] = fractionsW.Object
-    batch[-1].additionalParameters["FakeFactor.{0}.Type".format(ifake+1)]   = fractionsW.Type
-    ifake += 1
-    # Fraction QCD
-    batch[-1].additionalParameters["FakeFactor.{0}.Name".format(ifake+1)]   = fractionsQCD.Name
-    batch[-1].additionalParameters["FakeFactor.{0}.File".format(ifake+1)]   = fractionsQCD.File
-    batch[-1].additionalParameters["FakeFactor.{0}.Object".format(ifake+1)] = fractionsQCD.Object
-    batch[-1].additionalParameters["FakeFactor.{0}.Type".format(ifake+1)]   = fractionsQCD.Type
-    ifake += 1
-    # Fraction TT
-    batch[-1].additionalParameters["FakeFactor.{0}.Name".format(ifake+1)]   = fractionsTT.Name
-    batch[-1].additionalParameters["FakeFactor.{0}.File".format(ifake+1)]   = fractionsTT.File
-    batch[-1].additionalParameters["FakeFactor.{0}.Object".format(ifake+1)] = fractionsTT.Object
-    batch[-1].additionalParameters["FakeFactor.{0}.Type".format(ifake+1)]   = fractionsTT.Type
-    ifake += 1
-    # Fraction ZJ
-    batch[-1].additionalParameters["FakeFactor.{0}.Name".format(ifake+1)]   = fractionsZJ.Name
-    batch[-1].additionalParameters["FakeFactor.{0}.File".format(ifake+1)]   = fractionsZJ.File
-    batch[-1].additionalParameters["FakeFactor.{0}.Object".format(ifake+1)] = fractionsZJ.Object
-    batch[-1].additionalParameters["FakeFactor.{0}.Type".format(ifake+1)]   = fractionsZJ.Type
-    ifake += 1
-    # Fraction VV
-    batch[-1].additionalParameters["FakeFactor.{0}.Name".format(ifake+1)]   = fractionsVV.Name
-    batch[-1].additionalParameters["FakeFactor.{0}.File".format(ifake+1)]   = fractionsVV.File
-    batch[-1].additionalParameters["FakeFactor.{0}.Object".format(ifake+1)] = fractionsVV.Object
-    batch[-1].additionalParameters["FakeFactor.{0}.Type".format(ifake+1)]   = fractionsVV.Type
-    ifake += 1
-    # HighMT correction
-    batch[-1].additionalParameters["FakeFactor.{0}.Name".format(ifake+1)]   = highMTCorrection.Name
-    batch[-1].additionalParameters["FakeFactor.{0}.File".format(ifake+1)]   = highMTCorrection.File
-    batch[-1].additionalParameters["FakeFactor.{0}.Object".format(ifake+1)] = highMTCorrection.Object
-    batch[-1].additionalParameters["FakeFactor.{0}.Type".format(ifake+1)]   = highMTCorrection.Type
-    ifake += 1
-    # Non closures
-    for nonClosure in nonClosures.values():
-        batch[-1].additionalParameters["FakeFactor.{0}.Name".format(ifake+1)]   = nonClosure.Name
-        batch[-1].additionalParameters["FakeFactor.{0}.File".format(ifake+1)]   = nonClosure.File
-        batch[-1].additionalParameters["FakeFactor.{0}.Object".format(ifake+1)] = nonClosure.Object
-        batch[-1].additionalParameters["FakeFactor.{0}.Type".format(ifake+1)]   = nonClosure.Type
+    for fakeFactor in selectedFakeFactors:
+        batch[-1].additionalParameters["FakeFactor.{0}.Name".format(ifake+1)]   = fakeFactor.object.Name
+        batch[-1].additionalParameters["FakeFactor.{0}.File".format(ifake+1)]   = fakeFactor.object.File
+        batch[-1].additionalParameters["FakeFactor.{0}.Object".format(ifake+1)] = fakeFactor.object.Object
+        batch[-1].additionalParameters["FakeFactor.{0}.Type".format(ifake+1)]   = fakeFactor.object.Type
         ifake += 1
-    # stat shifts
-    for type_shifts in binByBinShiftsData.values():
-        for fake_shifts in type_shifts.values():
-            for shift in fake_shifts.values():
-                batch[-1].additionalParameters["FakeFactor.{0}.Name".format(ifake+1)]   = shift.Name
-                batch[-1].additionalParameters["FakeFactor.{0}.File".format(ifake+1)]   = shift.File
-                batch[-1].additionalParameters["FakeFactor.{0}.Object".format(ifake+1)] = shift.Object
-                batch[-1].additionalParameters["FakeFactor.{0}.Type".format(ifake+1)]   = shift.Type
-                ifake += 1
+    batch[-1].additionalParameters["Systematics"] = systematics[:-1]
     #
     batch[-1].additionalParameters["NumberOfFakeFactors"] = str(ifake)
 
