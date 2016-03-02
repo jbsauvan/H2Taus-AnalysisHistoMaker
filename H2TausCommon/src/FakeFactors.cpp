@@ -436,3 +436,185 @@ double FakeFactors::retrieveFakeFactor(const std::string& name, const EventMuTau
 
     return factor;
 }
+
+
+/*****************************************************************/
+double FakeFactors::retrieveFakeFactor(const std::string& name, const EventMuMu& event, bool fluctuate)
+/*****************************************************************/
+{
+    const auto& name_object = m_fakeFactors.find(name);
+    if(name_object==m_fakeFactors.end())
+    {
+        std::cout<<"WARNING: Cannot retrieve fake factor "<<name<<". Please define it in the config file\n";
+        return 1.;
+    }
+    const auto& type_object = name_object->second;
+    TObject* object = type_object.second;
+    const std::string& type = type_object.first;
+    double factor = 1.;
+    if(type=="Combined")
+    {
+        //std::cerr<<"("<<name;
+        //std::cerr<<"[";
+        std::vector<double> vars;
+        for(const auto& factor : m_formulaVariables[name])
+        {
+            //std::cerr<<factor<<"=";
+            double var = retrieveFakeFactor(factor, event, fluctuate);
+            vars.push_back(var);
+            //std::cerr<<var<<", ";
+        }
+        //std::cerr<<"]=";
+        TFormula* formula = dynamic_cast<TFormula*>(object);
+        //std::cerr<<formula->EvalPar(&vars[0])<<")\n";
+        return formula->EvalPar(&vars[0]);
+
+    }
+    else
+    {
+        std::vector<double> values;
+        // CAREFUL: it has to be checked that it doesn't go in the wrong place because
+        // of strings included in other strings. That's why 2D fake factors come first.
+        // 2D fake factor
+        if(name.find("VsPtEta")!=std::string::npos)
+        {
+            values.push_back(event.tau().Pt());
+            values.push_back(fabs(event.tau().Eta())); // Careful: This is absolute value of eta
+        }
+        else if(name.find("VsPtDecay")!=std::string::npos)
+        {
+            values.push_back(event.tau().Pt());
+            values.push_back(event.tau().decayMode);
+        }
+        else if(name.find("VsJetPtDecay")!=std::string::npos)
+        {
+            values.push_back(event.tauJetMatch().Pt());
+            values.push_back(event.tau().decayMode);
+        }
+        else if(name.find("VsJetPtPt")!=std::string::npos)
+        {
+            values.push_back(event.tauJetMatch().Pt());
+            values.push_back(event.tau().Pt());
+        }
+        else if(name.find("VsPtPdgId")!=std::string::npos)
+        {
+            values.push_back(event.tau().Pt());
+            double valueId = fabs(event.tauMatch().pdgId);
+            if((valueId>=6 && valueId<=20) || valueId>=22 || valueId==0) valueId = 2.; // FIXME: find a better way to discard values not used to determine the fake rates
+            values.push_back( valueId * (event.tau().sign_flip!=0 ? event.tau().sign_flip : 1));
+        }
+        else if(name.find("VsMVisMT")!=std::string::npos)
+        {
+            values.push_back(event.mvis());
+            values.push_back(event.mt());
+        }
+        // 1D fake factor
+        else if(name.find("Inclusive")!=std::string::npos)
+        {
+            values.push_back(1.);
+        }
+        else if(name.find("VsPt")!=std::string::npos)
+        {
+            values.push_back(event.tau().Pt());
+        }
+        else if(name.find("VsEta")!=std::string::npos)
+        {
+            values.push_back(event.tau().Eta());
+        }
+        else if(name.find("VsNVtx")!=std::string::npos)
+        {
+            values.push_back(event.n_vertices());
+        }
+        else if(name.find("VsDecay")!=std::string::npos)
+        {
+            values.push_back(event.tau().decayMode);
+        }
+        else if(name.find("VsPdgId")!=std::string::npos)
+        {
+            double value = fabs(event.tauMatch().pdgId);
+            if((value>=6 && value<=20) || value>=22 || value==0) value = 2.; // FIXME: find a better way to discard values not used to determine the fake rates
+            values.push_back( value * (event.tau().sign_flip!=0 ? event.tau().sign_flip : 1));
+        }
+        else if(name.find("VsJetPt")!=std::string::npos)
+        {
+            values.push_back(event.tauJetMatch().Pt());
+        }
+        else if(name.find("VsMVis")!=std::string::npos)
+        {
+            values.push_back(event.mvis());
+        }
+        else if(name.find("VsMT")!=std::string::npos)
+        {
+            values.push_back(event.mt());
+        }
+        else
+        {
+            throw("Cannot find input variables for fake factor "+name);
+        }
+
+        // Retrieve fake factor depending on type of object
+        if(type=="1DGraph")
+        {
+            TGraphAsymmErrors* graph = dynamic_cast<TGraphAsymmErrors*>(object);
+            // Don't extrapolate. Suppose lowest point is point 0 and highest point is the last one
+            if(values[0]>graph->GetX()[graph->GetN()-1]) values[0]=graph->GetX()[graph->GetN()-1];
+            else if(values[0]<graph->GetX()[0]) values[0]=graph->GetX()[0];
+            factor = graph->Eval(values[0]);
+            // Apply randon fluctuations if requested
+            if(fluctuate)
+            {
+                // Find closest point to retrieve relative error here
+                int closest = -1;
+                double dxmin = 9999.;
+                for(int p=0;p<graph->GetN();p++)
+                {
+                    if(fabs(graph->GetX()[p]-values[0])<dxmin)
+                    {
+                        dxmin = fabs(graph->GetX()[p]-values[0]);
+                        closest = p;
+                    }
+                }
+                //std::cout<<"Closest point of "<<values[0]<<" is "<<graph->GetX()[closest]<<"\n";
+                // Use same relative errors as the closest point
+                double errorUp   = graph->GetEYhigh()[closest]*factor/graph->GetY()[closest]; 
+                double errorDown = graph->GetEYlow()[closest]*factor/graph->GetY()[closest];
+                double errorMean = (errorUp+errorDown)/2.;
+                //std::cout<<factor<<" ("<<errorUp<<" "<<errorDown<<" "<<errorMean<<")";
+                factor = std::max(0.,m_random.Gaus(factor, errorMean));
+                // Get random fluctuation using Gaussian with different positive and negative sigma
+                //TF1 * f = new TF1("f",[&](double*x, double *p){ return fabs(x[0]>0 ? TMath::Gaus(x[0], factor, errorUp) : TMath::Gaus(x[0], factor, errorDown)); }, factor-3.*errorDown, factor+3.*errorUp, 0); 
+                //factor = f->GetRandom(); //FIXME: TRandom is used. Better to use TRandom3
+                //std::cout<<" "<<factor<<"\n";
+                //f->Delete();
+            }
+        }
+        else if(type=="1DHisto")
+        {
+            TH1F* histo = dynamic_cast<TH1F*>(object);
+            int bx = histo->GetXaxis()->FindBin(values[0]);
+            factor = histo->GetBinContent(bx);
+        }
+        else if(type=="2DHisto")
+        {
+            TH2F* histo = dynamic_cast<TH2F*>(object);
+            int bx = histo->GetXaxis()->FindBin(values[0]);
+            int by = histo->GetYaxis()->FindBin(values[1]);
+            factor = histo->GetBinContent(bx,by);
+            // TODO: also add random fluctuations feature here (would need to store asymmetric errors
+            // somewhere)
+        }
+        else
+        {
+            throw("Unknown type of fake factor\n");
+        }
+        // Apply high-mT -> low-mT correction factor
+        // NOW DONE IN CONFIG
+        //if(name.find("HighMT")!=std::string::npos)
+        //{
+            //factor *= 0.685578; // extrapolation factor derived from Z+jet MC, with pT(muon2)>5GeV
+        //}
+    }
+
+
+    return factor;
+}

@@ -258,3 +258,29 @@ def applyStat(fakeFactorsMC, fakeFactorsData):
                     NOM=fakeFactor
                 )
             )
+
+def createZMuMuHighMT(fakeFactorsMC, fakeFactorsData):
+    fakeFactors2DMCFileTemplate = "/afs/cern.ch/user/j/jsauvan/workspace/Projects/Htautau_Run2/Studies/FakeRate/ComputeFakeRates/plots/FakeFactors_{TYPE}_2D/FakeFactors_{TYPE}_2D.root"
+    fakeFactors2DDataFileTemplate = "/afs/cern.ch/user/j/jsauvan/workspace/Projects/Htautau_Run2/Studies/FakeRate/ComputeFakeRates/plots/FakeFactors_Data_{TYPE}_2D/FakeFactors_Data_{TYPE}_2D.root"
+    ### MC fake factors
+    fakeFactorsMC.append(
+        createRawComponent(
+            Name="Weight_ZMuMu_HighMT_"+fakeFactor,
+            File=fakeFactors2DMCFileTemplate.format(TYPE='ZMuMu_HighMT') ,
+            Type="2DHisto",
+            Object="FakeFactors_ZMuMu_HighMT_2D_MTgt70_Iso_Medium_MTgt70_InvertIso_Medium_tau_pt_vs_decayMode"
+        )
+    )
+
+    ### Data fake factors
+    fakeFactorsData.append(
+        createRawComponent(
+            Name="Weight_ZMuMu_HighMT_"+fakeFactor,
+            File=fakeFactors2DDataFileTemplate.format(TYPE='ZMuMu_HighMT') ,
+            Type="2DHisto",
+            Object="FakeFactors_Data_ZMuMu_HighMT_2D_MTgt70_Iso_Medium_MTgt70_InvertIso_Medium_tau_pt_vs_decayMode"
+        )
+    )
+
+
+

@@ -68,7 +68,7 @@ namespace AnHiMa
             double weight_trigger;
             double eff_trigger_data;
             double eff_trigger_mc;
-            double weight_rec_eff;
+            //double weight_rec_eff;
             double muonid_loose;
             double muonid_medium;
             double muonid_tight;
@@ -101,13 +101,13 @@ namespace AnHiMa
             double weight_trigger;
             double eff_trigger_data;
             double eff_trigger_mc;
-            double weight_rec_eff;
+            //double weight_rec_eff;
             double decayMode;
             double zImpact;
             double dz_selfvertex;
-            double againstElectronMVA5;
-            double againstElectronMVA5category;
-            double againstElectronMVA5raw;
+            double againstElectronMVA6;
+            double againstElectronMVA6category;
+            double againstElectronMVA6raw;
             double againstMuon3;
             double byCombinedIsolationDeltaBetaCorrRaw3Hits;
             double byIsolationMVA3newDMwLTraw;

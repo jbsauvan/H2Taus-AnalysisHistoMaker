@@ -115,7 +115,7 @@ void AnalysisFakeRateQCD::fillHistos(unsigned selection)
      m_histos.FillHisto(102+hoffset, event().tau().Phi(), weight, sysNum);
      m_histos.FillHisto(103+hoffset, event().tau().decayMode, weight, sysNum);
      m_histos.FillHisto(104+hoffset, event().tau().againstMuon3, weight, sysNum);
-     m_histos.FillHisto(105+hoffset, event().tau().againstElectronMVA5, weight, sysNum);
+     m_histos.FillHisto(105+hoffset, event().tau().againstElectronMVA6, weight, sysNum);
      m_histos.FillHisto(106+hoffset, event().tau().byCombinedIsolationDeltaBetaCorrRaw3Hits, weight, sysNum);
      m_histos.FillHisto(107+hoffset, fabs(event().tauMatch().pdgId)*(event().tau().sign_flip!=0 ? event().tau().sign_flip : 1), weight, sysNum);
      m_histos.FillHisto(108+hoffset, event().tauJetMatch().Pt(), weight, sysNum); 

@@ -45,22 +45,27 @@ bool AnalysisFakeRateZMuMuLowMT::initialize(const string& parameterFile)
     if(!status) return status;
     event().connectVariables(m_inputChain);
 
+
     // Read parameters
-    //std::string puWeightsDataFileName  = m_reader.params().GetValue("PUWeightsDataFile", "");
-    //std::string puWeightsMCFileName    = m_reader.params().GetValue("PUWeightsMCFile", "");
-    //std::string puWeightsDataHistoName = m_reader.params().GetValue("PUWeightsDataHisto", "pileup");
-    //std::string puWeightsMCHistoName   = m_reader.params().GetValue("PUWeightsMCHisto", "pu_mc");
-    //// 
-    //event().setIsData(m_reader.params().GetValue("IsData", false));
+    unsigned nFakeFactors = m_reader.params().GetValue("NumberOfFakeFactors", 0);
+    std::cout<<"INFO: Number of fake factors = "<<nFakeFactors<<"\n";
+    for(unsigned i=0;i<nFakeFactors; i++)
+    {
+        std::string name       = m_reader.params().GetValue(std::string("FakeFactor." + to_string(i+1) + ".Name").c_str(), "");
+        std::string fileName   = m_reader.params().GetValue(std::string("FakeFactor." + to_string(i+1) + ".File").c_str(), "");
+        std::string objectName = m_reader.params().GetValue(std::string("FakeFactor." + to_string(i+1) + ".Object").c_str(), "");
+        std::string type       = m_reader.params().GetValue(std::string("FakeFactor." + to_string(i+1) + ".Type").c_str(), "");
 
-    //std::cout<<"IsData             = " << event().isData() << "\n";
-    //std::cout<<"PUWeightsDataFile  = " << puWeightsDataFileName << "\n";
-    //std::cout<<"PUWeightsMCFile    = " << puWeightsMCFileName << "\n";
-    //std::cout<<"PUWeightsDataHisto = " << puWeightsDataHistoName << "\n";
-    //std::cout<<"PUWeightsMCHisto   = " << puWeightsMCHistoName << "\n";
+        status = m_fakeFactors.addFakeFactor(name, fileName, objectName, type);
+        if(!status) return status;
 
-    //bool ok = m_puWeights.initialize(puWeightsDataFileName, puWeightsMCFileName, puWeightsDataHistoName, puWeightsMCHistoName);
-    //if(!ok) return false;
+        std::cout<<"INFO:  Fake factor #"<<i+1<<"\n";
+        std::cout<<"INFO:    Name   = "<<name<<"\n";
+        std::cout<<"INFO:    File   = "<<fileName<<"\n";
+        std::cout<<"INFO:    Object = "<<objectName<<"\n";
+        std::cout<<"INFO:    Type   = "<<type<<"\n";
+    }
+    m_fakeFactors.createCombinedFakeFactorFormulas();
 
     return true;
 }
@@ -79,14 +84,14 @@ void AnalysisFakeRateZMuMuLowMT::execute()
             {
                 for(const auto& sys : systematicList())
                 {
-                    std::vector<std::string> sysTokens;
-                    tokenize(sys, sysTokens, "Muon2PtCut_");
-                    float muon2PtCut = 5.;
-                    if(sysTokens.size()>0)
-                    {
-                        fromString(muon2PtCut, sysTokens.back());
-                    }
-                    if(event().muon(1).Pt()<muon2PtCut) continue;
+                    //std::vector<std::string> sysTokens;
+                    //tokenize(sys, sysTokens, "Muon2PtCut_");
+                    //float muon2PtCut = 5.;
+                    //if(sysTokens.size()>0)
+                    //{
+                        //fromString(muon2PtCut, sysTokens.back());
+                    //}
+                    //if(event().muon(1).Pt()<muon2PtCut) continue;
                     fillHistos(iso, mt, sys);
                 }
             }
@@ -100,6 +105,8 @@ void AnalysisFakeRateZMuMuLowMT::fillHistos(unsigned iso, unsigned mt, const std
 {
     short sysNum = systematicNumber(sys);
     float weight = event().weight();
+    float fakeFactor = (sys!="" ? m_fakeFactors.retrieveFakeFactor(sys, event()) : 1.);
+    weight *= fakeFactor;
     //float puWeight = 1.;
     //if(sys!="NoPUReweight" && !event().isData()) // apply PU reweighting
     //{
@@ -146,5 +153,7 @@ void AnalysisFakeRateZMuMuLowMT::fillHistos(unsigned iso, unsigned mt, const std
 
     // arrays
     m_histos.Fill1BinHisto(310+hoffset, event().tau().decayMode, event().tau().Pt(), weight, sysNum);
+
+    m_histos.FillNtuple(500+hoffset, (double)event().run(), (double)event().event(), weight, sysNum);
 }
 
