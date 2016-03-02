@@ -340,14 +340,15 @@ bool EventMuTau::passSelectionBackup(int selection)
 }
 
 /*****************************************************************/
-bool EventMuTau::passSelectionFakeFactorsWJetsHighMT(int selection)
+bool EventMuTau::passSelectionFakeFactorsWJetsHighMT(int iso, bool os)
 /*****************************************************************/
 {
     bool pass = true;
     pass &= (tau().pt > 0.);
     pass &= (mt()>70.);
-    pass &= (tau().charge*muon().charge<0); //FIXME: only OS for the moment
-    switch(selection)
+    if(os) pass &= (tau().charge*muon().charge<0); 
+    else pass &= (tau().charge*muon().charge>0);
+    switch(iso)
     {
         case 0: // Tau isolation raw < 1.5 GeV
             pass &= (tau().byCombinedIsolationDeltaBetaCorrRaw3Hits < 1.5);

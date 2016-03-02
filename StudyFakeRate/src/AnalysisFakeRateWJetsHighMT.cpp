@@ -74,9 +74,11 @@ void AnalysisFakeRateWJetsHighMT::execute()
 /*****************************************************************/
 {
     event().update();
-    for(unsigned sel=0; sel<=5; sel++)
+    bool os = true;
+    for(unsigned iso=0; iso<=5; iso++)
     {
-        if(event().passSelectionFakeFactorsWJetsHighMT(sel)) fillHistos(sel);
+        if(event().passSelectionFakeFactorsWJetsHighMT(iso, os)) fillHistos(iso); // OS
+        if(event().passSelectionFakeFactorsWJetsHighMT(iso, !os)) fillHistos(iso+6); // SS
     }
 }
 

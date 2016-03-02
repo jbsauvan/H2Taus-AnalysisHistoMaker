@@ -96,6 +96,103 @@ DECAY 3
 
 end_HistosZMuMu
 
+############################################################
+### Histograms used to derive fake rates in high-mT region
+############################################################
+HistosHighMT: FakeRate_IsoRaw_1_5_, FakeRate_InvertIsoRaw_1_5_(1000), FakeRate_NoIso_(2000), FakeRate_Iso_Medium_(3000), FakeRate_InvertIso_Medium_(4000), FakeRate_InvertIso_Medium_RawOnly_(5000),FakeRate_SS_IsoRaw_1_5_(6000), FakeRate_SS_InvertIsoRaw_1_5_(7000), FakeRate_SS_NoIso_(8000), FakeRate_SS_Iso_Medium_(9000), FakeRate_SS_InvertIso_Medium_(10000), FakeRate_SS_InvertIso_Medium_RawOnly_(11000)
+
+# General event 
+h1f_sys 0 nevents ' Number of events ' 1 0.5 1.5
+1binvbh1f_sys 1 nvertices ' Number of vertices ' 12 0. 5. 8. 10. 12. 14. 16. 18. 21. 25. 30. 40.
+1binvbh1f_sys 2 rho ' #rho ' 11 0. 4. 6. 8. 10. 12. 14. 16. 20. 25. 35.
+1binvbh1f_sys 3 npu ' N_{PU} ' 12 0. 5. 8. 10. 12. 14. 16. 18. 21. 25. 30. 40.
+
+# First muon
+h1f_sys 10 l1_pt ' p_{T}^{l1} [GeV] ' 100 0. 100.
+h1f_sys 11 l1_eta ' #eta^{l1} ' 50 -2.5 2.5
+h1f_sys 12 l1_phi ' #phi^{l1} ' 50 -3.14159265359 3.14159265359 
+h1f_sys 13 l1_reliso05 ' iso^{l1} ' 500 0. 1.
+
+# Second muon
+h1f_sys 20 l2_pt ' p_{T}^{l2} [GeV] ' 100 0. 100.
+h1f_sys 21 l2_eta ' #eta^{l2} ' 50 -2.5 2.5
+h1f_sys 22 l2_phi ' #phi^{l2} ' 50 -3.14159265359 3.14159265359
+h1f_sys 23 l2_reliso05 ' iso^{l2} ' 100 0. 0.2
+
+# Dimuon mass
+h1f_sys 50 l1l2_mass ' M_{#mu#mu} [GeV] ' 70 50. 120.
+h1f_sys 51 l1l2_highmass ' M_{#mu#mu} [GeV] ' 45 0. 900.
+h1f_sys 52 l1l2_pt ' p_{T}^{#mu#mu} [GeV] ' 20 0. 200.
+
+
+# Tau
+h1f_sys 99 tau_pt_fixedbin ' p_{T}(#tau) [GeV] ' 40 0. 100.
+1binvbh1f_sys 100 tau_pt ' p_{T}(#tau) [GeV] ' 14 20. 22. 24. 26. 30. 35. 40. 50. 60. 70. 90. 120. 150. 200.
+h1f_sys 101 tau_eta ' #eta^{#tau} ' 12 -2.4 2.4
+h1f_sys 102 tau_phi ' #phi^{#tau} ' 50 -3.14159265359 3.14159265359
+h1f_sys 103 tau_decayMode ' decay^{#tau} ' 15 -0.5 14.5
+h1f_sys 104 tau_againstMuon3 ' tau-muon discriminant ' 60 0. 6.
+h1f_sys 105 tau_againstElectronMVA5 ' tau-ele discriminant ' 30 0. 3.
+h1f_sys 106 tau_iso ' tau isolation ' 200 0. 20.
+h1f_sys 107 tau_pdgId ' pdg id ' 45 -22.5 22.5
+1binvbh1f_sys 108 tau_jet_pt ' p_{T}(#jet) [GeV] ' 10 10. 20. 30. 40. 50. 60. 80. 100. 150. 300.
+
+# Mu Tau
+h1f_sys 151 mvis ' M_{vis} [GeV] ' 60 0. 300.
+h1f_sys 152 mt   ' M_{T} [GeV] ' 40 0. 200.
+
+# 2D histograms
+2binvbh2f_sys 200 tau_pt_vs_eta ' #eta^{#tau} vs p_{T}(#tau) [GeV] ' 
+7 20. 22. 25. 30. 40. 60. 200.
+4 0. 0.8 1.5 2.4
+#
+2binvbh2f_sys 201 tau_pt_vs_decayMode ' decay^{#tau} vs p_{T}(#tau) [GeV] ' 
+7 20. 22. 25. 30. 40. 60. 200.
+16 -0.5 0.5 1.5 2.5 3.5 4.5 5.5 6.5 7.5 8.5 9.5 10.5 11.5 12.5 13.5 14.5
+#
+2binvbh2f_sys 202 tau_pt_vs_pdgId ' pdg ID vs p_{T}(#tau) [GeV] ' 
+5 20. 25. 30. 60. 200.
+46 -22.5 -21.5 -20.5 -19.5 -18.5 -17.5 -16.5 -15.5 -14.5 -13.5 -12.5 -11.5 -10.5 -9.5 -8.5 -7.5 -6.5 -5.5 -4.5 -3.5 -2.5 -1.5 -0.5 0.5 1.5 2.5 3.5 4.5 5.5 6.5 7.5 8.5 9.5 10.5 11.5 12.5 13.5 14.5 15.5 16.5 17.5 18.5 19.5 20.5 21.5 22.5
+#
+2binvbh2f_sys 203 tau_pt_vs_mergedPdgId ' pdg ID vs p_{T}(#tau) [GeV] ' 
+5 20. 25. 30. 60. 200.
+9 -5.5 -0.5 0.5 1.5 3.5 4.5 5.5 21.5 22.5
+#
+2binvbh2f_sys 204 tau_jet_pt_vs_pt ' p_{T}(#tau) [GeV] vs p_{T}(jet) [GeV] ' 
+7 10. 20. 30. 40. 60. 100. 300.
+4 20. 30. 60. 200.
+#
+2binvbh2f_sys 205 tau_jet_pt_vs_decayMode ' decay^{#tau} vs p_{T}(jet) [GeV]  ' 
+7 10. 20. 30. 40. 60. 100. 300.
+16 -0.5 0.5 1.5 2.5 3.5 4.5 5.5 6.5 7.5 8.5 9.5 10.5 11.5 12.5 13.5 14.5
+
+
+# arrays
+1binvvh1f_sys 300 tau_pt_vs_eta_ ' p_{T}(#tau) [GeV] ' 7 20. 22. 25. 30. 40. 60. 200.
+ETA 3
+0. 0.8 1.5 2.4
+#
+1binvvh1f_sys 310 tau_pt_vs_decayMode_ ' p_{T}(#tau) [GeV] ' 7 20. 22. 25. 30. 40. 60. 200.
+DECAY 3
+-0.5 0.5 1.5 10.5
+#
+1binvvh1f_sys 320 tau_pt_vs_pdgId_ ' p_{T}(#tau) [GeV] ' 5 20. 25. 30. 60. 200.
+PDGID 13
+-5.5 -4.5 -3.5 -2.5 -1.5 -0.5 0.5 1.5 2.5 3.5 4.5 5.5 21.5 22.5
+#
+1binvvh1f_sys 340 tau_pt_vs_mergedPdgId_ ' p_{T}(#tau) [GeV] ' 5 20. 25. 30. 60. 200.
+PDGID 8
+-5.5 -0.5 0.5 1.5 3.5 4.5 5.5 21.5 22.5
+#
+1binvvh1f_sys 360 tau_jet_pt_vs_pt_ ' p_{T}(#tau) [GeV] ' 6 10. 30. 50. 70. 100. 300.
+PT 3
+20. 30. 60. 200.
+#
+1binvvh1f_sys 370 tau_jet_pt_vs_decayMode_ ' p_{T}(#jet) [GeV] ' 7 10. 20. 30. 40. 60. 100. 300.
+DECAY 3
+-0.5 0.5 1.5 10.5
+
+end_HistosHighMT
 
 ############################################################
 ### Histograms used to derive fake rates function of mT in Zmumu
