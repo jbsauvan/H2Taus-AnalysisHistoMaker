@@ -13,7 +13,8 @@ def findFraction(name, fractions):
 
 def create(fakeFactorsMC, fakeFactorsData):
     fractionsFile = "/afs/cern.ch/user/j/jsauvan/workspace/Projects/Htautau_Run2/Studies/FakeRate/ComputeBackgroundFractions/results/backgroundFraction_Iso_Medium_mvis_vs_mt.root"
-    formCombined = '[{W_QCD}]*[{QCD}]+[{W_W}]*([{W}]+[{TT}])+[{W_Z}]*([{ZJ}]+[{VV}])'
+    #formCombined = '[{W_QCD}]*[{QCD}]+[{W_W}]*([{W}]+[{TT}])+[{W_Z}]*([{ZJ}]+[{VV}])'
+    formCombined = '[{W_QCD}]*[{QCD}]+[{W_W}]*([{W}]+[{TT}]+[{ZJ}]+[{VV}])'
     fractionsW   = createRawComponent(
         Name="Fraction_W_VsMVisMT"  ,
         File=fractionsFile,
@@ -51,7 +52,7 @@ def create(fakeFactorsMC, fakeFactorsData):
             Form=formCombined,
             W_QCD=findComponent("Weight_QCDSS_"+fakeFactor,fakeFactorsMC),
             W_W=findComponent("Weight_HighMT_"+fakeFactor,fakeFactorsMC),
-            W_Z=findComponent("Weight_ZMuMu_"+fakeFactor,fakeFactorsMC),
+            #W_Z=findComponent("Weight_ZMuMu_"+fakeFactor,fakeFactorsMC),
             QCD=fractionsQCD,
             W=fractionsW,
             ZJ=fractionsZJ,
@@ -65,7 +66,7 @@ def create(fakeFactorsMC, fakeFactorsData):
             Form=formCombined,
             W_QCD=findComponent("Weight_QCDSS_"+fakeFactor,fakeFactorsData),
             W_W=findComponent("Weight_HighMT_"+fakeFactor,fakeFactorsData),
-            W_Z=findComponent("Weight_ZMuMu_"+fakeFactor,fakeFactorsData),
+            #W_Z=findComponent("Weight_ZMuMu_"+fakeFactor,fakeFactorsData),
             QCD=fractionsQCD,
             W=fractionsW,
             ZJ=fractionsZJ,
@@ -77,7 +78,8 @@ def create(fakeFactorsMC, fakeFactorsData):
 
 
 def createShift(group, name, shift, fractionsFile, fakeFactorsMC, fakeFactorsData):
-    formCombined = '[{W_QCD}]*[{QCD}]+[{W_W}]*([{W}]+[{TT}])+[{W_Z}]*([{ZJ}]+[{VV}])'
+    #formCombined = '[{W_QCD}]*[{QCD}]+[{W_W}]*([{W}]+[{TT}])+[{W_Z}]*([{ZJ}]+[{VV}])'
+    formCombined = '[{W_QCD}]*[{QCD}]+[{W_W}]*([{W}]+[{TT}]+[{ZJ}]+[{VV}])'
     fractionsW   = createRawComponent(
         Name="Fraction_W_VsMVisMT_{SHIFT}".format(SHIFT=shift)  ,
         File=fractionsFile,
@@ -118,7 +120,7 @@ def createShift(group, name, shift, fractionsFile, fakeFactorsMC, fakeFactorsDat
             Form=formCombined,
             W_QCD=findComponent("Weight_QCDSS_"+fakeFactor,fakeFactorsMC),
             W_W=findComponent("Weight_HighMT_"+fakeFactor,fakeFactorsMC),
-            W_Z=findComponent("Weight_ZMuMu_"+fakeFactor,fakeFactorsMC),
+            #W_Z=findComponent("Weight_ZMuMu_"+fakeFactor,fakeFactorsMC),
             QCD=fractionsQCD,
             W=fractionsW,
             ZJ=fractionsZJ,
@@ -136,7 +138,7 @@ def createShift(group, name, shift, fractionsFile, fakeFactorsMC, fakeFactorsDat
             Form=formCombined,
             W_QCD=findComponent("Weight_QCDSS_"+fakeFactor,fakeFactorsData),
             W_W=findComponent("Weight_HighMT_"+fakeFactor,fakeFactorsData),
-            W_Z=findComponent("Weight_ZMuMu_"+fakeFactor,fakeFactorsData),
+            #W_Z=findComponent("Weight_ZMuMu_"+fakeFactor,fakeFactorsData),
             QCD=fractionsQCD,
             W=fractionsW,
             ZJ=fractionsZJ,

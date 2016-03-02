@@ -27,17 +27,17 @@ class FakeFactors:
 #fractionsVV  = {Name:"Fraction_VV_VsMVis"     , File:fractionsFile, Type:"1DHisto", Object:"h_backgroundFraction_lowMT_mvis_VV"}
 
 fractionsFile = "/afs/cern.ch/user/j/jsauvan/workspace/Projects/Htautau_Run2/Studies/FakeRate/ComputeBackgroundFractions/results/backgroundFraction_Iso_Medium_mvis_vs_mt.root"
-fractionsW   = {Name:"Fraction_W_VsMVisMT"      , File:fractionsFile, Type:"2DHisto", Object:"h_backgroundFraction_Iso_Medium_mvis_vs_mt_W"}
-fractionsQCD = {Name:"Fraction_QCD_VsMVisMT"    , File:fractionsFile, Type:"2DHisto", Object:"h_backgroundFraction_Iso_Medium_mvis_vs_mt_QCD"}
-fractionsTT  = {Name:"Fraction_TT_VsMVisMT"     , File:fractionsFile, Type:"2DHisto", Object:"h_backgroundFraction_Iso_Medium_mvis_vs_mt_TT"}
-fractionsZJ  = {Name:"Fraction_ZJ_VsMVisMT"     , File:fractionsFile, Type:"2DHisto", Object:"h_backgroundFraction_Iso_Medium_mvis_vs_mt_ZJ"}
-fractionsVV  = {Name:"Fraction_VV_VsMVisMT"     , File:fractionsFile, Type:"2DHisto", Object:"h_backgroundFraction_Iso_Medium_mvis_vs_mt_VV"}
+fractionsW   = {Name:"Fraction_W_VsMVisMT"      , File:fractionsFile, Type:"2DHisto", Object:"h_backgroundFraction_Iso_Medium_mvis_vs_mt_W_Nom"}
+fractionsQCD = {Name:"Fraction_QCD_VsMVisMT"    , File:fractionsFile, Type:"2DHisto", Object:"h_backgroundFraction_Iso_Medium_mvis_vs_mt_QCD_Nom"}
+fractionsTT  = {Name:"Fraction_TT_VsMVisMT"     , File:fractionsFile, Type:"2DHisto", Object:"h_backgroundFraction_Iso_Medium_mvis_vs_mt_TT_Nom"}
+fractionsZJ  = {Name:"Fraction_ZJ_VsMVisMT"     , File:fractionsFile, Type:"2DHisto", Object:"h_backgroundFraction_Iso_Medium_mvis_vs_mt_ZJ_Nom"}
+fractionsVV  = {Name:"Fraction_VV_VsMVisMT"     , File:fractionsFile, Type:"2DHisto", Object:"h_backgroundFraction_Iso_Medium_mvis_vs_mt_VV_Nom"}
 
 ##############################################
 ## High-MT correction
 ##############################################
-highMTCorrectionFile = "/afs/cern.ch/user/j/jsauvan/workspace/Projects/Htautau_Run2/Studies/FakeRate/ComputeFakeRates/plots/FakeFactors_WJets/FakeFactors_WJets_highMTCorrections.root"
-highMTCorrection = {Name:"HighMTCorr_VsMT"      , File:highMTCorrectionFile, Type:"1DGraph", Object:"HighMTCorrection_WJets_Iso_Medium_OS_InvertIso_Medium_OS_mt"}
+highMTCorrectionFile = "/afs/cern.ch/user/j/jsauvan/workspace/Projects/Htautau_Run2/Studies/FakeRate/ComputeMTCorrection/results/mtCorrections.root"
+highMTCorrection = {Name:"HighMTCorr_VsMT"      , File:highMTCorrectionFile, Type:"1DGraph", Object:"mt_correction"}
 
 
 fakeFactorsMC = {}
@@ -90,14 +90,15 @@ fakeFactorsMC['QCDSS'].fakeFactors.append({Name:"Weight_QCDSS_Iso_Medium_VsPtDec
 #####################################################
 ### Combined
 #template = '[{W_QCD}]*[{QCD}]+[{W_W}]*[{W}]+[{W_Z}]*([{ZJ}]+[{TT}]+[{VV}])'
-template = '[{W_QCD}]*[{QCD}]+[{W_W}]*([{W}]+[{TT}])+[{W_Z}]*([{ZJ}]+[{VV}])'
+#template = '[{W_QCD}]*[{QCD}]+[{W_W}]*([{W}]+[{TT}])+[{W_Z}]*([{ZJ}]+[{VV}])'
+template = '[{W_QCD}]*[{QCD}]+[{W_W}]*([{W}]+[{TT}]+[{ZJ}]+[{VV}])'
 fakeFactorsMC['Combined'] = FakeFactors()
 ## !IsoMedium -> IsoMedium
 # 1D
-fakeFactorsMC['Combined'].fakeFactors.append({Name:"Weight_Combined_Iso_Medium_VsPt"     , File:'', Type:"Combined", Object:template.format(W_QCD=fakeFactorsMC['QCDSS'].fakeFactors[0][Name],QCD=fractionsQCD[Name],W_W=fakeFactorsMC['HighMT'].fakeFactors[0][Name],W=fractionsW[Name],W_Z=fakeFactorsMC['ZMuMu'].fakeFactors[0][Name],ZJ=fractionsZJ[Name],TT=fractionsTT[Name],VV=fractionsVV[Name])})
-fakeFactorsMC['Combined'].fakeFactors.append({Name:"Weight_Combined_Iso_Medium_VsDecay"  , File:'', Type:"Combined", Object:template.format(W_QCD=fakeFactorsMC['QCDSS'].fakeFactors[1][Name],QCD=fractionsQCD[Name],W_W=fakeFactorsMC['HighMT'].fakeFactors[1][Name],W=fractionsW[Name],W_Z=fakeFactorsMC['ZMuMu'].fakeFactors[1][Name],ZJ=fractionsZJ[Name],TT=fractionsTT[Name],VV=fractionsVV[Name])})
+fakeFactorsMC['Combined'].fakeFactors.append({Name:"Weight_Combined_Iso_Medium_VsPt"     , File:'', Type:"Combined", Object:template.format(W_QCD=fakeFactorsMC['QCDSS'].fakeFactors[0][Name],QCD=fractionsQCD[Name],W_W=fakeFactorsMC['HighMT'].fakeFactors[0][Name],W=fractionsW[Name],ZJ=fractionsZJ[Name],TT=fractionsTT[Name],VV=fractionsVV[Name])})
+fakeFactorsMC['Combined'].fakeFactors.append({Name:"Weight_Combined_Iso_Medium_VsDecay"  , File:'', Type:"Combined", Object:template.format(W_QCD=fakeFactorsMC['QCDSS'].fakeFactors[1][Name],QCD=fractionsQCD[Name],W_W=fakeFactorsMC['HighMT'].fakeFactors[1][Name],W=fractionsW[Name],ZJ=fractionsZJ[Name],TT=fractionsTT[Name],VV=fractionsVV[Name])})
 # 2D
-fakeFactorsMC['Combined'].fakeFactors.append({Name:"Weight_Combined_Iso_Medium_VsPtDecay", File:'', Type:"Combined", Object:template.format(W_QCD=fakeFactorsMC['QCDSS'].fakeFactors[2][Name],QCD=fractionsQCD[Name],W_W=fakeFactorsMC['HighMT'].fakeFactors[2][Name],W=fractionsW[Name],W_Z=fakeFactorsMC['ZMuMu'].fakeFactors[2][Name],ZJ=fractionsZJ[Name],TT=fractionsTT[Name],VV=fractionsVV[Name])})
+fakeFactorsMC['Combined'].fakeFactors.append({Name:"Weight_Combined_Iso_Medium_VsPtDecay", File:'', Type:"Combined", Object:template.format(W_QCD=fakeFactorsMC['QCDSS'].fakeFactors[2][Name],QCD=fractionsQCD[Name],W_W=fakeFactorsMC['HighMT'].fakeFactors[2][Name],W=fractionsW[Name],ZJ=fractionsZJ[Name],TT=fractionsTT[Name],VV=fractionsVV[Name])})
 
 
 
@@ -149,11 +150,12 @@ fakeFactorsData['QCDSS'].fakeFactors.append({Name:"Weight_QCDSS_Iso_Medium_VsPtD
 #####################################################
 ### Combined
 #template = '[{W_QCD}]*[{QCD}]+[{W_W}]*[{W}]+[{W_Z}]*([{ZJ}]+[{TT}]+[{VV}])'
-template = '[{W_QCD}]*[{QCD}]+[{W_W}]*([{W}]+[{TT}])+[{W_Z}]*([{ZJ}]+[{VV}])'
+#template = '[{W_QCD}]*[{QCD}]+[{W_W}]*([{W}]+[{TT}])+[{W_Z}]*([{ZJ}]+[{VV}])'
+template = '[{W_QCD}]*[{QCD}]+[{W_W}]*([{W}]+[{TT}]+[{ZJ}]+[{VV}])'
 fakeFactorsData['Combined'] = FakeFactors()
 ## !IsoMedium -> IsoMedium
 # 1D
-fakeFactorsData['Combined'].fakeFactors.append({Name:"Weight_Combined_Iso_Medium_VsPt"     , File:'', Type:"Combined", Object:template.format(W_QCD=fakeFactorsData['QCDSS'].fakeFactors[0][Name],QCD=fractionsQCD[Name],W_W=fakeFactorsData['HighMT'].fakeFactors[0][Name],W=fractionsW[Name],W_Z=fakeFactorsData['ZMuMu'].fakeFactors[0][Name],ZJ=fractionsZJ[Name],TT=fractionsTT[Name],VV=fractionsVV[Name])})
-fakeFactorsData['Combined'].fakeFactors.append({Name:"Weight_Combined_Iso_Medium_VsDecay"  , File:'', Type:"Combined", Object:template.format(W_QCD=fakeFactorsData['QCDSS'].fakeFactors[1][Name],QCD=fractionsQCD[Name],W_W=fakeFactorsData['HighMT'].fakeFactors[1][Name],W=fractionsW[Name],W_Z=fakeFactorsData['ZMuMu'].fakeFactors[1][Name],ZJ=fractionsZJ[Name],TT=fractionsTT[Name],VV=fractionsVV[Name])})
+fakeFactorsData['Combined'].fakeFactors.append({Name:"Weight_Combined_Iso_Medium_VsPt"     , File:'', Type:"Combined", Object:template.format(W_QCD=fakeFactorsData['QCDSS'].fakeFactors[0][Name],QCD=fractionsQCD[Name],W_W=fakeFactorsData['HighMT'].fakeFactors[0][Name],W=fractionsW[Name],ZJ=fractionsZJ[Name],TT=fractionsTT[Name],VV=fractionsVV[Name])})
+fakeFactorsData['Combined'].fakeFactors.append({Name:"Weight_Combined_Iso_Medium_VsDecay"  , File:'', Type:"Combined", Object:template.format(W_QCD=fakeFactorsData['QCDSS'].fakeFactors[1][Name],QCD=fractionsQCD[Name],W_W=fakeFactorsData['HighMT'].fakeFactors[1][Name],W=fractionsW[Name],ZJ=fractionsZJ[Name],TT=fractionsTT[Name],VV=fractionsVV[Name])})
 # 2D
-fakeFactorsData['Combined'].fakeFactors.append({Name:"Weight_Combined_Iso_Medium_VsPtDecay", File:'', Type:"Combined", Object:template.format(W_QCD=fakeFactorsData['QCDSS'].fakeFactors[2][Name],QCD=fractionsQCD[Name],W_W=fakeFactorsData['HighMT'].fakeFactors[2][Name],W=fractionsW[Name],W_Z=fakeFactorsData['ZMuMu'].fakeFactors[2][Name],ZJ=fractionsZJ[Name],TT=fractionsTT[Name],VV=fractionsVV[Name])})
+fakeFactorsData['Combined'].fakeFactors.append({Name:"Weight_Combined_Iso_Medium_VsPtDecay", File:'', Type:"Combined", Object:template.format(W_QCD=fakeFactorsData['QCDSS'].fakeFactors[2][Name],QCD=fractionsQCD[Name],W_W=fakeFactorsData['HighMT'].fakeFactors[2][Name],W=fractionsW[Name],ZJ=fractionsZJ[Name],TT=fractionsTT[Name],VV=fractionsVV[Name])})

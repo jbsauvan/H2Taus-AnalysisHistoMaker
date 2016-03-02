@@ -77,23 +77,23 @@ def applyNonClosure(fakeFactorsMC, fakeFactorsData):
     nonClosureFile = "/afs/cern.ch/user/j/jsauvan/workspace/Projects/Htautau_Run2/Studies/FakeRate/Uncertainties/Closures/results/nonClosures.root"
     formShift = '[{SHIFT}]*[{NOM}]'
     ## MC
-    nonClosureZMuMu = createRawComponent(
-        Name="ZMuMuNonClosure_VsMVis",
-        File=nonClosureFile,
-        Type="1DGraph",
-        Object="ZMuMu_Histo_Smooth_Ratio"
-    )
-    fakeFactorZMuMu = findComponent("Weight_ZMuMu_"+fakeFactor,fakeFactorsMC)
-    fakeFactorZMuMu.addSystematic(
-        'NonClosure',
-        'ShiftNonClosure_ZMuMu',
-        createCombinedComponent(
-            Name='',
-            Form=formShift,
-            SHIFT=nonClosureZMuMu,
-            NOM=fakeFactorZMuMu
-        )
-    )
+    #nonClosureZMuMu = createRawComponent(
+        #Name="ZMuMuNonClosure_VsMVis",
+        #File=nonClosureFile,
+        #Type="1DGraph",
+        #Object="ZMuMu_Histo_Smooth_Ratio"
+    #)
+    #fakeFactorZMuMu = findComponent("Weight_ZMuMu_"+fakeFactor,fakeFactorsMC)
+    #fakeFactorZMuMu.addSystematic(
+        #'NonClosure',
+        #'ShiftNonClosure_ZMuMu',
+        #createCombinedComponent(
+            #Name='',
+            #Form=formShift,
+            #SHIFT=nonClosureZMuMu,
+            #NOM=fakeFactorZMuMu
+        #)
+    #)
     #
     nonClosureQCDSS = createRawComponent(
         Name="QCDSSNonClosure_VsMVis",
@@ -113,17 +113,17 @@ def applyNonClosure(fakeFactorsMC, fakeFactorsData):
         )
     )
     ## Data
-    fakeFactorZMuMu = findComponent("Weight_ZMuMu_"+fakeFactor,fakeFactorsData)
-    fakeFactorZMuMu.addSystematic(
-        'NonClosure',
-        'ShiftNonClosure_ZMuMu',
-        createCombinedComponent(
-            Name='',
-            Form=formShift,
-            SHIFT=nonClosureZMuMu,
-            NOM=fakeFactorZMuMu
-        )
-    )
+    #fakeFactorZMuMu = findComponent("Weight_ZMuMu_"+fakeFactor,fakeFactorsData)
+    #fakeFactorZMuMu.addSystematic(
+        #'NonClosure',
+        #'ShiftNonClosure_ZMuMu',
+        #createCombinedComponent(
+            #Name='',
+            #Form=formShift,
+            #SHIFT=nonClosureZMuMu,
+            #NOM=fakeFactorZMuMu
+        #)
+    #)
     #
     fakeFactorQCDSS = findComponent("Weight_QCDSS_"+fakeFactor,fakeFactorsData)
     fakeFactorQCDSS.addSystematic(
