@@ -26,6 +26,7 @@
 #include "AnHiMaCMG/Core/interface/EventAware.h"
 #include "AnHiMaCMG/H2TausCommon/interface/EventMuMu.h"
 #include "AnHiMaCMG/H2TausCommon/interface/PUWeights.h"
+#include "AnHiMaCMG/H2TausCommon/interface/FakeFactors.h"
 
 
 
@@ -46,6 +47,7 @@ namespace AnHiMa
             void fillHistos(unsigned, unsigned, const std::string&);
 
             PUWeights m_puWeights;
+            FakeFactors m_fakeFactors;
     };
 }
 

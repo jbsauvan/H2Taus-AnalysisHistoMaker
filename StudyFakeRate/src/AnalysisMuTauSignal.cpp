@@ -123,7 +123,7 @@ void AnalysisMuTauSignal::fillHistos(unsigned selection, const std::string& sys)
     m_histos.FillHisto(22+hoffset, event().tau().Phi(), weight, sysNum);
     m_histos.FillHisto(23+hoffset, event().tau().decayMode, weight, sysNum);
     m_histos.FillHisto(24+hoffset, event().tau().againstMuon3, weight, sysNum);
-    m_histos.FillHisto(25+hoffset, event().tau().againstElectronMVA5, weight, sysNum);
+    m_histos.FillHisto(25+hoffset, event().tau().againstElectronMVA6, weight, sysNum);
     m_histos.FillHisto(26+hoffset, event().tau().byCombinedIsolationDeltaBetaCorrRaw3Hits, weight, sysNum);
     m_histos.FillHisto(27+hoffset, fabs(event().tauMatch().pdgId)*(event().tau().sign_flip!=0 ? event().tau().sign_flip : 1), weight, sysNum);
 

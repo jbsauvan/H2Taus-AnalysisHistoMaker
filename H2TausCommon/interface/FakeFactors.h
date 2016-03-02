@@ -1,19 +1,3 @@
-/**
- *  @file  FakeFactors.h
- *  @brief  
- *
- *
- *  @author  Jean-Baptiste Sauvan <sauvan@llr.in2p3.fr>
- *
- *  @date    01/04/2016
- *
- *  @internal
- *     Created :  01/04/2016
- * Last update :  01/04/2016 02:59:44 PM
- *          by :  JB Sauvan
- *
- * =====================================================================================
- */
 
 
 
@@ -25,6 +9,7 @@
 #include <map>
 #include <utility>
 #include "AnHiMaCMG/H2TausCommon/interface/EventMuTau.h"
+#include "AnHiMaCMG/H2TausCommon/interface/EventMuMu.h"
 #include "TRandom3.h"
 
 class TObject;
@@ -40,6 +25,7 @@ namespace AnHiMa
             bool addFakeFactor(const std::string&, const std::string&, const std::string&, const std::string&);
             void createCombinedFakeFactorFormulas();
             double retrieveFakeFactor(const std::string&, const EventMuTau&, bool fluctuate=false);
+            double retrieveFakeFactor(const std::string&, const EventMuMu&, bool fluctuate=false);
 
 
         private:
