@@ -153,6 +153,43 @@ def applyNonClosure(fakeFactorsMC, fakeFactorsData):
         )
     )
 
+def applySplitNonClosure(fakeFactorsMC, fakeFactorsData):
+    nonClosureFile = "/afs/cern.ch/user/j/jsauvan/workspace/Projects/Htautau_Run2/Studies/FakeRate/Uncertainties/Closures/results/nonClosures_split.root"
+    formShift = '[{SHIFT}]*[{NOM}]'
+    for i in xrange(4):
+        nonClosureQCDSS = createRawComponent(
+            Name="QCDSSNonClosure{I}_VsMVis".format(I=i),
+            File=nonClosureFile,
+            Type="1DGraph",
+            Object="QCDSS_Histo_Smooth_Ratio_{I}".format(I=i)
+        )
+        ## MC
+        fakeFactorQCDSS = findComponent("Weight_QCDSS_"+fakeFactor,fakeFactorsMC)
+        fakeFactorQCDSS.addSystematic(
+            'NonClosure',
+            'ShiftNonClosure_QCDSS_{I}'.format(I=i),
+            createCombinedComponent(
+                Name='',
+                Form=formShift,
+                SHIFT=nonClosureQCDSS,
+                NOM=fakeFactorQCDSS
+            )
+        )
+        ## Data
+        fakeFactorQCDSS = findComponent("Weight_QCDSS_"+fakeFactor,fakeFactorsData)
+        fakeFactorQCDSS.addSystematic(
+            'NonClosure',
+            'ShiftNonClosure_QCDSS_{I}'.format(I=i),
+            createCombinedComponent(
+                Name='',
+                Form=formShift,
+                SHIFT=nonClosureQCDSS,
+                NOM=fakeFactorQCDSS
+            )
+        )
+
+
+
 
 
 

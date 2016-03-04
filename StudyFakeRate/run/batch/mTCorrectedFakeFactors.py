@@ -117,6 +117,70 @@ def applyNonClosure(fakeFactorsMC, fakeFactorsData):
         )
     )
 
+def applySplitNonClosure(fakeFactorsMC, fakeFactorsData):
+    nonClosureFile = "/afs/cern.ch/user/j/jsauvan/workspace/Projects/Htautau_Run2/Studies/FakeRate/Uncertainties/Closures/results/nonClosures_split.root"
+    nonClosureSSFile = "/afs/cern.ch/user/j/jsauvan/workspace/Projects/Htautau_Run2/Studies/FakeRate/Uncertainties/Closures/results/nonClosures_split.root"
+    formShift = '[{SHIFT}]*[{NOM}]'
+    for i in xrange(4):
+        nonClosureHighMT = createRawComponent(
+            Name="HighMTNonClosure{I}_VsMVis".format(I=i),
+            File=nonClosureFile,
+            Type="1DGraph",
+            Object="HighMT_Histo_Smooth_Ratio_{I}".format(I=i)
+        )
+        nonClosureHighMTSS = createRawComponent(
+            Name="HighMTSSNonClosure{I}_VsMVis".format(I=i),
+            File=nonClosureSSFile,
+            Type="1DGraph",
+            Object="HighMTSS_Histo_Smooth_Ratio_{I}".format(I=i)
+        )
+        ## MC
+        fakeFactorHighMT = findComponent("Weight_HighMT_"+fakeFactor,fakeFactorsMC)
+        fakeFactorHighMT.addSystematic(
+            'NonClosure',
+            'ShiftNonClosure_HighMT_{I}'.format(I=i),
+            createCombinedComponent(
+                Name='',
+                Form=formShift,
+                SHIFT=nonClosureHighMT,
+                NOM=fakeFactorHighMT
+            )
+        )
+        fakeFactorHighMTSS = findComponent("Weight_HighMTSS_"+fakeFactor,fakeFactorsMC)
+        fakeFactorHighMTSS.addSystematic(
+            'NonClosure',
+            'ShiftNonClosure_HighMTSS_{I}'.format(I=i),
+            createCombinedComponent(
+                Name='',
+                Form=formShift,
+                SHIFT=nonClosureHighMTSS,
+                NOM=fakeFactorHighMTSS
+            )
+        )
+        ## Data
+        fakeFactorHighMT = findComponent("Weight_HighMT_"+fakeFactor,fakeFactorsData)
+        fakeFactorHighMT.addSystematic(
+            'NonClosure',
+            'ShiftNonClosure_HighMT_{I}'.format(I=i),
+            createCombinedComponent(
+                Name='',
+                Form=formShift,
+                SHIFT=nonClosureHighMT,
+                NOM=fakeFactorHighMT
+            )
+        )
+        fakeFactorHighMTSS = findComponent("Weight_HighMTSS_"+fakeFactor,fakeFactorsData)
+        fakeFactorHighMTSS.addSystematic(
+            'NonClosure',
+            'ShiftNonClosure_HighMTSS_{I}'.format(I=i),
+            createCombinedComponent(
+                Name='',
+                Form=formShift,
+                SHIFT=nonClosureHighMTSS,
+                NOM=fakeFactorHighMTSS
+            )
+        )
+
 def applyStat(highMTCorrection):
     highMTCorrectionFile = "/afs/cern.ch/user/j/jsauvan/workspace/Projects/Htautau_Run2/Studies/FakeRate/ComputeMTCorrection/results/mtCorrections.root"
     highMTCorrection.addSystematic(
