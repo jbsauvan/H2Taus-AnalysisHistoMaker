@@ -67,6 +67,17 @@ fakeFactorsMC['HighMTRaw'].fakeFactors.append({Name:"Weight_HighMTRaw_Iso_Medium
 # 2D
 fakeFactorsMC['HighMTRaw'].fakeFactors.append({Name:"Weight_HighMTRaw_Iso_Medium_VsPtDecay"   , File:fakeFactorsMC['HighMTRaw'].fakeFactorsFile2D, Type:"2DHisto", Object:"FakeFactors_HighMT_2D_Iso_Medium_InvertIso_Medium_tau_pt_vs_decayMode"})
 #####################################################
+### HighMTSS Raw
+fakeFactorsMC['HighMTSSRaw'] = FakeFactors()
+fakeFactorsMC['HighMTSSRaw'].fakeFactorsFile1D = "/afs/cern.ch/user/j/jsauvan/workspace/Projects/Htautau_Run2/Studies/FakeRate/ComputeFakeRates/plots/FakeFactors_HighMTSS_1D/FakeFactors_HighMTSS_1D.root"
+fakeFactorsMC['HighMTSSRaw'].fakeFactorsFile2D = "/afs/cern.ch/user/j/jsauvan/workspace/Projects/Htautau_Run2/Studies/FakeRate/ComputeFakeRates/plots/FakeFactors_HighMTSS_2D/FakeFactors_HighMTSS_2D.root"
+## !IsoMedium -> IsoMedium
+# 1D
+fakeFactorsMC['HighMTSSRaw'].fakeFactors.append({Name:"Weight_HighMTSSRaw_Iso_Medium_VsPt"        , File:fakeFactorsMC['HighMTSSRaw'].fakeFactorsFile1D, Type:"1DGraph", Object:"FakeFactors_HighMTSS_1D_SS_Iso_Medium_SS_InvertIso_Medium_tau_pt"})
+fakeFactorsMC['HighMTSSRaw'].fakeFactors.append({Name:"Weight_HighMTSSRaw_Iso_Medium_VsDecay"     , File:fakeFactorsMC['HighMTSSRaw'].fakeFactorsFile1D, Type:"1DGraph", Object:"FakeFactors_HighMTSS_1D_SS_Iso_Medium_SS_InvertIso_Medium_tau_decayMode"})
+# 2D
+fakeFactorsMC['HighMTSSRaw'].fakeFactors.append({Name:"Weight_HighMTSSRaw_Iso_Medium_VsPtDecay"   , File:fakeFactorsMC['HighMTSSRaw'].fakeFactorsFile2D, Type:"2DHisto", Object:"FakeFactors_HighMTSS_2D_SS_Iso_Medium_SS_InvertIso_Medium_tau_pt_vs_decayMode"})
+#####################################################
 ### HighMT Corr
 template = '[{CORR}]*[{RAW}]'
 fakeFactorsMC['HighMT'] = FakeFactors()
@@ -76,6 +87,16 @@ fakeFactorsMC['HighMT'].fakeFactors.append({Name:"Weight_HighMT_Iso_Medium_VsPt"
 fakeFactorsMC['HighMT'].fakeFactors.append({Name:"Weight_HighMT_Iso_Medium_VsDecay"  , File:'', Type:"Combined", Object:template.format(CORR=highMTCorrection[Name],RAW=fakeFactorsMC['HighMTRaw'].fakeFactors[1][Name])})
 # 2D
 fakeFactorsMC['HighMT'].fakeFactors.append({Name:"Weight_HighMT_Iso_Medium_VsPtDecay", File:'', Type:"Combined", Object:template.format(CORR=highMTCorrection[Name],RAW=fakeFactorsMC['HighMTRaw'].fakeFactors[2][Name])})
+#####################################################
+### HighMTSS Corr
+template = '[{CORR}]*[{RAW}]'
+fakeFactorsMC['HighMTSS'] = FakeFactors()
+## !IsoMedium -> IsoMedium
+# 1D
+fakeFactorsMC['HighMTSS'].fakeFactors.append({Name:"Weight_HighMTSS_Iso_Medium_VsPt"     , File:'', Type:"Combined", Object:template.format(CORR=highMTCorrection[Name],RAW=fakeFactorsMC['HighMTSSRaw'].fakeFactors[0][Name])})
+fakeFactorsMC['HighMTSS'].fakeFactors.append({Name:"Weight_HighMTSS_Iso_Medium_VsDecay"  , File:'', Type:"Combined", Object:template.format(CORR=highMTCorrection[Name],RAW=fakeFactorsMC['HighMTSSRaw'].fakeFactors[1][Name])})
+# 2D
+fakeFactorsMC['HighMTSS'].fakeFactors.append({Name:"Weight_HighMTSS_Iso_Medium_VsPtDecay", File:'', Type:"Combined", Object:template.format(CORR=highMTCorrection[Name],RAW=fakeFactorsMC['HighMTSSRaw'].fakeFactors[2][Name])})
 #####################################################
 ### QCDSS
 fakeFactorsMC['QCDSS'] = FakeFactors()
@@ -127,6 +148,17 @@ fakeFactorsData['HighMTRaw'].fakeFactors.append({Name:"Weight_HighMTRaw_Iso_Medi
 # 2D
 fakeFactorsData['HighMTRaw'].fakeFactors.append({Name:"Weight_HighMTRaw_Iso_Medium_VsPtDecay"   , File:fakeFactorsData['HighMTRaw'].fakeFactorsFile2D, Type:"2DHisto", Object:"FakeFactors_Data_HighMT_2D_Iso_Medium_InvertIso_Medium_tau_pt_vs_decayMode"})
 #####################################################
+### HighMTSS Raw
+fakeFactorsData['HighMTSSRaw'] = FakeFactors()
+fakeFactorsData['HighMTSSRaw'].fakeFactorsFile1D = "/afs/cern.ch/user/j/jsauvan/workspace/Projects/Htautau_Run2/Studies/FakeRate/ComputeFakeRates/plots/FakeFactors_Data_HighMTSS_1D/FakeFactors_Data_HighMTSS_1D.root"
+fakeFactorsData['HighMTSSRaw'].fakeFactorsFile2D = "/afs/cern.ch/user/j/jsauvan/workspace/Projects/Htautau_Run2/Studies/FakeRate/ComputeFakeRates/plots/FakeFactors_Data_HighMTSS_2D/FakeFactors_Data_HighMTSS_2D.root"
+## !IsoMedium -> IsoMedium
+# 1D
+fakeFactorsData['HighMTSSRaw'].fakeFactors.append({Name:"Weight_HighMTSSRaw_Iso_Medium_VsPt"        , File:fakeFactorsData['HighMTSSRaw'].fakeFactorsFile1D, Type:"1DGraph", Object:"FakeFactors_Data_HighMT_1D_SS_Iso_Medium_SS_InvertIso_Medium_tau_pt"})
+fakeFactorsData['HighMTSSRaw'].fakeFactors.append({Name:"Weight_HighMTSSRaw_Iso_Medium_VsDecay"     , File:fakeFactorsData['HighMTSSRaw'].fakeFactorsFile1D, Type:"1DGraph", Object:"FakeFactors_Data_HighMT_1D_SS_Iso_Medium_SS_InvertIso_Medium_tau_decayMode"})
+# 2D
+fakeFactorsData['HighMTSSRaw'].fakeFactors.append({Name:"Weight_HighMTSSRaw_Iso_Medium_VsPtDecay"   , File:fakeFactorsData['HighMTSSRaw'].fakeFactorsFile2D, Type:"2DHisto", Object:"FakeFactors_Data_HighMT_2D_SS_Iso_Medium_SS_InvertIso_Medium_tau_pt_vs_decayMode"})
+#####################################################
 ### HighMT Corr
 template = '[{CORR}]*[{RAW}]'
 fakeFactorsData['HighMT'] = FakeFactors()
@@ -136,6 +168,16 @@ fakeFactorsData['HighMT'].fakeFactors.append({Name:"Weight_HighMT_Iso_Medium_VsP
 fakeFactorsData['HighMT'].fakeFactors.append({Name:"Weight_HighMT_Iso_Medium_VsDecay"  , File:'', Type:"Combined", Object:template.format(CORR=highMTCorrection[Name],RAW=fakeFactorsData['HighMTRaw'].fakeFactors[1][Name])})
 # 2D
 fakeFactorsData['HighMT'].fakeFactors.append({Name:"Weight_HighMT_Iso_Medium_VsPtDecay", File:'', Type:"Combined", Object:template.format(CORR=highMTCorrection[Name],RAW=fakeFactorsData['HighMTRaw'].fakeFactors[2][Name])})
+#####################################################
+### HighMTSS Corr
+template = '[{CORR}]*[{RAW}]'
+fakeFactorsData['HighMTSS'] = FakeFactors()
+## !IsoMedium -> IsoMedium
+# 1D
+fakeFactorsData['HighMTSS'].fakeFactors.append({Name:"Weight_HighMTSS_Iso_Medium_VsPt"     , File:'', Type:"Combined", Object:template.format(CORR=highMTCorrection[Name],RAW=fakeFactorsData['HighMTSSRaw'].fakeFactors[0][Name])})
+fakeFactorsData['HighMTSS'].fakeFactors.append({Name:"Weight_HighMTSS_Iso_Medium_VsDecay"  , File:'', Type:"Combined", Object:template.format(CORR=highMTCorrection[Name],RAW=fakeFactorsData['HighMTSSRaw'].fakeFactors[1][Name])})
+# 2D
+fakeFactorsData['HighMTSS'].fakeFactors.append({Name:"Weight_HighMTSS_Iso_Medium_VsPtDecay", File:'', Type:"Combined", Object:template.format(CORR=highMTCorrection[Name],RAW=fakeFactorsData['HighMTSSRaw'].fakeFactors[2][Name])})
 #####################################################
 ### QCDSS
 fakeFactorsData['QCDSS'] = FakeFactors()
@@ -159,3 +201,15 @@ fakeFactorsData['Combined'].fakeFactors.append({Name:"Weight_Combined_Iso_Medium
 fakeFactorsData['Combined'].fakeFactors.append({Name:"Weight_Combined_Iso_Medium_VsDecay"  , File:'', Type:"Combined", Object:template.format(W_QCD=fakeFactorsData['QCDSS'].fakeFactors[1][Name],QCD=fractionsQCD[Name],W_W=fakeFactorsData['HighMT'].fakeFactors[1][Name],W=fractionsW[Name],ZJ=fractionsZJ[Name],TT=fractionsTT[Name],VV=fractionsVV[Name])})
 # 2D
 fakeFactorsData['Combined'].fakeFactors.append({Name:"Weight_Combined_Iso_Medium_VsPtDecay", File:'', Type:"Combined", Object:template.format(W_QCD=fakeFactorsData['QCDSS'].fakeFactors[2][Name],QCD=fractionsQCD[Name],W_W=fakeFactorsData['HighMT'].fakeFactors[2][Name],W=fractionsW[Name],ZJ=fractionsZJ[Name],TT=fractionsTT[Name],VV=fractionsVV[Name])})
+#####################################################
+### Combined SS
+#template = '[{W_QCD}]*[{QCD}]+[{W_W}]*[{W}]+[{W_Z}]*([{ZJ}]+[{TT}]+[{VV}])'
+#template = '[{W_QCD}]*[{QCD}]+[{W_W}]*([{W}]+[{TT}])+[{W_Z}]*([{ZJ}]+[{VV}])'
+template = '[{W_QCD}]*[{QCD}]+[{W_W}]*([{W}]+[{TT}]+[{ZJ}]+[{VV}])'
+fakeFactorsData['CombinedSS'] = FakeFactors()
+## !IsoMedium -> IsoMedium
+# 1D
+fakeFactorsData['CombinedSS'].fakeFactors.append({Name:"Weight_CombinedSS_Iso_Medium_VsPt"     , File:'', Type:"Combined", Object:template.format(W_QCD=fakeFactorsData['QCDSS'].fakeFactors[0][Name],QCD=fractionsQCD[Name],W_W=fakeFactorsData['HighMTSS'].fakeFactors[0][Name],W=fractionsW[Name],ZJ=fractionsZJ[Name],TT=fractionsTT[Name],VV=fractionsVV[Name])})
+fakeFactorsData['CombinedSS'].fakeFactors.append({Name:"Weight_CombinedSS_Iso_Medium_VsDecay"  , File:'', Type:"Combined", Object:template.format(W_QCD=fakeFactorsData['QCDSS'].fakeFactors[1][Name],QCD=fractionsQCD[Name],W_W=fakeFactorsData['HighMTSS'].fakeFactors[1][Name],W=fractionsW[Name],ZJ=fractionsZJ[Name],TT=fractionsTT[Name],VV=fractionsVV[Name])})
+# 2D
+fakeFactorsData['CombinedSS'].fakeFactors.append({Name:"Weight_CombinedSS_Iso_Medium_VsPtDecay", File:'', Type:"Combined", Object:template.format(W_QCD=fakeFactorsData['QCDSS'].fakeFactors[2][Name],QCD=fractionsQCD[Name],W_W=fakeFactorsData['HighMTSS'].fakeFactors[2][Name],W=fractionsW[Name],ZJ=fractionsZJ[Name],TT=fractionsTT[Name],VV=fractionsVV[Name])})

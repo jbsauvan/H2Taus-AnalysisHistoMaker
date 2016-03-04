@@ -37,6 +37,14 @@ def create(fakeFactorsMC, fakeFactorsData):
     )
     fakeFactorsMC.append(
         createRawComponent(
+            Name="Weight_HighMTSSRaw_"+fakeFactor,
+            File=fakeFactors2DMCFileTemplate.format(TYPE='HighMTSS'),
+            Type="2DHisto",
+            Object="FakeFactors_HighMTSS_2D_SS_Iso_Medium_SS_InvertIso_Medium_tau_pt_vs_decayMode"
+        )
+    )
+    fakeFactorsMC.append(
+        createRawComponent(
             Name="Weight_QCDSS_"+fakeFactor,
             File=fakeFactors2DMCFileTemplate.format(TYPE='QCDSS'),
             Type="2DHisto",
@@ -59,6 +67,14 @@ def create(fakeFactorsMC, fakeFactorsData):
             File=fakeFactors2DDataFileTemplate.format(TYPE='HighMT'),
             Type="2DHisto",
             Object="FakeFactors_Data_HighMT_2D_Iso_Medium_InvertIso_Medium_tau_pt_vs_decayMode"
+        )
+    )
+    fakeFactorsData.append(
+        createRawComponent(
+            Name="Weight_HighMTSSRaw_"+fakeFactor,
+            File=fakeFactors2DDataFileTemplate.format(TYPE='HighMTSS'),
+            Type="2DHisto",
+            Object="FakeFactors_Data_HighMTSS_2D_SS_Iso_Medium_SS_InvertIso_Medium_tau_pt_vs_decayMode"
         )
     )
     fakeFactorsData.append(
