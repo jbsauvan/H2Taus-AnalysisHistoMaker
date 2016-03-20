@@ -69,7 +69,7 @@ for sample in samples:
     batch[-1].outputDirectory = "/afs/cern.ch/work/j/jsauvan/Projects/Htautau_Run2/Histos/StudyFakeRate/MuTau_FakeRateWJetsHighMT/"+sample[Name]
     batch[-1].outputFile = "fakerates_MuTau_WJetsHighMT_{0}.root".format(sample[Name])
     batch[-1].histoParameters = "../histos.par"
-    batch[-1].histoTag = "HistosHighMT"
+    batch[-1].histoTag = "HistosIsoOSSS"
     batch[-1].nFilesPerJob = 1
 
     batch[-1].batchSystem = "lxplus"

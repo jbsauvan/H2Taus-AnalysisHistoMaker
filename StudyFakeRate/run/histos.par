@@ -99,7 +99,7 @@ end_HistosZMuMu
 ############################################################
 ### Histograms used to derive fake rates in high-mT region
 ############################################################
-HistosHighMT: FakeRate_IsoRaw_1_5_, FakeRate_InvertIsoRaw_1_5_(1000), FakeRate_NoIso_(2000), FakeRate_Iso_Medium_(3000), FakeRate_InvertIso_Medium_(4000), FakeRate_InvertIso_Medium_RawOnly_(5000),FakeRate_SS_IsoRaw_1_5_(6000), FakeRate_SS_InvertIsoRaw_1_5_(7000), FakeRate_SS_NoIso_(8000), FakeRate_SS_Iso_Medium_(9000), FakeRate_SS_InvertIso_Medium_(10000), FakeRate_SS_InvertIso_Medium_RawOnly_(11000)
+HistosIsoOSSS: FakeRate_IsoRaw_1_5_, FakeRate_InvertIsoRaw_1_5_(1000), FakeRate_NoIso_(2000), FakeRate_Iso_Medium_(3000), FakeRate_InvertIso_Medium_(4000), FakeRate_InvertIso_Medium_RawOnly_(5000),FakeRate_SS_IsoRaw_1_5_(6000), FakeRate_SS_InvertIsoRaw_1_5_(7000), FakeRate_SS_NoIso_(8000), FakeRate_SS_Iso_Medium_(9000), FakeRate_SS_InvertIso_Medium_(10000), FakeRate_SS_InvertIso_Medium_RawOnly_(11000)
 
 # General event 
 h1f_sys 0 nevents ' Number of events ' 1 0.5 1.5
@@ -192,7 +192,7 @@ PT 3
 DECAY 3
 -0.5 0.5 1.5 10.5
 
-end_HistosHighMT
+end_HistosIsoOSSS
 
 ############################################################
 ### Histograms used to derive fake rates function of mT in Zmumu

@@ -1,7 +1,7 @@
 #include <string>
 #include <iostream>
 
-#include "AnHiMaCMG/StudyFakeRate/interface/AnalysisFakeRateQCDSS.h"
+#include "AnHiMaCMG/StudyFakeRate/interface/AnalysisFakeRateQCD.h"
 
 using namespace std;
 using namespace AnHiMa;
@@ -15,7 +15,7 @@ int main(int argc, char** argv)
     }
     string parFile(argv[1]);
 
-    AnalysisFakeRateQCDSS* analysis = new AnalysisFakeRateQCDSS();
+    AnalysisFakeRateQCD* analysis = new AnalysisFakeRateQCD();
     
     try
     {

@@ -1,5 +1,5 @@
 /**
- *  @file  AnalysisFakeRateQCDSS.cpp
+ *  @file  AnalysisFakeRateQCD.cpp
  *  @brief  
  *
  *
@@ -28,7 +28,7 @@
 #include "TGraphAsymmErrors.h"
 #include "TH2F.h"
 
-#include "AnHiMaCMG/StudyFakeRate/interface/AnalysisFakeRateQCDSS.h"
+#include "AnHiMaCMG/StudyFakeRate/interface/AnalysisFakeRateQCD.h"
 #include "AnHiMaCMG/Core/interface/Utilities.h"
 
 
@@ -40,7 +40,7 @@ using namespace std;
 
 
 /*****************************************************************/
-AnalysisFakeRateQCDSS::AnalysisFakeRateQCDSS():IAnalysis()
+AnalysisFakeRateQCD::AnalysisFakeRateQCD():IAnalysis()
 /*****************************************************************/
 {
 
@@ -50,7 +50,7 @@ AnalysisFakeRateQCDSS::AnalysisFakeRateQCDSS():IAnalysis()
 
 
 /*****************************************************************/
-AnalysisFakeRateQCDSS::~AnalysisFakeRateQCDSS()
+AnalysisFakeRateQCD::~AnalysisFakeRateQCD()
 /*****************************************************************/
 {
 
@@ -59,7 +59,7 @@ AnalysisFakeRateQCDSS::~AnalysisFakeRateQCDSS()
 
 
 /*****************************************************************/
-bool AnalysisFakeRateQCDSS::initialize(const string& parameterFile)
+bool AnalysisFakeRateQCD::initialize(const string& parameterFile)
 /*****************************************************************/
 {
     bool status = IAnalysis::initialize(parameterFile);
@@ -71,18 +71,20 @@ bool AnalysisFakeRateQCDSS::initialize(const string& parameterFile)
 
 
 /*****************************************************************/
-void AnalysisFakeRateQCDSS::execute()
+void AnalysisFakeRateQCD::execute()
 /*****************************************************************/
 {
     event().update();
-    for(unsigned sel=0; sel<=5; sel++)
+    bool os = true;
+    for(unsigned iso=0; iso<=5; iso++)
     {
-        if(event().passSelectionFakeFactorsQCDSS(sel)) fillHistos(sel);
+        if(event().passSelectionFakeFactorsQCD(iso, os)) fillHistos(iso); // OS
+        if(event().passSelectionFakeFactorsQCD(iso, !os)) fillHistos(iso+6); // SS
     }
 }
 
 /*****************************************************************/
-void AnalysisFakeRateQCDSS::fillHistos(unsigned selection)
+void AnalysisFakeRateQCD::fillHistos(unsigned selection)
 /*****************************************************************/
 {
     short sysNum = 0;

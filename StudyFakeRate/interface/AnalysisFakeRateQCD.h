@@ -1,5 +1,5 @@
 /**
- *  @file  AnalysisFakeRateQCDSS.h
+ *  @file  AnalysisFakeRateQCD.h
  *  @brief  
  *
  *
@@ -18,8 +18,8 @@
 
 
 
-#ifndef AnalysisFakeRateQCDSS_h
-#define AnalysisFakeRateQCDSS_h
+#ifndef AnalysisFakeRateQCD_h
+#define AnalysisFakeRateQCD_h
 
 #include "AnHiMaCMG/Core/interface/IAnalysis.h"
 #include "AnHiMaCMG/Core/interface/EventAware.h"
@@ -31,11 +31,11 @@ class TObject;
 namespace AnHiMa
 {
 
-    class AnalysisFakeRateQCDSS: public IAnalysis, EventAware<EventMuTau>
+    class AnalysisFakeRateQCD: public IAnalysis, EventAware<EventMuTau>
     {
         public:
-            AnalysisFakeRateQCDSS();
-            ~AnalysisFakeRateQCDSS();
+            AnalysisFakeRateQCD();
+            ~AnalysisFakeRateQCD();
 
             bool initialize(const std::string& parameterFile);
 

@@ -61,15 +61,15 @@ batch = []
 
 for sample in samples:
     batch.append(AnhimaBatchLauncher())
-    batch[-1].name = "FakeRate_MuTau_QCDSS_"+sample[Name]
+    batch[-1].name = "FakeRate_MuTau_QCD_"+sample[Name]
     batch[-1].exe = "/afs/cern.ch/work/j/jsauvan/Projects/Htautau_Run2/CMSSW/CMSSW_7_4_15/bin/slc6_amd64_gcc491/fakerate_mutau_qcdss.exe"
     batch[-1].baseDir = "/afs/cern.ch/work/j/jsauvan/Projects/Htautau_Run2/CMSSW/CMSSW_7_4_15/src/AnHiMaCMG/StudyFakeRate/"
     batch[-1].inputFiles.append("{0}/{1}/{2}/tree.root".format(treeDirectory, sample[Dir], treeProdName))
     batch[-1].tree = "tree"
-    batch[-1].outputDirectory = "/afs/cern.ch/work/j/jsauvan/Projects/Htautau_Run2/Histos/StudyFakeRate/MuTau_FakeRate_QCDSS/"+sample[Name]
-    batch[-1].outputFile = "fakerates_MuTau_QCDSS_{0}.root".format(sample[Name])
+    batch[-1].outputDirectory = "/afs/cern.ch/work/j/jsauvan/Projects/Htautau_Run2/Histos/StudyFakeRate/MuTau_FakeRate_QCD/"+sample[Name]
+    batch[-1].outputFile = "fakerates_MuTau_QCD_{0}.root".format(sample[Name])
     batch[-1].histoParameters = "../histos.par"
-    batch[-1].histoTag = "HistosZMuMu"
+    batch[-1].histoTag = "HistosIsoOSSS"
     batch[-1].nFilesPerJob = 1
 
     batch[-1].batchSystem = "lxplus"
@@ -79,7 +79,8 @@ for sample in samples:
     # Muon cuts
     #batch[-1].cuts.extend(["l1_reliso05<0.1","l1_muonid_medium>0.5","l1_pt>19"])
     #batch[-1].cuts.extend(["l1_reliso05>0.05","l1_muonid_medium>0.5","l1_pt>19"]) ## muon anti-isolation
-    batch[-1].cuts.extend(["l1_reliso05>0.12","l1_muonid_medium>0.5","l1_pt>19"]) ## new muon anti-isolation
+    #batch[-1].cuts.extend(["l1_reliso05>0.12","l1_muonid_medium>0.5","l1_pt>19"]) ## new muon anti-isolation
+    batch[-1].cuts.extend(["l1_reliso05>0.15","l1_muonid_medium>0.5","l1_pt>19"]) ## new muon anti-isolation (18/03/2016)
     # Tau cuts
     batch[-1].cuts.extend(["l2_againstMuon3>1.5","l2_againstElectronMVA5>0.5"])
     batch[-1].cuts.extend(["veto_dilepton<0.5", "veto_thirdlepton<0.5", "veto_otherlepton<0.5"])
