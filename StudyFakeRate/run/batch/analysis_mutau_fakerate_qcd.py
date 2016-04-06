@@ -69,7 +69,7 @@ for sample in samples:
     batch[-1].outputDirectory = "/afs/cern.ch/work/j/jsauvan/Projects/Htautau_Run2/Histos/StudyFakeRate/MuTau_FakeRate_QCD/"+sample[Name]
     batch[-1].outputFile = "fakerates_MuTau_QCD_{0}.root".format(sample[Name])
     batch[-1].histoParameters = "../histos.par"
-    batch[-1].histoTag = "HistosIsoOSSS"
+    batch[-1].histoTag = "HistosQCDOSSS"
     batch[-1].nFilesPerJob = 1
 
     batch[-1].batchSystem = "lxplus"
@@ -80,7 +80,8 @@ for sample in samples:
     #batch[-1].cuts.extend(["l1_reliso05<0.1","l1_muonid_medium>0.5","l1_pt>19"])
     #batch[-1].cuts.extend(["l1_reliso05>0.05","l1_muonid_medium>0.5","l1_pt>19"]) ## muon anti-isolation
     #batch[-1].cuts.extend(["l1_reliso05>0.12","l1_muonid_medium>0.5","l1_pt>19"]) ## new muon anti-isolation
-    batch[-1].cuts.extend(["l1_reliso05>0.15","l1_muonid_medium>0.5","l1_pt>19"]) ## new muon anti-isolation (18/03/2016)
+    #batch[-1].cuts.extend(["l1_reliso05>0.15","l1_muonid_medium>0.5","l1_pt>19"]) ## new muon anti-isolation (18/03/2016)
+    batch[-1].cuts.extend(["l1_reliso05>0.05","l1_muonid_medium>0.5","l1_pt>19"]) ## both anti-isolation and medium isolation (05/04/2016)
     # Tau cuts
     batch[-1].cuts.extend(["l2_againstMuon3>1.5","l2_againstElectronMVA5>0.5"])
     batch[-1].cuts.extend(["veto_dilepton<0.5", "veto_thirdlepton<0.5", "veto_otherlepton<0.5"])

@@ -374,7 +374,7 @@ bool EventMuTau::passSelectionFakeFactorsWJetsHighMT(int iso, bool os)
 }
 
 /*****************************************************************/
-bool EventMuTau::passSelectionFakeFactorsQCD(int iso, bool os)
+bool EventMuTau::passSelectionFakeFactorsQCD(int iso, int isomu, bool os)
 /*****************************************************************/
 {
     bool pass = true;
@@ -382,6 +382,17 @@ bool EventMuTau::passSelectionFakeFactorsQCD(int iso, bool os)
     pass &= (mt()<40.);
     if(os) pass &= (tau().charge*muon().charge<0); 
     else pass &= (tau().charge*muon().charge>0);
+    switch(isomu)
+    {
+        case 0: // anti-isolattion
+            pass &= (muon().reliso05>0.15);
+            break;
+        case 1: // medium isolation
+            pass &= (muon().reliso05>0.05 && muon().reliso05<0.15);
+            break;
+        default:
+            break;
+    };
     switch(iso)
     {
         case 0: // Tau isolation raw < 1.5 GeV

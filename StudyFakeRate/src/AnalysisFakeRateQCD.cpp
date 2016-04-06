@@ -78,8 +78,11 @@ void AnalysisFakeRateQCD::execute()
     bool os = true;
     for(unsigned iso=0; iso<=5; iso++)
     {
-        if(event().passSelectionFakeFactorsQCD(iso, os)) fillHistos(iso); // OS
-        if(event().passSelectionFakeFactorsQCD(iso, !os)) fillHistos(iso+6); // SS
+        for(unsigned isomu=0; isomu<=1; isomu++)
+        {
+            if(event().passSelectionFakeFactorsQCD(iso, isomu, os)) fillHistos(iso+12*isomu); // OS
+            if(event().passSelectionFakeFactorsQCD(iso, isomu, !os)) fillHistos(iso+6+12*isomu); // SS
+        }
     }
 }
 
