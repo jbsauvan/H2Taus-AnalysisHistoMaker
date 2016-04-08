@@ -178,6 +178,7 @@ void AnalysisFakeRateApply::fillHistos(unsigned selection, const std::string& sy
     m_histos.FillHisto(25+hoffset, event().tau().againstElectronMVA6, weight, sysNum);
     m_histos.FillHisto(26+hoffset, event().tau().byCombinedIsolationDeltaBetaCorrRaw3Hits, weight, sysNum);
     m_histos.FillHisto(27+hoffset, fabs(event().tauMatch().pdgId)*(event().tau().sign_flip!=0 ? event().tau().sign_flip : 1), weight, sysNum);
+    m_histos.FillHisto(28+hoffset, event().tau().byIsolationMVArun2v1DBoldDMwLTraw, weight, sysNum);
 
     // MuTau histos
     m_histos.FillHisto(50+hoffset, event().mvis(), weight, sysNum);

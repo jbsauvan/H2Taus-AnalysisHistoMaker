@@ -141,6 +141,7 @@ void AnalysisWJetsContamination::fillHistos(unsigned selection, const std::strin
     m_histos.FillHisto(24+hoffset, event().tau().byCombinedIsolationDeltaBetaCorrRaw3Hits, weight, sysNum);
     m_histos.FillHisto(25+hoffset, event().tau().photonPtSumOutsideSignalCone/event().tau().Pt(), weight, sysNum);
     m_histos.FillHisto(26+hoffset, event().tauJetMatch().Pt(), weight, sysNum);    
+    m_histos.FillHisto(27+hoffset, event().tau().byIsolationMVArun2v1DBoldDMwLTraw, weight, sysNum);
 
     // MuTau histos
     m_histos.FillHisto(50+hoffset, event().mvis(), weight, sysNum);

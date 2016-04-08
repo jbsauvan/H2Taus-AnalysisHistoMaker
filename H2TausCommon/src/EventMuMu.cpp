@@ -137,9 +137,13 @@ void EventMuMu::connectVariables(TChain* inputChain)
     inputChain->SetBranchStatus("tau1_byCombinedIsolationDeltaBetaCorrRaw3Hits" , true);
     inputChain->SetBranchStatus("tau1_byIsolationMVA3newDMwLTraw"               , true);
     inputChain->SetBranchStatus("tau1_byIsolationMVA3oldDMwLTraw"               , true);
+    inputChain->SetBranchStatus("tau1_byIsolationMVArun2v1DBnewDMwLTraw"        , true);
+    inputChain->SetBranchStatus("tau1_byIsolationMVArun2v1DBoldDMwLTraw"        , true);
     inputChain->SetBranchStatus("tau1_byCombinedIsolationDeltaBetaCorr3Hits"    , true);
     inputChain->SetBranchStatus("tau1_byIsolationMVA3newDMwLT"                  , true);
     inputChain->SetBranchStatus("tau1_byIsolationMVA3oldDMwLT"                  , true);
+    inputChain->SetBranchStatus("tau1_byIsolationMVArun2v1DBnewDMwLT"           , true);
+    inputChain->SetBranchStatus("tau1_byIsolationMVArun2v1DBoldDMwLT"           , true);
     inputChain->SetBranchStatus("tau1_chargedIsoPtSum"                          , true);
     inputChain->SetBranchStatus("tau1_decayModeFinding"                         , true);
     inputChain->SetBranchStatus("tau1_decayModeFindingNewDMs"                   , true);
@@ -253,9 +257,13 @@ void EventMuMu::connectVariables(TChain* inputChain)
     inputChain->SetBranchAddress("tau1_byCombinedIsolationDeltaBetaCorrRaw3Hits" , &m_tau.byCombinedIsolationDeltaBetaCorrRaw3Hits);
     inputChain->SetBranchAddress("tau1_byIsolationMVA3newDMwLTraw"               , &m_tau.byIsolationMVA3newDMwLTraw              );
     inputChain->SetBranchAddress("tau1_byIsolationMVA3oldDMwLTraw"               , &m_tau.byIsolationMVA3oldDMwLTraw              );
+    inputChain->SetBranchAddress("tau1_byIsolationMVArun2v1DBnewDMwLTraw"        , &m_tau.byIsolationMVArun2v1DBnewDMwLTraw       );
+    inputChain->SetBranchAddress("tau1_byIsolationMVArun2v1DBoldDMwLTraw"        , &m_tau.byIsolationMVArun2v1DBoldDMwLTraw       );
     inputChain->SetBranchAddress("tau1_byCombinedIsolationDeltaBetaCorr3Hits"    , &m_tau.byCombinedIsolationDeltaBetaCorr3Hits   );
     inputChain->SetBranchAddress("tau1_byIsolationMVA3newDMwLT"                  , &m_tau.byIsolationMVA3newDMwLT                 );
     inputChain->SetBranchAddress("tau1_byIsolationMVA3oldDMwLT"                  , &m_tau.byIsolationMVA3oldDMwLT                 );
+    inputChain->SetBranchAddress("tau1_byIsolationMVArun2v1DBnewDMwLT"           , &m_tau.byIsolationMVArun2v1DBnewDMwLT          );
+    inputChain->SetBranchAddress("tau1_byIsolationMVArun2v1DBoldDMwLT"           , &m_tau.byIsolationMVArun2v1DBoldDMwLT          );
     inputChain->SetBranchAddress("tau1_chargedIsoPtSum"                          , &m_tau.chargedIsoPtSum                         );
     inputChain->SetBranchAddress("tau1_decayModeFinding"                         , &m_tau.decayModeFinding                        );
     inputChain->SetBranchAddress("tau1_decayModeFindingNewDMs"                   , &m_tau.decayModeFindingNewDMs                  );
@@ -302,11 +310,13 @@ bool EventMuMu::passSelection(int selection)
             break;
         case 2: // No isolation
             break;
-        case 3: // Tau isolation medium
-            pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits >= 2);
+        case 3: // Tau isolation tight
+            //pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits >= 2);
+            pass &= (tau().byIsolationMVArun2v1DBoldDMwLT>= 4);
             break;
-        case 4: // Reverse tau isolation medium
-            pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits < 2);
+        case 4: // Reverse tau isolation tight
+            //pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits < 2);
+            pass &= (tau().byIsolationMVArun2v1DBoldDMwLT< 4);
             break;
         case 5: // Reversed medium isolation only reversing the raw isolation part
             pass &= (tau().byCombinedIsolationDeltaBetaCorrRaw3Hits > 1.5 && tau().photonPtSumOutsideSignalCone/tau().Pt()<0.1);
@@ -329,11 +339,13 @@ bool EventMuMu::passSelectionMTStudy(int iso, int mt)
     {
         case 0: // No isolation
             break;
-        case 1: // Tau isolation medium
-            pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits >= 2);
+        case 1: // Tau isolation tight 
+            //pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits >= 2);
+            pass &= (tau().byIsolationMVArun2v1DBoldDMwLT>= 4);
             break;
-        case 2: // Reverse tau isolation medium
-            pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits < 2);
+        case 2: // Reverse tau isolation tight
+            //pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits < 2);
+            pass &= (tau().byIsolationMVArun2v1DBoldDMwLT< 4);
             break;
         default:
             break;

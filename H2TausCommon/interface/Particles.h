@@ -112,9 +112,13 @@ namespace AnHiMa
             double byCombinedIsolationDeltaBetaCorrRaw3Hits;
             double byIsolationMVA3newDMwLTraw;
             double byIsolationMVA3oldDMwLTraw;
+            double byIsolationMVArun2v1DBnewDMwLTraw;
+            double byIsolationMVArun2v1DBoldDMwLTraw;
             double byCombinedIsolationDeltaBetaCorr3Hits;
             double byIsolationMVA3newDMwLT;
             double byIsolationMVA3oldDMwLT;
+            double byIsolationMVArun2v1DBnewDMwLT;
+            double byIsolationMVArun2v1DBoldDMwLT;
             double chargedIsoPtSum;
             double decayModeFinding;
             double decayModeFindingNewDMs;

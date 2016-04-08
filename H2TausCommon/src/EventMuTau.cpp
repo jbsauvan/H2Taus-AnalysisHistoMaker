@@ -106,9 +106,13 @@ void EventMuTau::connectVariables(TChain* inputChain)
     inputChain->SetBranchStatus("l2_byCombinedIsolationDeltaBetaCorrRaw3Hits" , true);
     inputChain->SetBranchStatus("l2_byIsolationMVA3newDMwLTraw"               , true);
     inputChain->SetBranchStatus("l2_byIsolationMVA3oldDMwLTraw"               , true);
+    inputChain->SetBranchStatus("l2_byIsolationMVArun2v1DBnewDMwLTraw"        , true);
+    inputChain->SetBranchStatus("l2_byIsolationMVArun2v1DBoldDMwLTraw"        , true);
     inputChain->SetBranchStatus("l2_byCombinedIsolationDeltaBetaCorr3Hits"    , true);
     inputChain->SetBranchStatus("l2_byIsolationMVA3newDMwLT"                  , true);
     inputChain->SetBranchStatus("l2_byIsolationMVA3oldDMwLT"                  , true);
+    inputChain->SetBranchStatus("l2_byIsolationMVArun2v1DBnewDMwLT"           , true);
+    inputChain->SetBranchStatus("l2_byIsolationMVArun2v1DBoldDMwLT"           , true);
     inputChain->SetBranchStatus("l2_chargedIsoPtSum"                          , true);
     inputChain->SetBranchStatus("l2_decayModeFinding"                         , true);
     inputChain->SetBranchStatus("l2_decayModeFindingNewDMs"                   , true);
@@ -206,9 +210,13 @@ void EventMuTau::connectVariables(TChain* inputChain)
     inputChain->SetBranchAddress("l2_byCombinedIsolationDeltaBetaCorrRaw3Hits" , &m_tau.byCombinedIsolationDeltaBetaCorrRaw3Hits);
     inputChain->SetBranchAddress("l2_byIsolationMVA3newDMwLTraw"               , &m_tau.byIsolationMVA3newDMwLTraw              );
     inputChain->SetBranchAddress("l2_byIsolationMVA3oldDMwLTraw"               , &m_tau.byIsolationMVA3oldDMwLTraw              );
+    inputChain->SetBranchAddress("l2_byIsolationMVArun2v1DBnewDMwLTraw"        , &m_tau.byIsolationMVArun2v1DBnewDMwLTraw       );
+    inputChain->SetBranchAddress("l2_byIsolationMVArun2v1DBoldDMwLTraw"        , &m_tau.byIsolationMVArun2v1DBoldDMwLTraw       );
     inputChain->SetBranchAddress("l2_byCombinedIsolationDeltaBetaCorr3Hits"    , &m_tau.byCombinedIsolationDeltaBetaCorr3Hits   );
     inputChain->SetBranchAddress("l2_byIsolationMVA3newDMwLT"                  , &m_tau.byIsolationMVA3newDMwLT                 );
     inputChain->SetBranchAddress("l2_byIsolationMVA3oldDMwLT"                  , &m_tau.byIsolationMVA3oldDMwLT                 );
+    inputChain->SetBranchAddress("l2_byIsolationMVArun2v1DBnewDMwLT"           , &m_tau.byIsolationMVArun2v1DBnewDMwLT          );
+    inputChain->SetBranchAddress("l2_byIsolationMVArun2v1DBoldDMwLT"           , &m_tau.byIsolationMVArun2v1DBoldDMwLT          );
     inputChain->SetBranchAddress("l2_chargedIsoPtSum"                          , &m_tau.chargedIsoPtSum                         );
     inputChain->SetBranchAddress("l2_decayModeFinding"                         , &m_tau.decayModeFinding                        );
     inputChain->SetBranchAddress("l2_decayModeFindingNewDMs"                   , &m_tau.decayModeFindingNewDMs                  );
@@ -249,11 +257,13 @@ bool EventMuTau::passSelection(int selection)
     {
         case 0: // No isolation
             break;
-        case 1: // Tau isolation medium
-            pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits >= 2);
+        case 1: // Tau isolation tight
+            //pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits >= 2);
+            pass &= (tau().byIsolationMVArun2v1DBoldDMwLT>= 4);
             break;
-        case 2: // Reverse tau isolation medium
-            pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits < 2);
+        case 2: // Reverse tau isolation tight
+            //pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits < 2);
+            pass &= (tau().byIsolationMVArun2v1DBoldDMwLT< 4);
             break;
         default:
             break;
@@ -275,11 +285,13 @@ bool EventMuTau::passSelectionSignal(int iso, int applyMT, int sign)
     {
         case 0: // No isolation
             break;
-        case 1: // Tau isolation medium
-            pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits >= 2);
+        case 1: // Tau isolation tight
+            //pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits >= 2);
+            pass &= (tau().byIsolationMVArun2v1DBoldDMwLT>= 4);
             break;
-        case 2: // Reverse tau isolation medium
-            pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits < 2);
+        case 2: // Reverse tau isolation tight
+            //pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits < 2);
+            pass &= (tau().byIsolationMVArun2v1DBoldDMwLT< 4);
             break;
         default:
             break;
@@ -358,11 +370,13 @@ bool EventMuTau::passSelectionFakeFactorsWJetsHighMT(int iso, bool os)
             break;
         case 2: // No isolation
             break;
-        case 3: // Tau isolation medium
-            pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits >= 2);
+        case 3: // Tau isolation tight
+            //pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits >= 2);
+            pass &= (tau().byIsolationMVArun2v1DBoldDMwLT>=4);
             break;
-        case 4: // Reverse tau isolation medium
-            pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits < 2);
+        case 4: // Reverse tau isolation tight
+            //pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits < 2);
+            pass &= (tau().byIsolationMVArun2v1DBoldDMwLT< 4);
             break;
         case 5: // Reversed medium isolation only reversing the raw isolation part
             pass &= (tau().byCombinedIsolationDeltaBetaCorrRaw3Hits > 1.5 && tau().photonPtSumOutsideSignalCone/tau().Pt()<0.1);
@@ -403,11 +417,13 @@ bool EventMuTau::passSelectionFakeFactorsQCD(int iso, int isomu, bool os)
             break;
         case 2: // No isolation
             break;
-        case 3: // Tau isolation medium
-            pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits >= 2);
+        case 3: // Tau isolation tight
+            //pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits >= 2);
+            pass &= (tau().byIsolationMVArun2v1DBoldDMwLT>= 4);
             break;
-        case 4: // Reverse tau isolation medium
-            pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits < 2);
+        case 4: // Reverse tau isolation tight
+            //pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits < 2);
+            pass &= (tau().byIsolationMVArun2v1DBoldDMwLT< 4);
             break;
         case 5: // Reversed medium isolation only reversing the raw isolation part
             pass &= (tau().byCombinedIsolationDeltaBetaCorrRaw3Hits > 1.5 && tau().photonPtSumOutsideSignalCone/tau().Pt()<0.1);
@@ -426,11 +442,13 @@ bool EventMuTau::passSelectionForPolarization(int selection)
     pass &= (tau().pt > 0.);
     switch(selection%20)
     {
-        case 0: // Tau isolation medium
-            pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits >= 2);
+        case 0: // Tau isolation tight
+            //pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits >= 2);
+            pass &= (tau().byIsolationMVArun2v1DBoldDMwLT>= 4);
             break;
-        case 1: // Reverse tau isolation medium
-            pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits < 2);
+        case 1: // Reverse tau isolation tight
+            //pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits < 2);
+            pass &= (tau().byIsolationMVArun2v1DBoldDMwLT< 4);
             break;
         case 2: // Tau isolation raw < 1.5 GeV
             pass &= (tau().byCombinedIsolationDeltaBetaCorrRaw3Hits < 1.5);
@@ -463,12 +481,14 @@ bool EventMuTau::passSelectionWJetsStudy(int selection)
     pass &= (tau().pt > 0.);
     switch(selection)
     {
-        case 0: // Tau isolation medium + OS
-            pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits >= 2);
+        case 0: // Tau isolation tight + OS
+            //pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits >= 2);
+            pass &= (tau().byIsolationMVArun2v1DBoldDMwLT>= 4);
             pass &= (tau().charge*muon().charge<0);
             break;
-        case 1: // Reverse tau isolation medium + OS
-            pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits < 2);
+        case 1: // Reverse tau isolation tight + OS
+            //pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits < 2);
+            pass &= (tau().byIsolationMVArun2v1DBoldDMwLT< 4);
             pass &= (tau().charge*muon().charge<0);
             break;
         case 2: // Loose10 reverse tau isolation medium + OS
@@ -484,12 +504,14 @@ bool EventMuTau::passSelectionWJetsStudy(int selection)
         case 4: //  OS
             pass &= (tau().charge*muon().charge<0);
             break;
-        case 5: // Tau isolation medium + SS
-            pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits >= 2);
+        case 5: // Tau isolation tight + SS
+            //pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits >= 2);
+            pass &= (tau().byIsolationMVArun2v1DBoldDMwLT>= 4);
             pass &= (tau().charge*muon().charge>0);
             break;
-        case 6: // Reverse tau isolation medium + SS
-            pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits < 2);
+        case 6: // Reverse tau isolation tight + SS
+            //pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits < 2);
+            pass &= (tau().byIsolationMVArun2v1DBoldDMwLT< 4);
             pass &= (tau().charge*muon().charge>0);
             break;
         case 7: // SS
@@ -518,24 +540,28 @@ bool EventMuTau::passSelectionWJetsContamination(int selection)
             pass &= (mt()>highMtCut);
             pass &= (tau().charge*muon().charge>0);
             break;
-        case 2: // high-MT + OS + medium iso
+        case 2: // high-MT + OS + tight iso
             pass &= (mt()>highMtCut);
-            pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits >= 2);
+            //pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits >= 2);
+            pass &= (tau().byIsolationMVArun2v1DBoldDMwLT>= 4);
             pass &= (tau().charge*muon().charge<0);
             break;
-        case 3: // high-MT + SS + medium iso
+        case 3: // high-MT + SS + tight iso
             pass &= (mt()>highMtCut);
-            pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits >= 2);
+            //pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits >= 2);
+            pass &= (tau().byIsolationMVArun2v1DBoldDMwLT>= 4);
             pass &= (tau().charge*muon().charge>0);
             break;
-        case 4: // high-MT + OS + anti medium iso
+        case 4: // high-MT + OS + anti tight iso
             pass &= (mt()>highMtCut);
-            pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits < 2);
+            //pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits < 2);
+            pass &= (tau().byIsolationMVArun2v1DBoldDMwLT< 4);
             pass &= (tau().charge*muon().charge<0);
             break;
-        case 5: // high-MT + SS + anti medium iso
+        case 5: // high-MT + SS + anti  tight iso
             pass &= (mt()>highMtCut);
-            pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits < 2);
+            //pass &= (tau().byCombinedIsolationDeltaBetaCorr3Hits < 2);
+            pass &= (tau().byIsolationMVArun2v1DBoldDMwLT< 4);
             pass &= (tau().charge*muon().charge>0);
             break;
         default:

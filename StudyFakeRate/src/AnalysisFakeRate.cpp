@@ -133,6 +133,7 @@ void AnalysisFakeRate::fillHistos(unsigned selection, const std::string& sys)
      m_histos.FillHisto(106+hoffset, event().tau().byCombinedIsolationDeltaBetaCorrRaw3Hits, weight, sysNum);
      m_histos.FillHisto(107+hoffset, fabs(event().tauMatch().pdgId)*(event().tau().sign_flip!=0 ? event().tau().sign_flip : 1), weight, sysNum);
      m_histos.FillHisto(108+hoffset, event().tauJetMatch().Pt(), weight, sysNum); 
+     m_histos.FillHisto(109+hoffset, event().tau().byIsolationMVArun2v1DBoldDMwLTraw, weight, sysNum);
 
      // 2D histograms
      m_histos.FillHisto(200+hoffset, event().tau().Pt(), fabs(event().tau().Eta()), weight, sysNum);

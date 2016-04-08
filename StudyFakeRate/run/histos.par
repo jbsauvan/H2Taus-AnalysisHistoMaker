@@ -38,6 +38,7 @@ h1f_sys 105 tau_againstElectronMVA5 ' tau-ele discriminant ' 30 0. 3.
 h1f_sys 106 tau_iso ' tau isolation ' 200 0. 20.
 h1f_sys 107 tau_pdgId ' pdg id ' 45 -22.5 22.5
 1binvbh1f_sys 108 tau_jet_pt ' p_{T}(#jet) [GeV] ' 10 10. 20. 30. 40. 50. 60. 80. 100. 150. 300.
+h1f_sys 109 tau_isomva ' MVA tau isolation ' 201 -1. 1.01
 
 # Mu Tau
 h1f_sys 151 mvis ' M_{vis} [GeV] ' 60 0. 300.
@@ -136,6 +137,7 @@ h1f_sys 105 tau_againstElectronMVA5 ' tau-ele discriminant ' 30 0. 3.
 h1f_sys 106 tau_iso ' tau isolation ' 200 0. 20.
 h1f_sys 107 tau_pdgId ' pdg id ' 45 -22.5 22.5
 1binvbh1f_sys 108 tau_jet_pt ' p_{T}(#jet) [GeV] ' 10 10. 20. 30. 40. 50. 60. 80. 100. 150. 300.
+h1f_sys 109 tau_isomva ' MVA tau isolation ' 201 -1. 1.01
 
 # Mu Tau
 h1f_sys 151 mvis ' M_{vis} [GeV] ' 60 0. 300.
@@ -234,6 +236,7 @@ h1f_sys 105 tau_againstElectronMVA5 ' tau-ele discriminant ' 30 0. 3.
 h1f_sys 106 tau_iso ' tau isolation ' 200 0. 20.
 h1f_sys 107 tau_pdgId ' pdg id ' 45 -22.5 22.5
 1binvbh1f_sys 108 tau_jet_pt ' p_{T}(#jet) [GeV] ' 10 10. 20. 30. 40. 50. 60. 80. 100. 150. 300.
+h1f_sys 109 tau_isomva ' MVA tau isolation ' 201 -1. 1.01
 
 # Mu Tau
 h1f_sys 151 mvis ' M_{vis} [GeV] ' 60 0. 300.
@@ -326,6 +329,7 @@ h1f_sys 103 tau_decayMode ' decay^{#tau} ' 15 -0.5 14.5
 h1f_sys 106 tau_iso ' tau isolation ' 200 0. 20.
 h1f_sys 107 tau_pdgId ' pdg id ' 45 -22.5 22.5
 1binvbh1f_sys 108 tau_jet_pt ' p_{T}(#jet) [GeV] ' 10 10. 20. 30. 40. 50. 60. 80. 100. 150. 300.
+h1f_sys 109 tau_isomva ' MVA tau isolation ' 201 -1. 1.01
 
 # MuTau
 h1f_sys 150 mvis ' M_{vis} [GeV] ' 60 0. 300.
@@ -377,6 +381,7 @@ h1f 24 tau_againstMuon3 ' tau-muon discriminant ' 60 0. 6.
 h1f 25 tau_againstElectronMVA5 ' tau-ele discriminant ' 30 0. 3.
 h1f 26 tau_iso ' tau isolation ' 200 0. 20.
 h1f 27 tau_pdgId ' pdg ID ' 45 -22.5 22.5
+h1f 28 tau_isomva ' MVA tau isolation ' 201 -1. 1.01
 
 
 # MuTau
@@ -454,6 +459,7 @@ h1f 24 tau_againstMuon3 ' tau-muon discriminant ' 60 0. 6.
 h1f 25 tau_againstElectronMVA5 ' tau-ele discriminant ' 30 0. 3.
 h1f 26 tau_iso ' tau isolation ' 200 0. 20.
 h1f 27 tau_pdgId ' pdg ID ' 45 -22.5 22.5
+h1f 28 tau_isomva ' MVA tau isolation ' 201 -1. 1.01
 
 
 # MuTau
@@ -496,6 +502,7 @@ h1f 24 tau_iso ' tau iso ' 500 0. 50.
 h1f 25 tau_outside_photons_pt ' relative photons pT outside cone ' 100 0. 1.
 1binvbh1f 26 tau_gen_pt ' p_{T}(#tau,gen) [GeV] ' 12 20. 30. 40. 50. 60. 70. 80. 90. 100. 120. 150. 200.
 1binvbh1f 27 tau_jet_pt ' p_{T}(#tau,jet) [GeV] ' 12 20. 30. 40. 50. 60. 70. 80. 90. 100. 120. 150. 200.
+h1f 28 tau_isomva ' MVA tau isolation ' 201 -1. 1.01
 
 # MuTau
 h1f_sys 50 mvis ' M_{vis} [GeV] ' 60 0. 300.
@@ -638,6 +645,7 @@ h1f 23 tau_pdgId ' pdg id ' 45 -22.5 22.5
 h1f 24 tau_iso ' tau iso ' 500 0. 50.
 h1f 25 tau_strip_pt ' relative photons pT outside cone ' 100 0. 1.
 1binvbh1f 26 tau_jet_pt ' p_{T}(#tau,jet) [GeV] ' 13 10. 20. 30. 40. 50. 60. 70. 80. 90. 100. 120. 150. 200.
+h1f 27 tau_isomva ' MVA tau isolation ' 201 -1. 1.01
 
 # MuTau
 h1f_sys 50 mvis ' M_{vis} [GeV] ' 60 0. 300.
@@ -676,6 +684,7 @@ h1f 24 tau_againstMuon3 ' tau-muon discriminant ' 60 0. 6.
 h1f 25 tau_againstElectronMVA5 ' tau-ele discriminant ' 30 0. 3.
 h1f 26 tau_iso ' tau isolation ' 200 0. 20.
 h1f 27 tau_pdgId ' pdg ID ' 45 -22.5 22.5
+h1f 28 tau_isomva ' MVA tau isolation ' 201 -1. 1.01
 
 
 # MuTau
