@@ -2,6 +2,7 @@
 <use name="DataFormats/ForwardDetId"/>
 <use name="AnHiMaCMG/Core"/>
 <use name="AnHiMaCMG/H2TausCommon"/>
+<use name="HTTutilities/Jet2TauFakes"/>
 <export>
    <lib name="1"/>
 </export>

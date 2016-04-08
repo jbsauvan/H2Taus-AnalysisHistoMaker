@@ -27,6 +27,7 @@
 #include "AnHiMaCMG/Core/interface/EventAware.h"
 #include "AnHiMaCMG/H2TausCommon/interface/EventMuTau.h"
 #include "AnHiMaCMG/H2TausCommon/interface/FakeFactors.h"
+#include "HTTutilities/Jet2TauFakes/interface/FakeFactor.h"
 
 
 
@@ -49,6 +50,8 @@ namespace AnHiMa
             void fillHistos(unsigned, const std::string&);
 
             FakeFactors m_fakeFactors;
+
+            FakeFactor* m_fakeFactorTest;
 
     };
 }
