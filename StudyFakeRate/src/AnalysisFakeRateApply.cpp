@@ -85,6 +85,12 @@ bool AnalysisFakeRateApply::initialize(const string& parameterFile)
     }
     m_fakeFactors.createCombinedFakeFactorFormulas();
 
+
+    // test new fake factors
+    TFile* fTest = TFile::Open("/afs/cern.ch/user/j/jsauvan/Projects/Htautau_Run2/CMSSW/CMSSW_7_6_3/src/HTTutilities/Jet2TauFakes/test/fakeFactor_sys.root");
+    m_fakeFactorTest = (FakeFactor*)fTest->Get("ff_comb");
+    fTest->Close();
+
     return true;
 }
 
@@ -122,6 +128,27 @@ void AnalysisFakeRateApply::fillHistos(unsigned selection, const std::string& sy
     float fakeFactor = (sys!="" ? m_fakeFactors.retrieveFakeFactor(sys, event()) : 1.);
     weight *= fakeFactor;
     int hoffset  = 1000*selection;
+
+    // test Fake factor
+    std::vector<double> inputs;
+    inputs.push_back(event().tau().Pt());
+    inputs.push_back(event().tau().decayMode);
+    inputs.push_back(event().mt());
+    inputs.push_back(event().mvis());
+    float ffTest_nom = m_fakeFactorTest->value(inputs);
+    float ffTest_sys_nonclosure_qcd = m_fakeFactorTest->value(inputs, "nonclosure_qcd");
+    float ffTest_sys_nonclosure_w = m_fakeFactorTest->value(inputs, "nonclosure_w");
+    float ffTest_sys_highmt_stat_up = m_fakeFactorTest->value(inputs, "highmt_stat_up");
+    float ffTest = 1.;
+    if(sys=="Weight_Combined_Iso_Medium_VsPtDecay") ffTest = ffTest_nom;
+    else if(sys=="Weight_Combined_Iso_Medium_VsPtDecay_ShiftNonClosure_QCDSS") ffTest = ffTest_sys_nonclosure_qcd;
+    else if(sys=="Weight_Combined_Iso_Medium_VsPtDecay_ShiftNonClosure_HighMT") ffTest = ffTest_sys_nonclosure_w;
+    else if(sys=="Weight_Combined_Iso_Medium_VsPtDecay_ShiftStatMTCorr_Up") ffTest = ffTest_sys_highmt_stat_up;
+    if(fabs(fakeFactor-ffTest)/fakeFactor>1e-3)
+    {
+        std::cout<<"ff("<<sys<<") = "<<fakeFactor<<", "<<ffTest<<"\n";
+        std::cout<<"  pt="<<event().tau().Pt()<<", decay="<<event().tau().decayMode<<", mt="<<event().mt()<<", mvis="<<event().mvis()<<"\n";
+    }
 
 
     // Event histos
