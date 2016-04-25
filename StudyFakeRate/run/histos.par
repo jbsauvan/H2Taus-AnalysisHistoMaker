@@ -51,7 +51,7 @@ h1f_sys 152 mt   ' M_{T} [GeV] ' 40 0. 200.
 #
 2binvbh2f_sys 201 tau_pt_vs_decayMode ' decay^{#tau} vs p_{T}(#tau) [GeV] ' 
 7 20. 22. 25. 30. 40. 60. 200.
-16 -0.5 0.5 1.5 2.5 3.5 4.5 5.5 6.5 7.5 8.5 9.5 10.5 11.5 12.5 13.5 14.5
+3 -0.5 1.5 10.5
 #
 2binvbh2f_sys 202 tau_pt_vs_pdgId ' pdg ID vs p_{T}(#tau) [GeV] ' 
 5 20. 25. 30. 60. 200.
@@ -76,8 +76,8 @@ ETA 3
 0. 0.8 1.5 2.4
 #
 1binvvh1f_sys 310 tau_pt_vs_decayMode_ ' p_{T}(#tau) [GeV] ' 7 20. 22. 25. 30. 40. 60. 200.
-DECAY 3
--0.5 0.5 1.5 10.5
+DECAY 2
+-0.5 1.5 10.5
 #
 1binvvh1f_sys 320 tau_pt_vs_pdgId_ ' p_{T}(#tau) [GeV] ' 5 20. 25. 30. 60. 200.
 PDGID 13
@@ -150,7 +150,7 @@ h1f_sys 152 mt   ' M_{T} [GeV] ' 40 0. 200.
 #
 2binvbh2f_sys 201 tau_pt_vs_decayMode ' decay^{#tau} vs p_{T}(#tau) [GeV] ' 
 7 20. 22. 25. 30. 40. 60. 200.
-16 -0.5 0.5 1.5 2.5 3.5 4.5 5.5 6.5 7.5 8.5 9.5 10.5 11.5 12.5 13.5 14.5
+3 -0.5 1.5 10.5
 #
 2binvbh2f_sys 202 tau_pt_vs_pdgId ' pdg ID vs p_{T}(#tau) [GeV] ' 
 5 20. 25. 30. 60. 200.
@@ -175,8 +175,8 @@ ETA 3
 0. 0.8 1.5 2.4
 #
 1binvvh1f_sys 310 tau_pt_vs_decayMode_ ' p_{T}(#tau) [GeV] ' 7 20. 22. 25. 30. 40. 60. 200.
-DECAY 3
--0.5 0.5 1.5 10.5
+DECAY 2
+-0.5 1.5 10.5
 #
 1binvvh1f_sys 320 tau_pt_vs_pdgId_ ' p_{T}(#tau) [GeV] ' 5 20. 25. 30. 60. 200.
 PDGID 13
@@ -249,7 +249,7 @@ h1f_sys 152 mt   ' M_{T} [GeV] ' 40 0. 200.
 #
 2binvbh2f_sys 201 tau_pt_vs_decayMode ' decay^{#tau} vs p_{T}(#tau) [GeV] ' 
 7 20. 22. 25. 30. 40. 60. 200.
-16 -0.5 0.5 1.5 2.5 3.5 4.5 5.5 6.5 7.5 8.5 9.5 10.5 11.5 12.5 13.5 14.5
+3 -0.5 1.5 10.5
 #
 2binvbh2f_sys 202 tau_pt_vs_pdgId ' pdg ID vs p_{T}(#tau) [GeV] ' 
 5 20. 25. 30. 60. 200.
@@ -274,8 +274,8 @@ ETA 3
 0. 0.8 1.5 2.4
 #
 1binvvh1f_sys 310 tau_pt_vs_decayMode_ ' p_{T}(#tau) [GeV] ' 7 20. 22. 25. 30. 40. 60. 200.
-DECAY 3
--0.5 0.5 1.5 10.5
+DECAY 2
+-0.5 1.5 10.5
 #
 1binvvh1f_sys 320 tau_pt_vs_pdgId_ ' p_{T}(#tau) [GeV] ' 5 20. 25. 30. 60. 200.
 PDGID 13
