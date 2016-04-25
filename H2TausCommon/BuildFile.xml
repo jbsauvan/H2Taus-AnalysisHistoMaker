@@ -1,6 +1,7 @@
 <!--<flags CXXFLAGS="-g -O0"/>-->
 <use name="root"/>
 <use name="AnHiMaCMG/Core"/>
+<use name="HTTutilities/Jet2TauFakes"/>
 <export>
    <lib name="1"/>
 </export>

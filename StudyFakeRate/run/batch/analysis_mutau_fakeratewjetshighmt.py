@@ -6,7 +6,7 @@ cmssw_base = os.environ['CMSSW_BASE']
 scram = os.environ['SCRAM_ARCH']
 
 ## Samples definition
-treeDirectory =  "/afs/cern.ch/work/s/steggema/public/mt/180216"
+treeDirectory =  "/afs/cern.ch/work/s/steggema/public/mt/070416/TauMuSVFitMC/"
 treeProdName  =  "H2TauTauTreeProducerTauMu"
 
 
@@ -25,19 +25,22 @@ samples.append({Name:"Z3"          ,Dir:"DY3JetsToLL_M50_LO",Cut:""})
 samples.append({Name:"Z4"          ,Dir:"DY4JetsToLL_M50_LO",Cut:""})
 samples.append({Name:"W"           ,Dir:"WJetsToLNu_LO"     ,Cut:""})
 samples.append({Name:"W1"          ,Dir:"W1JetsToLNu_LO"    ,Cut:""})
+samples.append({Name:"W2"          ,Dir:"W2JetsToLNu_LO"    ,Cut:""})
+samples.append({Name:"W3"          ,Dir:"W3JetsToLNu_LO"    ,Cut:""})
 samples.append({Name:"W4"          ,Dir:"W4JetsToLNu_LO"    ,Cut:""})
-samples.append({Name:"TT"          ,Dir:"TT_pow_ext"       ,Cut:""})
+samples.append({Name:"TT"          ,Dir:"TT_pow_ext3"       ,Cut:""})
 samples.append({Name:"T_tWch"      ,Dir:"T_tWch"           ,Cut:""})
 samples.append({Name:"TBar_tWch"   ,Dir:"TBar_tWch"        ,Cut:""})
-#samples.append({Name:"QCD"         ,Dir:"QCD_Mu15"         ,Cut:""})
+## ?? TBarToLeptons_tch_powheg, TToLeptons_tch_powheg 
+samples.append({Name:"QCD"         ,Dir:"QCD_Mu15"         ,Cut:""})
 #
 samples.append({Name:"ZZTo4L"      ,Dir:"ZZTo4L"           ,Cut:""}) 
 samples.append({Name:"ZZTo2L2Q"    ,Dir:"ZZTo2L2Q"         ,Cut:""})
-samples.append({Name:"WZTo3LNu"    ,Dir:"WZTo3LNu"         ,Cut:""})
+samples.append({Name:"WZTo3LNu"    ,Dir:"WZTo3LNu_amcatnlo",Cut:""})
 samples.append({Name:"WZTo2L2Q"    ,Dir:"WZTo2L2Q"         ,Cut:""})
 samples.append({Name:"WZTo1L3Nu"   ,Dir:"WZTo1L3Nu"        ,Cut:""})
 samples.append({Name:"WZTo1L1Nu2Q" ,Dir:"WZTo1L1Nu2Q"      ,Cut:""})
-#samples.append({Name:"VVTo2L2Nu"   ,Dir:"VVTo2L2Nu"        ,Cut:""})
+samples.append({Name:"VVTo2L2Nu"   ,Dir:"VVTo2L2Nu"        ,Cut:""})
 samples.append({Name:"WWTo1L1Nu2Q" ,Dir:"WWTo1L1Nu2Q"      ,Cut:""})
 #
 samples.append({Name:"Data_Run15D_16Dec",    Dir:"SingleMuon_Run2015D_16Dec"            ,Cut:""})
@@ -50,7 +53,7 @@ batch = []
 
 for sample in samples:
     batch.append(AnhimaBatchLauncher())
-    batch[-1].name = "FakeRate_MuTau_WJetsHighMT"+sample[Name]
+    batch[-1].name = "FakeRate_MuTau_WJetsHighMT_"+sample[Name]
     batch[-1].exe = "{CMSSW}/bin/{SCRAM}/fakeratewjetshighmt.exe".format(CMSSW=cmssw_base,SCRAM=scram)
     batch[-1].baseDir = "{CMSSW}/src/AnHiMaCMG/StudyFakeRate/".format(CMSSW=cmssw_base)
     batch[-1].inputFiles.append("{0}/{1}/{2}/tree.root".format(treeDirectory, sample[Dir], treeProdName))
@@ -68,7 +71,7 @@ for sample in samples:
     # Muon cuts
     batch[-1].cuts.extend(["l1_reliso05<0.1","l1_muonid_medium>0.5","l1_pt>19"])
     # Tau cuts
-    batch[-1].cuts.extend(["l2_againstMuon3>1.5","l2_againstElectronMVA5>0.5"])
+    batch[-1].cuts.extend(["l2_againstMuon3>1.5","l2_againstElectronMVA6>0.5"])
     batch[-1].cuts.extend(["veto_dilepton<0.5", "veto_thirdlepton<0.5", "veto_otherlepton<0.5"])
     batch[-1].cuts.extend(["l2_decayModeFinding"])
     batch[-1].cuts.extend(["l2_pt>20"])

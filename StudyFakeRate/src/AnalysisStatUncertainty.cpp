@@ -73,16 +73,14 @@ bool AnalysisStatUncertainty::initialize(const string& parameterFile)
         std::string name       = m_reader.params().GetValue(std::string("FakeFactor." + to_string(i+1) + ".Name").c_str(), "");
         std::string fileName   = m_reader.params().GetValue(std::string("FakeFactor." + to_string(i+1) + ".File").c_str(), "");
         std::string objectName = m_reader.params().GetValue(std::string("FakeFactor." + to_string(i+1) + ".Object").c_str(), "");
-        std::string type       = m_reader.params().GetValue(std::string("FakeFactor." + to_string(i+1) + ".Type").c_str(), "");
 
-        status = m_fakeFactors.addFakeFactor(name, fileName, objectName, type);
+        status = m_fakeFactors.addFakeFactor(name, fileName, objectName);
         if(!status) return status;
 
         std::cout<<"INFO:  Fake factor #"<<i+1<<"\n";
         std::cout<<"INFO:    Name   = "<<name<<"\n";
         std::cout<<"INFO:    File   = "<<fileName<<"\n";
         std::cout<<"INFO:    Object = "<<objectName<<"\n";
-        std::cout<<"INFO:    Type   = "<<type<<"\n";
     }
 
     return true;
@@ -118,7 +116,14 @@ void AnalysisStatUncertainty::fillHistos(unsigned selection, const std::string& 
     short sysNum = systematicNumber(sys);
     //bool fluctuate = (sys.find("Fluctuate")!=std::string::npos ? true : false);
     float weight = event().weight();
-    float fakeFactor = (sys!="" ? m_fakeFactors.retrieveFakeFactor(sys, event()) : 1.);
+    // Retrieve fake factor name and systematic shift
+    std::vector<std::string> tokens;
+    tokenize(sys, tokens, "__");
+    std::string fakeFactorName("");
+    if(tokens.size()>0) fakeFactorName = tokens[0];
+    std::string sysName("");
+    if(tokens.size()>1) sysName = tokens[1];
+    float fakeFactor = (sys!="" ? m_fakeFactors.retrieveFakeFactor(fakeFactorName, event(), sysName) : 1.);
     weight *= fakeFactor;
     int hoffset  = 1000*selection;
 
