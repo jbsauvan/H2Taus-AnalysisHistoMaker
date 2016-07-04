@@ -1,13 +1,10 @@
 from AnhimaBatchLauncher import AnhimaBatchLauncher
-from FakeFactorsLocationsMinimal import fakeFactorsMC,fakeFactorsData,fractionsW,fractionsTT,fractionsVV,fractionsZJ,fractionsQCD,highMTCorrection
 import glob
 
 ## Samples definition
-treeDirectory =  "/afs/cern.ch/work/j/jsauvan/public/HTauTau/Trees/mt/151215/"
+treeDirectory =  "/afs/cern.ch/work/s/steggema/public/mt/070416/TauMuSVFitMC/"
 treeProdName  =  "H2TauTauTreeProducerTauMu"
 
-
-fakeFactorsTypes = ['HighMTRaw','HighMT','QCDSS','Combined']
 
 
 for fakeFactorsType in fakeFactorsTypes:
@@ -33,21 +30,20 @@ samples = []
 samples.append({Name:"QCD"         ,Dir:"QCD_Mu15"         ,Cut:fake_cut})
 samples.append({Name:"ZJ"          ,Dir:"DYJetsToLL_M50_LO",Cut:zj_cut})
 samples.append({Name:"W"           ,Dir:"WJetsToLNu_LO"    ,Cut:fake_cut})
-samples.append({Name:"TT"          ,Dir:"TT_pow_ext"       ,Cut:fake_cut})
+samples.append({Name:"TT"          ,Dir:"TT_pow_ext_noweight"       ,Cut:fake_cut}) # FIXME: use version without noweight?
 samples.append({Name:"T_tWch"      ,Dir:"T_tWch"           ,Cut:fake_cut})
 samples.append({Name:"TBar_tWch"   ,Dir:"TBar_tWch"        ,Cut:fake_cut})
 ##
-#samples.append({Name:"ZZTo4L"      ,Dir:"ZZTo4L"           ,Cut:""}) ## FIXME: output not there
+samples.append({Name:"ZZTo4L"      ,Dir:"ZZTo4L"           ,Cut:fake_cut})
 samples.append({Name:"ZZTo2L2Q"    ,Dir:"ZZTo2L2Q"         ,Cut:fake_cut})
-samples.append({Name:"WZTo3L"      ,Dir:"WZTo3L"           ,Cut:fake_cut})
 samples.append({Name:"WZTo2L2Q"    ,Dir:"WZTo2L2Q"         ,Cut:fake_cut})
 samples.append({Name:"WZTo1L3Nu"   ,Dir:"WZTo1L3Nu"        ,Cut:fake_cut})
+samples.append({Name:"WZTo3LNu_amcatnlo"   ,Dir:"WZTo3LNu_amcatnlo"        ,Cut:fake_cut})
 samples.append({Name:"WZTo1L1Nu2Q" ,Dir:"WZTo1L1Nu2Q"      ,Cut:fake_cut})
-samples.append({Name:"VVTo2L2Nu"   ,Dir:"VVTo2L2Nu"        ,Cut:fake_cut})
 samples.append({Name:"WWTo1L1Nu2Q" ,Dir:"WWTo1L1Nu2Q"      ,Cut:fake_cut})
+samples.append({Name:"VVTo2L2Nu"   ,Dir:"VVTo2L2Nu"        ,Cut:fake_cut})
 #
-samples.append({Name:"Data_Run15D_v4",    Dir:"SingleMuon_Run2015D_v4"            ,Cut:""})
-samples.append({Name:"Data_Run15D_05Oct", Dir:"SingleMuon_Run2015D_05Oct"         ,Cut:""})
+samples.append({Name:"Data_Run15D_16Dec",    Dir:"SingleMuon_Run2015D_16Dec"            ,Cut:""})
 ## Non fake backgrounds
 #samples.append({Name:"ZTT"           ,Dir:"DYJetsToLL_M50_LO", Cut:ztt_cut})
 #samples.append({Name:"ZL"            ,Dir:"DYJetsToLL_M50_LO", Cut:zl_cut})
